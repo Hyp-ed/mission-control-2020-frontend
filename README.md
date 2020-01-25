@@ -1,12 +1,12 @@
-# HYPED Base-Station Frontend
-This repo holds all the code responsible for the frontend of the HYPED base-station frontend, and is included as a submodule in [the repo for the backend](https://github.com/Hyp-ed/base-station-2019). It is a single page React app that connects to the backend through a websocket and communicates over the STOMP protocol.
+# HYPED Mission-Control Frontend
+This project is still a work in progress, and as a result the frontend is not functional at the moment. This repo holds all the code responsible for the HYPED mission-control frontend, and is included as a submodule in [the repo for the backend](https://github.com/Hyp-ed/base-station-2020). It is a single page React app that connects to the backend through a websocket and communicates over the STOMP protocol.
 
 ### How to run
-There is no need to 'run' the frontend, it is already packaged together in a jar file with the backend. Download the latest release [here](https://github.com/Hyp-ed/base-station-2019/releases) and follow the instructions [here](https://github.com/Hyp-ed/base-station-2019/blob/master/README.md).
+There is no need to 'run' the frontend, it is already packaged together in a jar file with the backend. Download the latest release [here](https://github.com/Hyp-ed/base-station-2020/releases) and follow the instructions [here](https://github.com/Hyp-ed/base-station-2020/blob/master/README.md).
 
-# Running a development version of the base-station
+# Running a development version of the mission-control
 
-The base-station is made up of a Java backend and a React App (Javascript) frontend. In the release version of the backend, the backend and frontend are packaged together into one .jar file. However, if you'd like to setup a development server of the React App in order to work on the project, there are a few things to configure.
+The mission-control is made up of a Java backend and a React App (Javascript) frontend. In the release version of the backend, the backend and frontend are packaged together into one .jar file. However, if you'd like to setup a development server of the React App in order to work on the project, there are a few things to configure.
 
 ### Installing dependencies
 
@@ -39,7 +39,7 @@ $ yarn start
 
 Once the server is running any changes you make to the source code will automatically update the GUI in your browser.
 
-If you'd like to test your changes with a simulated pod run, you can use [this guide](https://github.com/Hyp-ed/base-station-2019/blob/master/README.md) to run the latest release backend, which will serve the state of the pod to your development frontend GUI as well as the release GUI (in general the dev server frontend GUI will be accessible at `localhost:3000` and the release GUI will be at `localhost:8080`, when they are running). Once the backend and the development frontend are running, you can use
+If you'd like to test your changes with a simulated pod run, you can use [this guide](https://github.com/Hyp-ed/base-station-2020/blob/master/README.md) to run the latest release backend, which will serve the state of the pod to your development frontend GUI as well as the release GUI (in general the dev server frontend GUI will be accessible at `localhost:3000` and the release GUI will be at `localhost:8080`, when they are running). Once the backend and the development frontend are running, you can use
 ```
 $ ./hyped <flags>
 ```
@@ -49,4 +49,4 @@ in the standard hyped repo directory on the same computer. Use `./hyped --f` to 
 
 <br>
 
-![screenshot](https://i.imgur.com/BrU8SX7.jpg)
+
