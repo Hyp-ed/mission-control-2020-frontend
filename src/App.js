@@ -41,7 +41,28 @@ class App extends React.Component {
         connectedToPod: receivedPodConnectionStatus === 'CONNECTED' ? true : false,
     });
     console.log(receivedPodConnectionStatus);
-}
+  }
+
+  podDataHandler(message) {
+    const receivedPodData = JSON.parse(message.body);
+
+    this.setState({
+        podData: receivedPodData,
+    });
+  }
+
+  disconnectHandler(error) {
+    if (error.startsWith('Whoops! Lost connection')) {
+        console.error('DISCONNECTED FROM BACKEND');
+
+        this.setState({
+            connectedToPod: false,
+        });
+    }
+    else {
+        console.error(error);
+    }
+  }
 
   render() {
     const connectedToPod = this.state.connectedToPod;
