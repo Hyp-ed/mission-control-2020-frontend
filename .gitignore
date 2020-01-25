@@ -10,6 +10,8 @@
 
 # production
 /build
+/build_packageYarnApp
+/.gradle
 
 # misc
 .DS_Store
