@@ -1,52 +1,68 @@
-# HYPED Mission-Control Frontend
-This project is still a work in progress, and as a result the frontend is not functional at the moment. This repo holds all the code responsible for the HYPED mission-control frontend, and is included as a submodule in [the repo for the backend](https://github.com/Hyp-ed/base-station-2020). It is a single page React app that connects to the backend through a websocket and communicates over the STOMP protocol.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### How to run
-There is no need to 'run' the frontend, it is already packaged together in a jar file with the backend. Download the latest release [here](https://github.com/Hyp-ed/base-station-2020/releases) and follow the instructions [here](https://github.com/Hyp-ed/base-station-2020/blob/master/README.md).
+## Available Scripts
 
-# Running a development version of the mission-control
+In the project directory, you can run:
 
-The mission-control is made up of a Java backend and a React App (Javascript) frontend. In the release version of the backend, the backend and frontend are packaged together into one .jar file. However, if you'd like to setup a development server of the React App in order to work on the project, there are a few things to configure.
+### `yarn start`
 
-### Installing dependencies
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-This section requires ```brew``` installed on your computer. (If you don't have `brew` set up, click [here](https://brew.sh/) for more info) In order for the React App to run we need to install some dependent libraries. In the directory containing the frontend repo, run:
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-```
-$ brew install node
-$ brew install npm
-```
-or on linux:
-```
-$ sudo apt-get install node
-$ sudo apt-get install npm
-```
-After installing node and npm:
-```
-$ sudo npm install yarn -g
-```
+### `yarn test`
 
-Note: do not use `sudo apt-get install yarn`. This will install a different package with the same name.
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Running the development server
-Clone this repository and navigate to its directory in terminal to get started. After successfully installing the dependencies, you should be able to start the dev server, and a browser window should open.
+### `yarn build`
 
-```
-$ yarn start
-```
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Testing changes
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
 
-Once the server is running any changes you make to the source code will automatically update the GUI in your browser.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-If you'd like to test your changes with a simulated pod run, you can use [this guide](https://github.com/Hyp-ed/base-station-2020/blob/master/README.md) to run the latest release backend, which will serve the state of the pod to your development frontend GUI as well as the release GUI (in general the dev server frontend GUI will be accessible at `localhost:3000` and the release GUI will be at `localhost:8080`, when they are running). Once the backend and the development frontend are running, you can use
-```
-$ ./hyped <flags>
-```
-in the standard hyped repo directory on the same computer. Use `./hyped --f` to see which `<flags>` are available. The hyped executable should connect to the backend, and the backend should serve the state of the executable to both frontend windows. To confirm this, check that the pod-state displays "CONNECTED".
+### `yarn eject`
 
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-<br>
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `yarn build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
