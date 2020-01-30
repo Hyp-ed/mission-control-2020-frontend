@@ -2,6 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Stomp from 'stompjs';
+import { faRuler } from "@fortawesome/free-solid-svg-icons";
+import Button from "./components/Button.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -63,13 +65,28 @@ class App extends React.Component {
         console.error(error);
     }
   }
-
+  
   render() {
     const connectedToPod = this.state.connectedToPod;
     const connectedToBackend = this.state.stompClient;
 
     return (
+      
       <div className="App">
+      <div>
+        <Button
+          caption="CALIBRATE"
+          icon={faRuler}
+          onClick={() => {
+            return;
+          }}
+          width="25%"
+          slantedLeft
+          // slantedRight
+          textColor="#FFFFFF"
+          backgroundColor="#1098AD"
+        ></Button>
+       </div>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
