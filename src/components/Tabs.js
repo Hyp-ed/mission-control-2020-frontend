@@ -6,7 +6,6 @@ export default function Tabs(props) {
     return (
         <div className="tabs-root">
             <div className="tabs-container">
-               <div>tabs here</div>
             </div>
             <div className="window-container">
 
