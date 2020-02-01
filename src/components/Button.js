@@ -23,10 +23,11 @@ export default function Button(props) {
         className={buttonSkewClassName}
         style={{
           color: props.textColor,
-          backgroundColor: props.backgroundColor
+          backgroundColor: props.backgroundColor,
+          height: 100+"%"
         }}
       >
-        <div className={buttonUnskewClassName}>
+        <div className={buttonUnskewClassName} style={{marginTop:"3%"}}>
           <FontAwesomeIcon className="button-icon" icon={props.icon} />
           <span>{props.caption}</span>
         </div>
