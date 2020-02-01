@@ -72,36 +72,31 @@ class App extends React.Component {
 
     return (
       
-      <div className="App">
-      <div>
-        <Button
-          caption="CALIBRATE"
-          icon={faRuler}
-          onClick={() => {
-            return;
-          }}
-          width="25%"
-          slantedLeft
-          // slantedRight
-          textColor="#FFFFFF"
-          backgroundColor="#1098AD"
-        ></Button>
-       </div>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            {connectedToBackend ? 'connected' : 'disconnected'} 
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <div className="background">
+        <div className="gui-wrapper">
+          
+          <header className="header">
+            <h2>logo here</h2>
+            <img src="" className="App-logo" alt="logo" />
+            <p style={{alignSelf:"center"}}>position here</p>
+            <p>
+              {connectedToBackend ? 'connected' : 'disconnected'} 
+            </p>
+          </header>
+          <Button
+            caption="CALIBRATE"
+            icon={faRuler}
+            onClick={() => {
+              return;
+            }}
+            width="25%"
+            slantedLeft
+            // slantedRight
+            textColor="#FFFFFF"
+            backgroundColor="#1098AD"
+          ></Button>
+        </div>
+      </div>      
   );
   }
 }
