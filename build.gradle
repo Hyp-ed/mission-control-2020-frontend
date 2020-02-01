@@ -15,7 +15,7 @@ apply plugin: 'base'
 apply plugin: 'com.moowork.node' // gradle-node-plugin
 
 task packageYarnApp(type: Zip) {
-    dependsOn yarn_install
+    yarn_build.dependsOn yarn_install
     dependsOn yarn_build
     baseName 'mission-control-2020-frontend'
     extension 'jar'
