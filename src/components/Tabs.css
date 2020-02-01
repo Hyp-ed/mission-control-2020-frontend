@@ -1,0 +1,7 @@
+.tabs-root {
+    grid-column: 2/4;
+    grid-row: 2/6;
+    background-color: #343434;
+    margin-top: 2.5em;
+    margin-bottom: 4.8em;
+}
