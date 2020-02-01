@@ -1,0 +1,12 @@
+.header-root {
+    grid-column: 1/4;
+    grid-row: 1/1;
+    background-color: #282c34;
+    margin-top:1em;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    max-height: 8vh;
+}

@@ -4,6 +4,8 @@ import './App.css';
 import Stomp from 'stompjs';
 import { faRuler } from "@fortawesome/free-solid-svg-icons";
 import Button from "./components/Button.js";
+import Header from "./components/Header.js";
+import Scrollable from "./components/Scrollable.js"
 
 class App extends React.Component {
   constructor(props) {
@@ -74,27 +76,30 @@ class App extends React.Component {
       
       <div className="background">
         <div className="gui-wrapper">
+          <Header
+            connectedToPod= {this.state.connectedToPod}
+            connectedToBackend = {this.state.stompClient}
+          />
           
-          <header className="header">
-            <h2>logo here</h2>
-            <img src="" className="App-logo" alt="logo" />
-            <p style={{alignSelf:"center"}}>position here</p>
-            <p>
-              {connectedToBackend ? 'connected' : 'disconnected'} 
-            </p>
-          </header>
-          <Button
-            caption="CALIBRATE"
-            icon={faRuler}
-            onClick={() => {
-              return;
-            }}
-            width="25%"
-            slantedLeft
-            // slantedRight
-            textColor="#FFFFFF"
-            backgroundColor="#1098AD"
-          ></Button>
+          <div className="modular-container">
+            <div className="main-buttons">
+                <Button
+                  caption="CALIBRATE"
+                  icon={faRuler}
+                  onClick={() => {
+                    return;
+                  }}
+                  width="8em"
+                  slantedLeft
+                  // slantedRight
+                  textColor="#FFFFFF"
+                  backgroundColor="#1098AD"
+              ></Button>
+            </div>
+            <Scrollable>
+
+            </Scrollable>
+          </div>
         </div>
       </div>      
   );
