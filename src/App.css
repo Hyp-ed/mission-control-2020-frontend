@@ -26,7 +26,7 @@ body {
 }
 
 .gauge-container {
-  grid-row: 4/6;
+  grid-row: 2/6;
+  grid-column: 7/13;
   display: inline-block;
-  display: none;
 }
