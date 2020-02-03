@@ -73,57 +73,48 @@ export default function App() {
 
 
     return (
-      
-
-        <div className="gui-wrapper">
+      <div className="gui-wrapper">
           <Header
             connectedToPod= {connectedToPod}
             connectedToBackend = {stompClient}
           />
-          <div className="modular-container">
-            <div className="main-buttons">
-                <Button
-                  caption="CALIBRATE"
-                  icon={faRuler}
-                  onClick={() => {
-                    return;
-                  }}
-                  width="8em"
-                  slantedLeft
-                  // slantedRight
-                  textColor="#FFFFFF"
-                  backgroundColor="#1098AD"
-              ></Button>
-            <Button
-                  caption="CALIBRATE"
-                  icon={faRuler}
-                  onClick={() => {
-                    return;
-                  }}
-                  width="8em"
-                  // slantedRight
-                  textColor="#FFFFFF"
-                  backgroundColor="#1098AD"
-              ></Button>
+          <div className="buttons">
+              <div className="main-buttons">
+                  <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    slantedLeft
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
               <Button
-                  caption="CALIBRATE"
-                  icon={faRuler}
-                  onClick={() => {
-                    return;
-                  }}
-                  width="8em"
-                  // slantedRight
-                  textColor="#FFFFFF"
-                  backgroundColor="#1098AD"
-              ></Button>
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+                <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+              </div>
             </div>
-            <Scrollable>
-
-            </Scrollable>
-          </div>
-          <Tabs>
-
-          </Tabs>
+          <Scrollable></Scrollable>
+          <Tabs></Tabs>
         </div>      
 
   );

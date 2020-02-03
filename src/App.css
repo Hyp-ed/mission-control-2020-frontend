@@ -6,18 +6,19 @@ body {
 .gui-wrapper {
   display: grid;
   grid-auto-columns: calc(100%/12);
+  grid-auto-rows: calc(100%/12);
   height: 94vh;
   padding: 1.5% 2%;
 }
 
-.modular-container {
+.buttons {
   display: flex;
   flex-direction: column;
-  grid-row: 1/4;
+  grid-row: 2/3;
   grid-column: 1 / 6;
   margin-bottom: 5em;
-  margin-top: 15vh;
   margin-right: 1em;
+  margin-top: 3em;
 }
 
 .main-buttons {
