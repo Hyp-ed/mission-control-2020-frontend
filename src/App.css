@@ -5,15 +5,16 @@ body {
 
 .gui-wrapper {
   display: grid;
-  height: 100vh;
+  grid-auto-columns: calc(100%/12);
+  height: 94vh;
   padding: 1.5% 2%;
 }
 
 .modular-container {
   display: flex;
   flex-direction: column;
-  grid-row: 1/6;
-  grid-column: 1 / 1;
+  grid-row: 1/4;
+  grid-column: 1 / 6;
   margin-bottom: 5em;
   margin-top: 15vh;
   margin-right: 1em;

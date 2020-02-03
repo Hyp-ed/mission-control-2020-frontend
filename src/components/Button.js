@@ -27,7 +27,7 @@ export default function Button(props) {
           height: 100+"%"
         }}
       >
-        <div className={buttonUnskewClassName} style={{marginTop:"3%"}}>
+        <div className={buttonUnskewClassName}>
           <FontAwesomeIcon className="button-icon" icon={props.icon} />
           <span>{props.caption}</span>
         </div>

@@ -4,8 +4,8 @@ import "./Scrollable.css";
 export default function Scrollable(props) {
 
     return (
-        <div className="root">
-            
+        <div className="scrollable-root">
+
         </div>
     );
 }

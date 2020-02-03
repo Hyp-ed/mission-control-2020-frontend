@@ -94,6 +94,28 @@ export default function App() {
                   textColor="#FFFFFF"
                   backgroundColor="#1098AD"
               ></Button>
+            <Button
+                  caption="CALIBRATE"
+                  icon={faRuler}
+                  onClick={() => {
+                    return;
+                  }}
+                  width="8em"
+                  // slantedRight
+                  textColor="#FFFFFF"
+                  backgroundColor="#1098AD"
+              ></Button>
+              <Button
+                  caption="CALIBRATE"
+                  icon={faRuler}
+                  onClick={() => {
+                    return;
+                  }}
+                  width="8em"
+                  // slantedRight
+                  textColor="#FFFFFF"
+                  backgroundColor="#1098AD"
+              ></Button>
             </div>
             <Scrollable>
 
