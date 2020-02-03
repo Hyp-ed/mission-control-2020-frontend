@@ -17,7 +17,7 @@ export default function Button(props) {
     <div
       className="button-container"
       onClick={props.onClick}
-      style={{ width: props.width }}
+      style={{ width: "33%" }}
     >
       <div
         className={buttonSkewClassName}
@@ -27,7 +27,7 @@ export default function Button(props) {
           height: 100+"%"
         }}
       >
-        <div className={buttonUnskewClassName} style={{marginTop:"3%"}}>
+        <div className={buttonUnskewClassName}>
           <FontAwesomeIcon className="button-icon" icon={props.icon} />
           <span>{props.caption}</span>
         </div>

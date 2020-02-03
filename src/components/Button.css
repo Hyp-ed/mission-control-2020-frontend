@@ -3,6 +3,7 @@
   font-size: 2.4em;
   text-align: center;
   overflow: hidden;
+  width: calc(100%/3);
   height: 2em;
 }
 

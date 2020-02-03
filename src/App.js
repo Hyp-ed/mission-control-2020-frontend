@@ -91,28 +91,47 @@ export default function App() {
     };
   });
 
-  return (
-    <div className="background">
+    return (
       <div className="gui-wrapper">
-        <Header
-          connectedToPod={connectedToPod}
-          connectedToBackend={stompClient}
-        />
-        <div className="modular-container">
-          <div className="main-buttons">
-            <Button
-              caption="CALIBRATE"
-              icon={faRuler}
-              onClick={() => {
-                return;
-              }}
-              width="8em"
-              slantedLeft
-              // slantedRight
-              textColor="#FFFFFF"
-              backgroundColor="#1098AD"
-            ></Button>
-          </div>
+          <Header
+            connectedToPod= {connectedToPod}
+            connectedToBackend = {stompClient}
+          />
+          <div className="buttons">
+              <div className="main-buttons">
+                  <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    slantedLeft
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+              <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+                <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+              </div>
+            </div>
           <Scrollable></Scrollable>
           <div className="gauge-container">
             <Gauge
@@ -128,9 +147,8 @@ export default function App() {
               value={gaugeData.velocity}
             />
           </div>
-        </div>
-        <Tabs></Tabs>
-      </div>
-    </div>
+          <Tabs></Tabs>
+        </div>      
+
   );
 }
