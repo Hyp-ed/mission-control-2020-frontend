@@ -1,14 +1,15 @@
 import React from 'react';
 import "./Header.css"
+import logo from "../hyped.png"
 
 export default function Header(props) {
     
     return (
         <header className="header-root">
-            <p>logo here</p>
-            <img src="../hyped.png" className="hyped-logo" alt="logo" />
-            <p style={{alignSelf:"center"}}>position here</p>
-            <p style={{marginLeft:"67%"}}>
+            <img src={logo} className="hyped-logo" alt="logo" />
+            <p>position here</p>
+            <p>time</p>
+            <p>
               {props.connectedToBackend ? 'connected' : 'disconnected'} 
             </p>
         </header>

@@ -74,7 +74,7 @@ export default function App() {
 
     return (
       
-      <div className="background">
+
         <div className="gui-wrapper">
           <Header
             connectedToPod= {connectedToPod}
@@ -102,8 +102,7 @@ export default function App() {
           <Tabs>
 
           </Tabs>
-        </div>
-      </div>      
+        </div>      
 
   );
 }
