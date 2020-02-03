@@ -66,12 +66,10 @@ export default function Gauge(props) {
       gradientStops={gradientStops}
       circleStyle={{ fill: props.value > 80 ? red : gray }}
       textStyle={{
-        fill: gray,
-        fontFamily: "Roboto Mono"
+        fill: gray
       }}
       waveTextStyle={{
-        fill: black,
-        fontFamily: "Roboto Mono"
+        fill: black
       }}
     />
   );
