@@ -10,7 +10,7 @@ import Tabs from "./components/Tabs.js";
 
 export default function App() {
   const [connectedToPod, setConnectedToPod] = useState(false);
-  const [stompClient, setStompClient] = useState(null);
+  const [stompClient, setStompClient] = useState(false);
   const [podData, setPodData] = useState(null);
 
   useEffect(() => {
@@ -77,8 +77,8 @@ export default function App() {
       <div className="background">
         <div className="gui-wrapper">
           <Header
-            connectedToPod= {this.state.connectedToPod}
-            connectedToBackend = {this.state.stompClient}
+            connectedToPod= {connectedToPod}
+            connectedToBackend = {stompClient}
           />
           <div className="modular-container">
             <div className="main-buttons">
