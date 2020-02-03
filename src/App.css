@@ -7,8 +7,6 @@
   pointer-events: none;
 }
 
-
-
 .App-link {
   color: #61dafb;
 }
@@ -42,8 +40,11 @@
 }
 
 .main-buttons {
-  width:auto;
+  width: auto;
 }
 
-
-
+.gauge-container {
+  grid-row: 4/6;
+  display: inline-block;
+  display: none;
+}
