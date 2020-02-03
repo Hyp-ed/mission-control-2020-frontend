@@ -1,0 +1,15 @@
+.tabs-root {
+    grid-column: 6/13;
+    grid-row: 5/13;
+    background-color: #343434;
+    display: grid;
+}
+
+.tabs-container {
+    grid-row: 1/1;
+    background-color: rgb(63, 63, 63);
+}
+
+.window-container {
+    grid-row:2/11;
+}

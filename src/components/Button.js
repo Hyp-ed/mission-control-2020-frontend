@@ -17,13 +17,14 @@ export default function Button(props) {
     <div
       className="button-container"
       onClick={props.onClick}
-      style={{ width: props.width }}
+      style={{ width: "33%" }}
     >
       <div
         className={buttonSkewClassName}
         style={{
           color: props.textColor,
-          backgroundColor: props.backgroundColor
+          backgroundColor: props.backgroundColor,
+          height: 100+"%"
         }}
       >
         <div className={buttonUnskewClassName}>

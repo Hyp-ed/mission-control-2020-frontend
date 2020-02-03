@@ -4,10 +4,13 @@ import "./App.css";
 import Stomp from "stompjs";
 import { faRuler } from "@fortawesome/free-solid-svg-icons";
 import Button from "./components/Button.js";
+import Header from "./components/Header.js";
+import Scrollable from "./components/Scrollable.js";
+import Tabs from "./components/Tabs.js";
 
 export default function App() {
   const [connectedToPod, setConnectedToPod] = useState(false);
-  const [stompClient, setStompClient] = useState(null);
+  const [stompClient, setStompClient] = useState(false);
   const [podData, setPodData] = useState(null);
 
   useEffect(() => {
@@ -68,34 +71,51 @@ export default function App() {
     }
   };
 
-  return (
-    <div className="App">
-      <div>
-        <Button
-          caption="CALIBRATE"
-          icon={faRuler}
-          onClick={() => {
-            return;
-          }}
-          width="25%"
-          slantedLeft
-          // slantedRight
-          textColor="#FFFFFF"
-          backgroundColor="#1098AD"
-        ></Button>
-      </div>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{stompClient ? "connected" : "disconnected"}</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    return (
+      <div className="gui-wrapper">
+          <Header
+            connectedToPod= {connectedToPod}
+            connectedToBackend = {stompClient}
+          />
+          <div className="buttons">
+              <div className="main-buttons">
+                  <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    slantedLeft
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+              <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+                <Button
+                    caption="CALIBRATE"
+                    icon={faRuler}
+                    onClick={() => {
+                      return;
+                    }}
+                    // slantedRight
+                    textColor="#FFFFFF"
+                    backgroundColor="#1098AD"
+                ></Button>
+              </div>
+            </div>
+          <Scrollable></Scrollable>
+          <Tabs></Tabs>
+        </div>      
+
   );
 }
