@@ -25,6 +25,10 @@ After installing node and npm:
 ```
 $ sudo npm install yarn -g
 ```
+After installing yarn:
+```
+$ yarn install
+```
 
 Note: do not use `sudo apt-get install yarn`. This will install a different package with the same name.
 
