@@ -79,7 +79,7 @@ export default function App() {
             connectedToBackend = {stompClient}
           />
           <div className="buttons">             
-                  <Button
+              <Button
                     caption="CALIBRATE"
                     icon={faRuler}
                     onClick={() => {
@@ -96,6 +96,7 @@ export default function App() {
                     onClick={() => {
                       return;
                     }}
+                    fontSize="1.5em"
                     // slantedRight
                     textColor="#000000"
                     backgroundColor="#FFFFFF"

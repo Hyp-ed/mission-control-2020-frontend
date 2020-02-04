@@ -17,7 +17,7 @@ export default function Button(props) {
     <div
       className="button-container"
       onClick={props.onClick}
-      style={{ width: "33%" }}
+      style={{ width: "33%" , fontSize: props.fontSize}}
     >
       <div
         className={buttonSkewClassName}
