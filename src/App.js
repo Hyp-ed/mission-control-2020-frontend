@@ -106,7 +106,6 @@ export default function App() {
                         return;
                       }}
                       slantedLeft
-                      // slantedRight
                       textColor="#FFFFFF"
                       backgroundColor="#1098AD"
                   ></Button>
@@ -116,10 +115,9 @@ export default function App() {
                       onClick={() => {
                         return;
                       }}
-                      fontSize="1.4em"
-                      // slantedRight
                       textColor="#000000"
                       backgroundColor="#FFFFFF"
+                      width="40%"
                   ></Button>
                   <Button
                       caption="ABORT"
@@ -127,6 +125,7 @@ export default function App() {
                       onClick={() => {
                         return;
                       }}
+                      width="25%"
                       // slantedRight
                       textColor="#000000"
                       backgroundColor="#FFFFFF"

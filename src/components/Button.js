@@ -3,42 +3,45 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Button.css";
 
 export default function Button(props) {
-  // known issue: both sides cannot be slanted
+  const leftSlantStyle = props.slantedLeft 
+                          ? {clipPath: "polygon(100% 0, 0% 100%, 100% 100%)",
+                            backgroundColor: props.backgroundColor}
+                          : {backgroundColor: props.backgroundColor};
 
-  const buttonSkewClassName = `button-slant ${
-    props.slantedLeft ? "slant__left slant-margin__left" : ""
-  } ${props.slantedRight ? "slant__right slant-margin__right" : ""}`;
-
-  const buttonUnskewClassName = `${props.slantedLeft ? "slant__right" : ""} ${
-    props.slantedRight ? "slant__left" : ""
-  }`;
+  const rightSlantStyle = props.slantedRight 
+                          ? {clipPath: "polygon(0 0, 0 100%, 100% 100%)",
+                            backgroundColor: props.backgroundColor}
+                          : {backgroundColor: props.backgroundColor};
 
   return (
     <div
       className="button-container"
       onClick={props.onClick}
-      style={{ width: "32%" , fontSize: props.fontSize}}
-    >
-      <div
-        className={buttonSkewClassName}
-        style={{
-          color: props.textColor,
-          backgroundColor: props.backgroundColor,
-          height: 100+"%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-evenly"
-        }}
-      >
-      <div 
-        className={buttonUnskewClassName}
-        style={{display: "inherit",
-                alignItems: "center",
-                marginBottom: 5+"%"}}>
-          <FontAwesomeIcon className="button-icon" icon={props.icon} />
-          <span>{props.caption}</span>
+      style={{ 
+        color: props.textColor,
+        width: props.width, 
+        fontSize: props.fontSize}}>
+          <div
+            className="left-slant"
+            style={leftSlantStyle}
+          >
+          </div>
+          <div 
+            className="button-caption"
+            style={{backgroundColor: props.backgroundColor,
+                    display: "flex",
+                    alignItems: "center",}}>
+              <FontAwesomeIcon className="button-icon" icon={props.icon} />
+              <span>{props.caption}</span>
+          </div>
+          <div 
+            className="right-slant"
+            style={rightSlantStyle}>
+          </div>      
       </div>
-    </div>
-    </div>
   );
+}
+
+Button.defaultProps = {
+  width: "32%",
 }
