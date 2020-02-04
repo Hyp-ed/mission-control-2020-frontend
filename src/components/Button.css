@@ -4,7 +4,7 @@
   text-align: center;
   overflow: hidden;
   width: calc(100%/3);
-  height: 80%;
+  height: 100%;
 }
 
 .button-container:hover {

@@ -97,41 +97,43 @@ export default function App() {
             connectedToPod= {connectedToPod}
             connectedToBackend = {stompClient}
           />
-          <div className="buttons">             
-              <Button
-                    caption="CALIBRATE"
-                    icon={faRuler}
-                    onClick={() => {
-                      return;
-                    }}
-                    slantedLeft
-                    // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
-                ></Button>
-              <Button
-                    caption="RETRACT BRAKES"
-                    icon={faStop}
-                    onClick={() => {
-                      return;
-                    }}
-                    fontSize="1.5em"
-                    // slantedRight
-                    textColor="#000000"
-                    backgroundColor="#FFFFFF"
-                ></Button>
+          <div className="button-modular-container">
+            <div className="buttons">             
                 <Button
-                    caption="ABORT"
-                    icon={faExclamationTriangle}
-                    onClick={() => {
-                      return;
-                    }}
-                    // slantedRight
-                    textColor="#000000"
-                    backgroundColor="#FFFFFF"
-                ></Button>             
+                      caption="CALIBRATE"
+                      icon={faRuler}
+                      onClick={() => {
+                        return;
+                      }}
+                      slantedLeft
+                      // slantedRight
+                      textColor="#FFFFFF"
+                      backgroundColor="#1098AD"
+                  ></Button>
+                <Button
+                      caption="RETRACT BRAKES"
+                      icon={faStop}
+                      onClick={() => {
+                        return;
+                      }}
+                      fontSize="1.5em"
+                      // slantedRight
+                      textColor="#000000"
+                      backgroundColor="#FFFFFF"
+                  ></Button>
+                  <Button
+                      caption="ABORT"
+                      icon={faExclamationTriangle}
+                      onClick={() => {
+                        return;
+                      }}
+                      // slantedRight
+                      textColor="#000000"
+                      backgroundColor="#FFFFFF"
+                  ></Button>             
             </div>
-          <Scrollable></Scrollable>
+            <Scrollable></Scrollable>
+          </div>
           <div className="gauge-container">
             <Gauge
               unit={"m/s"}
