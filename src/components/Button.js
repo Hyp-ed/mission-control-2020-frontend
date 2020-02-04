@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Button.css";
+import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
 export default function Button(props) {
   // known issue: both sides cannot be slanted
@@ -24,12 +25,19 @@ export default function Button(props) {
         style={{
           color: props.textColor,
           backgroundColor: props.backgroundColor,
-          height: 100+"%"
+          height: 100+"%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-evenly"
         }}
       >
-      <div className={buttonUnskewClassName}>
-        <FontAwesomeIcon className="button-icon" icon={props.icon} />
-        <span>{props.caption}</span>
+      <div 
+        className={buttonUnskewClassName}
+        style={{display: "inherit",
+                alignItems: "center",
+                marginBottom: 5+"%"}}>
+          <FontAwesomeIcon className="button-icon" icon={props.icon} />
+          <span>{props.caption}</span>
       </div>
     </div>
     </div>

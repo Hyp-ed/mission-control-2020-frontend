@@ -116,7 +116,7 @@ export default function App() {
                       onClick={() => {
                         return;
                       }}
-                      fontSize="1.5em"
+                      fontSize="1.4em"
                       // slantedRight
                       textColor="#000000"
                       backgroundColor="#FFFFFF"

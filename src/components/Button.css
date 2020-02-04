@@ -32,6 +32,7 @@
   -moz-transform: skew(25deg);
   -ms-transform: skew(25deg);
   transform: skew(25deg);
+  display: flex;
 }
 
 .slant-margin__left {
@@ -42,4 +43,7 @@
 .slant-margin__right {
   margin-left: -5%;
   margin-right: 5%;
+
+  align-items: center;
+  justify-items: center;
 }
