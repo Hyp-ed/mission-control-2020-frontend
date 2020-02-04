@@ -78,8 +78,7 @@ export default function App() {
             connectedToPod= {connectedToPod}
             connectedToBackend = {stompClient}
           />
-          <div className="buttons">
-              <div className="main-buttons">
+          <div className="buttons">             
                   <Button
                     caption="CALIBRATE"
                     icon={faRuler}
@@ -110,8 +109,7 @@ export default function App() {
                     // slantedRight
                     textColor="#FFFFFF"
                     backgroundColor="#1098AD"
-                ></Button>
-              </div>
+                ></Button>             
             </div>
           <Scrollable></Scrollable>
           <Tabs></Tabs>
