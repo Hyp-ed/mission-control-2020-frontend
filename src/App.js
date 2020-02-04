@@ -91,24 +91,24 @@ export default function App() {
                     backgroundColor="#1098AD"
                 ></Button>
               <Button
-                    caption="CALIBRATE"
+                    caption="RETRACT BRAKES"
                     icon={faRuler}
                     onClick={() => {
                       return;
                     }}
                     // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
+                    textColor="#000000"
+                    backgroundColor="#FFFFFF"
                 ></Button>
                 <Button
-                    caption="CALIBRATE"
+                    caption="ABORT"
                     icon={faRuler}
                     onClick={() => {
                       return;
                     }}
                     // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
+                    textColor="#000000"
+                    backgroundColor="#FFFFFF"
                 ></Button>             
             </div>
           <Scrollable></Scrollable>

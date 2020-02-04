@@ -13,12 +13,13 @@ body {
 
 .buttons {
   display: flex;
-  flex-direction: row;
-  grid-row: 2/3;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  grid-row: 2 / 2;
   grid-column: 1 / 6;
-  margin-bottom: 5em;
-  margin-right: 1em;
-  margin-top: 3em;
+  margin-right: 0.8em;
+  vertical-align: sub;
 }
 
 
