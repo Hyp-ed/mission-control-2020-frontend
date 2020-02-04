@@ -1,7 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Button.css";
-import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
 export default function Button(props) {
   // known issue: both sides cannot be slanted
