@@ -10,41 +10,9 @@
   cursor: pointer;
 }
 
-.button-slant {
-  padding: 5px;
-}
-
 .button-icon {
   height: 100%;
   padding-right: 10px;
-}
-
-.slant__left {
-  -webkit-transform: skew(-25deg);
-  -moz-transform: skew(-25deg);
-  -ms-transform: skew(-25deg);
-  transform: skew(-25deg);
-}
-
-.slant__right {
-  -webkit-transform: skew(25deg);
-  -moz-transform: skew(25deg);
-  -ms-transform: skew(25deg);
-  transform: skew(25deg);
-  display: flex;
-}
-
-.slant-margin__left {
-  margin-left: 5%;
-  margin-right: -5%;
-}
-
-.slant-margin__right {
-  margin-left: -5%;
-  margin-right: 5%;
-
-  align-items: center;
-  justify-items: center;
 }
 
 .left-slant {
