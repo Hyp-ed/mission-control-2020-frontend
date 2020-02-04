@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Stomp from "stompjs";
-import { faRuler } from "@fortawesome/free-solid-svg-icons";
+import {faRuler, faExclamationTriangle, faStop} from "@fortawesome/free-solid-svg-icons";
 import Button from "./components/Button.js";
 import Header from "./components/Header.js";
 import Scrollable from "./components/Scrollable.js";
@@ -92,7 +92,7 @@ export default function App() {
                 ></Button>
               <Button
                     caption="RETRACT BRAKES"
-                    icon={faRuler}
+                    icon={faStop}
                     onClick={() => {
                       return;
                     }}
@@ -102,7 +102,7 @@ export default function App() {
                 ></Button>
                 <Button
                     caption="ABORT"
-                    icon={faRuler}
+                    icon={faExclamationTriangle}
                     onClick={() => {
                       return;
                     }}
