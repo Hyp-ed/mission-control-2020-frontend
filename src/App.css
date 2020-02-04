@@ -26,7 +26,10 @@ body {
 }
 
 .gauge-container {
-  grid-row: 2/6;
-  grid-column: 7/13;
-  display: inline-block;
+  grid-row: 2/7;
+  grid-column: 10/13;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+  margin-top: 10%;
 }

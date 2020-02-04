@@ -135,14 +135,14 @@ export default function App() {
           <Scrollable></Scrollable>
           <div className="gauge-container">
             <Gauge
-              unit={"m/s^2"}
-              radius={100}
+              unit={"m/s"}
+              radius={130}
               refreshRate={refreshRate}
               value={gaugeData.acceleration}
             />
             <Gauge
-              unit={"m/s"}
-              radius={80}
+              unit={"m/s²"}
+              radius={90}
               refreshRate={refreshRate}
               value={gaugeData.velocity}
             />
