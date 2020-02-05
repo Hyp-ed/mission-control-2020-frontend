@@ -7,38 +7,42 @@ const green = "#00A000";
 const yellow = "#EAA200";
 const red = "#F10026";
 
+const gradientStops = [
+  {
+    key: "0%",
+    stopColor: green,
+    stopOpacity: 1,
+    offset: "0%"
+  },
+  {
+    key: "60%",
+    stopColor: yellow,
+    stopOpacity: 0.75,
+    offset: "75%"
+  },
+  {
+    key: "80%",
+    stopColor: red,
+    stopOpacity: 0.5,
+    offset: "100%"
+  }
+];
+
 export default function Gauge(props) {
-  const gradientStops = [
-    {
-      key: "0%",
-      stopColor: green,
-      stopOpacity: 1,
-      offset: "0%"
-    },
-    {
-      key: "60%",
-      stopColor: yellow,
-      stopOpacity: 0.75,
-      offset: "75%"
-    },
-    {
-      key: "80%",
-      stopColor: red,
-      stopOpacity: 0.5,
-      offset: "100%"
-    }
-  ];
+  const actualValue = props.value; // created to make props.value accessible in nested component textRenderer
+  const maxValue = props.maxValue ? props.maxValue : 100;
+  const pctValue = (props.value / maxValue) * 100;
 
   return (
     <LiquidFillGauge
       innerRadius={0.9}
       width={props.radius * 2}
       height={props.radius * 2}
-      value={props.value}
+      value={pctValue} // value must be in percent as per documentation
       unit={props.unit}
       textSize={1}
       textRenderer={props => {
-        const value = Math.round(props.value);
+        const value = Math.round(actualValue);
         const radius = Math.min(props.height / 2, props.width / 2);
         const textPixels = (props.textSize * radius) / 2;
         const valueStyle = {
