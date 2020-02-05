@@ -29,38 +29,30 @@ const gradientStops = [
 ];
 
 export default function Gauge(props) {
-  const realValue = props.value; // created to make props.value accessible in nested component textRenderer
   const maxValue = props.maxValue ? props.maxValue : 100;
   const pctValue = (props.value / maxValue) * 100;
+
+  // Specifies a custom text renderer for rendering a percent value.
+  const textRenderer = () => {
+    const value = Math.round(props.value);
+    const fontSize = props.size / 4;
+    return (
+      <tspan>
+        <tspan className="value" style={{ fontSize }}>
+          {value}
+        </tspan>
+        <tspan style={{ fontSize: fontSize * 0.6 }}>{props.unit}</tspan>
+      </tspan>
+    );
+  };
 
   return (
     <LiquidFillGauge
       innerRadius={0.9}
-      width={props.radius * 2}
-      height={props.radius * 2}
+      width={props.size}
+      height={props.size}
       value={pctValue} // value must be in percent as per documentation
-      unit={props.unit}
-      textSize={1}
-      textRenderer={props => {
-        const value = Math.round(realValue);
-        const radius = Math.min(props.height / 2, props.width / 2);
-        const textPixels = (props.textSize * radius) / 2;
-        const valueStyle = {
-          fontSize: textPixels
-        };
-        const percentStyle = {
-          fontSize: textPixels * 0.6
-        };
-
-        return (
-          <tspan>
-            <tspan className="value" style={valueStyle}>
-              {value}
-            </tspan>
-            <tspan style={percentStyle}>{props.unit}</tspan>
-          </tspan>
-        );
-      }}
+      textRenderer={textRenderer}
       riseAnimation
       riseAnimationTime={props.refreshRate}
       waveAnimation={false}

@@ -136,14 +136,14 @@ export default function App() {
       <div className="gauge-container">
         <Gauge
           unit={"m/s"}
-          radius={130}
+          size={260}
           refreshRate={refreshRate}
           value={gaugeData.velocity}
           maxValue={velMaxValue}
         />
         <Gauge
           unit={"m/s²"}
-          radius={90}
+          size={180}
           refreshRate={refreshRate}
           value={gaugeData.acceleration}
           maxValue={accMaxValue}
