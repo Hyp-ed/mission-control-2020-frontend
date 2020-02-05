@@ -77,78 +77,79 @@ export default function App() {
   // This is actually the more efficient way to do it, but it made the animation behave weirdly
   const [gaugeData, setGaugeData] = useState({ velocity: 0, acceleration: 0 });
   const refreshRate = 250;
+  const accMaxValue = 50;
+  const velMaxValue = 400;
   useEffect(() => {
     let timer = setTimeout(() => {
       setGaugeData({
-        velocity: Math.random() * 100,
-        acceleration: Math.random() * 100
+        velocity: Math.random() * velMaxValue,
+        acceleration: Math.random() * accMaxValue
       });
-      // setVelocity(Math.random() * 100);
-      // setAcceleration(Math.random() * 100);
     }, refreshRate);
     return () => {
       clearTimeout(timer);
     };
   });
 
-    return (
-      <div className="gui-wrapper">
-          <Header
-            connectedToPod= {connectedToPod}
-            connectedToBackend = {stompClient}
-          />
-          <div className="buttons">
-              <div className="main-buttons">
-                  <Button
-                    caption="CALIBRATE"
-                    icon={faRuler}
-                    onClick={() => {
-                      return;
-                    }}
-                    slantedLeft
-                    // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
-                ></Button>
-              <Button
-                    caption="CALIBRATE"
-                    icon={faRuler}
-                    onClick={() => {
-                      return;
-                    }}
-                    // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
-                ></Button>
-                <Button
-                    caption="CALIBRATE"
-                    icon={faRuler}
-                    onClick={() => {
-                      return;
-                    }}
-                    // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
-                ></Button>
-              </div>
-            </div>
-          <Scrollable></Scrollable>
-          <div className="gauge-container">
-            <Gauge
-              unit={"m/s"}
-              radius={130}
-              refreshRate={refreshRate}
-              value={gaugeData.acceleration}
-            />
-            <Gauge
-              unit={"m/s²"}
-              radius={90}
-              refreshRate={refreshRate}
-              value={gaugeData.velocity}
-            />
-          </div>
-          <Tabs></Tabs>
-        </div>      
-
+  return (
+    <div className="gui-wrapper">
+      <Header
+        connectedToPod={connectedToPod}
+        connectedToBackend={stompClient}
+      />
+      <div className="buttons">
+        <div className="main-buttons">
+          <Button
+            caption="CALIBRATE"
+            icon={faRuler}
+            onClick={() => {
+              return;
+            }}
+            slantedLeft
+            // slantedRight
+            textColor="#FFFFFF"
+            backgroundColor="#1098AD"
+          ></Button>
+          <Button
+            caption="CALIBRATE"
+            icon={faRuler}
+            onClick={() => {
+              return;
+            }}
+            // slantedRight
+            textColor="#FFFFFF"
+            backgroundColor="#1098AD"
+          ></Button>
+          <Button
+            caption="CALIBRATE"
+            icon={faRuler}
+            onClick={() => {
+              return;
+            }}
+            // slantedRight
+            textColor="#FFFFFF"
+            backgroundColor="#1098AD"
+          ></Button>
+        </div>
+      </div>
+      <Scrollable></Scrollable>
+      <div className="gauge-container">
+        <Gauge
+          unit={"m/s"}
+          radius={130}
+          refreshRate={refreshRate}
+          value={gaugeData.velocity}
+          maxValue={velMaxValue}
+        />
+        <Gauge
+          unit={"m/s²"}
+          radius={90}
+          refreshRate={refreshRate}
+          value={gaugeData.acceleration}
+          maxValue={accMaxValue}
+        />
+      </div>
+      <Tabs></Tabs>
+    </div>
   );
 }

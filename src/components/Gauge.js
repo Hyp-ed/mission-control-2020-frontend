@@ -29,7 +29,7 @@ const gradientStops = [
 ];
 
 export default function Gauge(props) {
-  const actualValue = props.value; // created to make props.value accessible in nested component textRenderer
+  const realValue = props.value; // created to make props.value accessible in nested component textRenderer
   const maxValue = props.maxValue ? props.maxValue : 100;
   const pctValue = (props.value / maxValue) * 100;
 
@@ -42,7 +42,7 @@ export default function Gauge(props) {
       unit={props.unit}
       textSize={1}
       textRenderer={props => {
-        const value = Math.round(actualValue);
+        const value = Math.round(realValue);
         const radius = Math.min(props.height / 2, props.width / 2);
         const textPixels = (props.textSize * radius) / 2;
         const valueStyle = {
