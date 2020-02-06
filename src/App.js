@@ -77,14 +77,14 @@ export default function App() {
   // This is actually the more efficient way to do it, but it made the animation behave weirdly
   const [gaugeData, setGaugeData] = useState({ velocity: 0, acceleration: 0 });
   const refreshRate = 250;
+  const accMaxValue = 50;
+  const velMaxValue = 400;
   useEffect(() => {
     let timer = setTimeout(() => {
       setGaugeData({
-        velocity: Math.random() * 100,
-        acceleration: Math.random() * 100
+        velocity: Math.random() * velMaxValue,
+        acceleration: Math.random() * accMaxValue
       });
-      // setVelocity(Math.random() * 100);
-      // setAcceleration(Math.random() * 100);
     }, refreshRate);
     return () => {
       clearTimeout(timer);
@@ -136,15 +136,17 @@ export default function App() {
           <div className="gauge-container">
             <Gauge
               unit={"m/s"}
-              radius={130}
+              size={260}
               refreshRate={refreshRate}
-              value={gaugeData.acceleration}
+              value={gaugeData.velocity}
+              maxValue={velMaxValue}
             />
             <Gauge
               unit={"m/s²"}
-              radius={90}
+              size={180}
               refreshRate={refreshRate}
-              value={gaugeData.velocity}
+              value={gaugeData.acceleration}
+              maxValue={accMaxValue}
             />
           </div>
           <Tabs></Tabs>
