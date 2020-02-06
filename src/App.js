@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Stomp from "stompjs";
-import { faRuler } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRuler,
+  faExclamationTriangle,
+  faStop
+} from "@fortawesome/free-solid-svg-icons";
 import Button from "./components/Button.js";
 import Header from "./components/Header.js";
 import Scrollable from "./components/Scrollable.js";
 import Tabs from "./components/Tabs.js";
+import Gauge from "./components/Gauge";
 
 export default function App() {
   const [connectedToPod, setConnectedToPod] = useState(false);
@@ -46,7 +50,7 @@ export default function App() {
         );
       })
       .catch(error => console.error(error));
-  });
+  }, [stompClient]); // Only subscribe to stompClient changes
 
   const podConnectionStatusHandler = message => {
     const receivedPodConnectionStatus = message.body;
@@ -71,51 +75,85 @@ export default function App() {
     }
   };
 
+  // TEMP: FAKE GAUGE DATA
+  // We use an object to force both gauges update at the same time
+  // If acceleration and velocity were two separate hooks, changing the state of one of them would only force the corresponding gauge to re-render
+  // This is actually the more efficient way to do it, but it made the animation behave weirdly
+  const [gaugeData, setGaugeData] = useState({ velocity: 0, acceleration: 0 });
+  const refreshRate = 250;
+  const accMaxValue = 50;
+  const velMaxValue = 400;
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setGaugeData({
+        velocity: Math.random() * velMaxValue,
+        acceleration: Math.random() * accMaxValue
+      });
+    }, refreshRate);
+    return () => {
+      clearTimeout(timer);
+    };
+  });
 
-    return (
-      <div className="gui-wrapper">
-          <Header
-            connectedToPod= {connectedToPod}
-            connectedToBackend = {stompClient}
-          />
-          <div className="buttons">
-              <div className="main-buttons">
-                  <Button
-                    caption="CALIBRATE"
-                    icon={faRuler}
-                    onClick={() => {
-                      return;
-                    }}
-                    slantedLeft
-                    // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
-                ></Button>
-              <Button
-                    caption="CALIBRATE"
-                    icon={faRuler}
-                    onClick={() => {
-                      return;
-                    }}
-                    // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
-                ></Button>
-                <Button
-                    caption="CALIBRATE"
-                    icon={faRuler}
-                    onClick={() => {
-                      return;
-                    }}
-                    // slantedRight
-                    textColor="#FFFFFF"
-                    backgroundColor="#1098AD"
-                ></Button>
-              </div>
-            </div>
-          <Scrollable></Scrollable>
-          <Tabs></Tabs>
-        </div>      
-
+  return (
+    <div className="gui-wrapper">
+      <Header
+        connectedToPod={connectedToPod}
+        connectedToBackend={stompClient}
+      />
+      <div className="button-modular-container">
+        <div className="buttons">
+          <Button
+            caption="CALIBRATE"
+            icon={faRuler}
+            onClick={() => {
+              return;
+            }}
+            slantedLeft
+            textColor="#FFFFFF"
+            backgroundColor="#1098AD"
+          ></Button>
+          <Button
+            caption="RETRACT BRAKES"
+            icon={faStop}
+            onClick={() => {
+              return;
+            }}
+            textColor="#000000"
+            backgroundColor="#FFFFFF"
+            width="40%"
+          ></Button>
+          <Button
+            caption="ABORT"
+            icon={faExclamationTriangle}
+            onClick={() => {
+              return;
+            }}
+            width="25%"
+            // slantedRight
+            textColor="#000000"
+            backgroundColor="#FFFFFF"
+          ></Button>
+        </div>
+        <Scrollable></Scrollable>
+      </div>
+      <div className="gauge-container">
+        <Gauge
+          unit={"m/s"}
+          size={Math.min(window.innerHeight / 4, window.innerWidth /7)}
+          refreshRate={refreshRate}
+          value={gaugeData.velocity}
+          maxValue={velMaxValue}
+        />
+        <Gauge
+          unit={"m/s²"}
+          size={Math.min(window.innerHeight / 6, window.innerWidth /11)}
+          refreshRate={refreshRate}
+          value={gaugeData.acceleration}
+          maxValue={accMaxValue}
+        />
+      </div>
+      <Tabs></Tabs>
+    </div>
   );
 }

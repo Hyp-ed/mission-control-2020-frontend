@@ -1,7 +1,6 @@
 .header-root {
     grid-column: 1/13;
     grid-row: 1/1;
-    background-color: #282c34;
     height: 100%;
     display: flex;
     justify-content: space-between;

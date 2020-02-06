@@ -3,35 +3,41 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Button.css";
 
 export default function Button(props) {
-  // known issue: both sides cannot be slanted
+  
+  function slantStyle() {
+      var style = ["button-container"];
+      if (props.slantedLeft) {
+        style.push("button-container-leftslant");
+      }
+      if (props.slantedRight) {
+        style.push("button-container-rightslant");
+      }
 
-  const buttonSkewClassName = `button-slant ${
-    props.slantedLeft ? "slant__left slant-margin__left" : ""
-  } ${props.slantedRight ? "slant__right slant-margin__right" : ""}`;
-
-  const buttonUnskewClassName = `${props.slantedLeft ? "slant__right" : ""} ${
-    props.slantedRight ? "slant__left" : ""
-  }`;
+      return style.join(" ");
+  }
 
   return (
     <div
-      className="button-container"
+      className={slantStyle()}
       onClick={props.onClick}
-      style={{ width: "33%" }}
-    >
-      <div
-        className={buttonSkewClassName}
-        style={{
-          color: props.textColor,
-          backgroundColor: props.backgroundColor,
-          height: 100+"%"
-        }}
-      >
-        <div className={buttonUnskewClassName}>
-          <FontAwesomeIcon className="button-icon" icon={props.icon} />
-          <span>{props.caption}</span>
-        </div>
+      style={{ 
+        color: props.textColor,
+        backgroundColor: props.backgroundColor,
+        width: props.width, 
+        fontSize: props.fontSize}}>
+          <div 
+            className="button-caption"
+            style={{
+                    display: "flex",
+                    alignItems: "center",
+                    }}>
+              <FontAwesomeIcon className="button-icon" icon={props.icon} />
+              <span>{props.caption}</span>
+          </div>  
       </div>
-    </div>
   );
+}
+
+Button.defaultProps = {
+  width: "32%",
 }

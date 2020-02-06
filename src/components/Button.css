@@ -1,18 +1,22 @@
 .button-container {
   display: inline-block;
-  font-size: 2.4em;
   text-align: center;
+  font-size: 1.4vw;
   overflow: hidden;
-  width: calc(100%/3);
-  height: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.button-container-leftslant {
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.button-container-rightslant {
+  clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
 }
 
 .button-container:hover {
   cursor: pointer;
-}
-
-.button-slant {
-  padding: 5px;
 }
 
 .button-icon {
@@ -20,26 +24,14 @@
   padding-right: 10px;
 }
 
-.slant__left {
-  -webkit-transform: skew(-25deg);
-  -moz-transform: skew(-25deg);
-  -ms-transform: skew(-25deg);
-  transform: skew(-25deg);
+.button-caption {
+  padding: 0 5%;
 }
 
-.slant__right {
-  -webkit-transform: skew(25deg);
-  -moz-transform: skew(25deg);
-  -ms-transform: skew(25deg);
-  transform: skew(25deg);
+.button-container-leftslant .button-caption {
+  padding-left: 15%;
 }
 
-.slant-margin__left {
-  margin-left: 5%;
-  margin-right: -5%;
-}
-
-.slant-margin__right {
-  margin-left: -5%;
-  margin-right: 5%;
+.button-container-rightslant .button-caption {
+  padding-right: 15%;
 }
