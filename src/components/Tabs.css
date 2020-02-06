@@ -10,7 +10,7 @@
     grid-column: 1/2;
     display: flex;
     justify-content: space-between;
-    padding: 1%;
+    padding: 0.3em;
     padding-right: 2%;
     clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
     background-color: #343434;
@@ -20,4 +20,5 @@
     grid-column: 1/5;
     grid-row: 2/11;
     background-color: #343434;
+    margin-top: 0.2em;
 }
