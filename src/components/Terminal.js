@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import "./Terminal.css";
+import { animateScroll } from 'react-scroll';
 
 export default function Terminal(props) {
+    const [terminalOutput, setTerminalOutput] = useState('');
 
+    useEffect(() => {
+        scrollToBottom();
+        return function cleanup() {
+
+        };
+    });
+
+    function scrollToBottom() {
+        animateScroll.scrollToBottom({
+          containerId: 'terminal_pre',
+          duration: 0
+        });
+    }
+    
     if (props.isInactive) {
         return(null);
     }
