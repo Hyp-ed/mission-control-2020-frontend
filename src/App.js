@@ -14,7 +14,7 @@ import Gauge from "./components/Gauge";
 
 export default function App() {
   const [connectedToPod, setConnectedToPod] = useState(false);
-  const [stompClient, setStompClient] = useState(false);
+  const [stompClient, setStompClient] = useState(null);
   const [podData, setPodData] = useState(null);
 
   useEffect(() => {
@@ -30,27 +30,25 @@ export default function App() {
       )
       .then(text => console.log("CONNECTED TO BACKEND"))
       .then(() => {
-        setStompClient(Stomp.client("ws://localhost:8080/connecthere"));
-
-        stompClient.connect(
+        const sc = Stomp.client("ws://localhost:8080/connecthere");
+        setStompClient(sc);
+        sc.connect(
           {},
           frame => {
-            stompClient.subscribe("/topic/podData", message =>
-              podDataHandler(message)
-            );
-            stompClient.subscribe("/topic/isPodConnected", message =>
+            sc.subscribe("/topic/podData", message => podDataHandler(message));
+            sc.subscribe("/topic/isPodConnected", message =>
               podConnectionStatusHandler(message)
             );
-            stompClient.subscribe("/topic/errors", message =>
+            sc.subscribe("/topic/errors", message =>
               console.error(`ERROR FROM BACKEND: ${message}`)
             );
-            stompClient.send("/app/pullData");
+            sc.send("/app/pullData");
           },
           error => disconnectHandler(error)
         );
       })
       .catch(error => console.error(error));
-  }, [stompClient]); // Only subscribe to stompClient changes
+  }, []); // Only run once
 
   const podConnectionStatusHandler = message => {
     const receivedPodConnectionStatus = message.body;
@@ -93,7 +91,7 @@ export default function App() {
     return () => {
       clearTimeout(timer);
     };
-  });
+  }, [gaugeData]);
 
   return (
     <div className="gui-wrapper">
@@ -140,14 +138,14 @@ export default function App() {
       <div className="gauge-container">
         <Gauge
           unit={"m/s"}
-          size={Math.min(window.innerHeight / 4, window.innerWidth /7)}
+          size={Math.min(window.innerHeight / 4, window.innerWidth / 7)}
           refreshRate={refreshRate}
           value={gaugeData.velocity}
           maxValue={velMaxValue}
         />
         <Gauge
           unit={"m/s²"}
-          size={Math.min(window.innerHeight / 6, window.innerWidth /11)}
+          size={Math.min(window.innerHeight / 6, window.innerWidth / 11)}
           refreshRate={refreshRate}
           value={gaugeData.acceleration}
           maxValue={accMaxValue}
