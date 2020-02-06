@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Stomp from "stompjs";
-import {faRuler, faExclamationTriangle, faStop} from "@fortawesome/free-solid-svg-icons";
+import {
+  faRuler,
+  faExclamationTriangle,
+  faStop
+} from "@fortawesome/free-solid-svg-icons";
 import Button from "./components/Button.js";
 import Header from "./components/Header.js";
 import Scrollable from "./components/Scrollable.js";
@@ -91,66 +95,65 @@ export default function App() {
     };
   });
 
-    return (
-      <div className="gui-wrapper">
-          <Header
-            connectedToPod= {connectedToPod}
-            connectedToBackend = {stompClient}
-          />
-          <div className="button-modular-container">
-            <div className="buttons">             
-                <Button
-                      caption="CALIBRATE"
-                      icon={faRuler}
-                      onClick={() => {
-                        return;
-                      }}
-                      slantedLeft
-                      textColor="#FFFFFF"
-                      backgroundColor="#1098AD"
-                  ></Button>
-                <Button
-                      caption="RETRACT BRAKES"
-                      icon={faStop}
-                      onClick={() => {
-                        return;
-                      }}
-                      textColor="#000000"
-                      backgroundColor="#FFFFFF"
-                      width="40%"
-                  ></Button>
-                  <Button
-                      caption="ABORT"
-                      icon={faExclamationTriangle}
-                      onClick={() => {
-                        return;
-                      }}
-                      width="25%"
-                      // slantedRight
-                      textColor="#000000"
-                      backgroundColor="#FFFFFF"
-                  ></Button>             
-            </div>
-            <Scrollable></Scrollable>
-          </div>
-          <div className="gauge-container">
-            <Gauge
-              unit={"m/s"}
-              size={260}
-              refreshRate={refreshRate}
-              value={gaugeData.velocity}
-              maxValue={velMaxValue}
-            />
-            <Gauge
-              unit={"m/s²"}
-              size={180}
-              refreshRate={refreshRate}
-              value={gaugeData.acceleration}
-              maxValue={accMaxValue}
-            />
-          </div>
-          <Tabs></Tabs>
-        </div>      
-
+  return (
+    <div className="gui-wrapper">
+      <Header
+        connectedToPod={connectedToPod}
+        connectedToBackend={stompClient}
+      />
+      <div className="button-modular-container">
+        <div className="buttons">
+          <Button
+            caption="CALIBRATE"
+            icon={faRuler}
+            onClick={() => {
+              return;
+            }}
+            slantedLeft
+            textColor="#FFFFFF"
+            backgroundColor="#1098AD"
+          ></Button>
+          <Button
+            caption="RETRACT BRAKES"
+            icon={faStop}
+            onClick={() => {
+              return;
+            }}
+            textColor="#000000"
+            backgroundColor="#FFFFFF"
+            width="40%"
+          ></Button>
+          <Button
+            caption="ABORT"
+            icon={faExclamationTriangle}
+            onClick={() => {
+              return;
+            }}
+            width="25%"
+            // slantedRight
+            textColor="#000000"
+            backgroundColor="#FFFFFF"
+          ></Button>
+        </div>
+        <Scrollable></Scrollable>
+      </div>
+      <div className="gauge-container">
+        <Gauge
+          unit={"m/s"}
+          size={window.innerWidth / 7}
+          refreshRate={refreshRate}
+          value={gaugeData.velocity}
+          maxValue={velMaxValue}
+        />
+        <Gauge
+          unit={"m/s²"}
+          size={window.innerWidth / 11}
+          refreshRate={refreshRate}
+          value={gaugeData.acceleration}
+          maxValue={accMaxValue}
+        />
+      </div>
+      <Tabs></Tabs>
+    </div>
   );
 }
