@@ -21,8 +21,8 @@ export default function Button(props) {
       className={slantStyle()}
       onClick={props.onClick}
       style={{ 
-        color: props.textColor,
-        backgroundColor: props.backgroundColor,
+        color: props.isInactive ? "#FFFFFF" : props.textColor,
+        backgroundColor: props.isInactive ? "inherit" : props.backgroundColor,
         width: props.width, 
         fontSize: props.fontSize}}>
           <div 

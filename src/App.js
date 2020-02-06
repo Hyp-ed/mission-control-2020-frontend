@@ -153,7 +153,9 @@ export default function App() {
           maxValue={accMaxValue}
         />
       </div>
-      <Tabs></Tabs>
+      <Tabs
+        activeTabs
+      />
     </div>
   );
 }

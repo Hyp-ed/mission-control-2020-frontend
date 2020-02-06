@@ -2,16 +2,22 @@
     grid-column: 6/13;
     grid-row: 5/13;
     display: grid;
+    grid-auto-rows: calc(100%/10);
 }
 
 .tabs-container {
     grid-row: 1/1;
     grid-column: 1/2;
-    background-color: rgb(63, 63, 63);
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
+    padding-right: 2%;
+    clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
+    background-color: #343434;
 }
 
 .window-container {
-    grid-column: 1/3;
+    grid-column: 1/5;
     grid-row: 2/11;
     background-color: #343434;
 }
