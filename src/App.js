@@ -126,7 +126,6 @@ export default function App() {
                         return;
                       }}
                       width="25%"
-                      // slantedRight
                       textColor="#000000"
                       backgroundColor="#FFFFFF"
                   ></Button>             
