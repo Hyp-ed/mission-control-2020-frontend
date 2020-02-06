@@ -4,6 +4,7 @@ import Button from "./Button.js"
 import {faTerminal,
         faChartBar,
         faProjectDiagram} from "@fortawesome/free-solid-svg-icons";
+import Terminal from "./Terminal.js"
 
 export default function Tabs(props) {
     const [activeTabs, setActiveTabs] = useState([false,false,true]);
@@ -55,7 +56,8 @@ export default function Tabs(props) {
                     backgroundColor="#FFFFFF"/>
             </div>
             <div className="window-container">
-                
+                <Terminal
+                    isInactive={!activeTabs[0]}/>
             </div>
         </div>
     );    
