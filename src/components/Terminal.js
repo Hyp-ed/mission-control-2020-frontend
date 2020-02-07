@@ -19,6 +19,7 @@ export default function Terminal(props) {
         });
         socket.on('console_error', err => {
             console.error(`CONSOLE_ERROR: ${err}`);
+            setTerminalOutput(terminalOutput + `\nCONSOLE_ERROR: ${err}`);
         });
         scrollToBottom();
         return function cleanup() {
@@ -27,6 +28,13 @@ export default function Terminal(props) {
             if (props.isInactive) console.log("terminal off");
         };
     }, [terminalOutput]); //useEffect only called when terminal output changes
+
+    useEffect(() => {
+        socket.on('disconnect', (e) => {
+            console.log("DEBUG SERVER DISCONNECTED: "+ e);
+            setTerminalOutput(terminalOutput + "\nDEBUG SERVER DISCONNECTED: "+ e);
+        })
+    })
 
     const scrollToBottom = () => {
         animateScroll.scrollToBottom({
