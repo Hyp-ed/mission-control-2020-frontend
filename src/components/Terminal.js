@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import "./Terminal.css";
 import { animateScroll } from 'react-scroll';
 
+const socket_port = 3333;
+//const socket = io.connect(`http://192.168.6.2:${socket_port}`);
+
 export default function Terminal(props) {
     const [terminalOutput, setTerminalOutput] = useState('');
 
     useEffect(() => {
         scrollToBottom();
         return function cleanup() {
-
+            // TODO: we can cleanup the text here when the terminal is inactive or when too much is in the pre
+            if (props.isInactive) console.log("terminal off");
         };
     });
 
