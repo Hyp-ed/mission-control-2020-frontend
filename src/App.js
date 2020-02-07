@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Stomp from "stompjs";
-import {
-  faRuler,
-  faExclamationTriangle,
-  faStop
-} from "@fortawesome/free-solid-svg-icons";
-import Button from "./components/Button.js";
+import ButtonContainer from "./components/ButtonContainer";
 import Header from "./components/Header.js";
-import Scrollable from "./components/Scrollable.js";
+import Data from "./components/Data.js";
 import Tabs from "./components/Tabs.js";
 import Gauge from "./components/Gauge";
 
@@ -99,42 +94,8 @@ export default function App() {
         connectedToPod={connectedToPod}
         connectedToBackend={stompClient}
       />
-      <div className="button-modular-container">
-        <div className="buttons">
-          <Button
-            caption="CALIBRATE"
-            icon={faRuler}
-            onClick={() => {
-              return;
-            }}
-            slantedLeft
-            textColor="#FFFFFF"
-            backgroundColor="#1098AD"
-          ></Button>
-          <Button
-            caption="RETRACT BRAKES"
-            icon={faStop}
-            onClick={() => {
-              return;
-            }}
-            textColor="#000000"
-            backgroundColor="#FFFFFF"
-            width="40%"
-          ></Button>
-          <Button
-            caption="ABORT"
-            icon={faExclamationTriangle}
-            onClick={() => {
-              return;
-            }}
-            width="25%"
-            // slantedRight
-            textColor="#000000"
-            backgroundColor="#FFFFFF"
-          ></Button>
-        </div>
-        <Scrollable></Scrollable>
-      </div>
+      <ButtonContainer></ButtonContainer>
+      <Data></Data>
       <div className="gauge-container">
         <Gauge
           unit={"m/s"}

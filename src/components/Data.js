@@ -1,7 +1,7 @@
 import React from 'react';
-import "./Scrollable.css";
+import "./Data.css";
 
-export default function Scrollable(props) {
+export default function Data(props) {
 
     return (
         <div className="scrollable-root">

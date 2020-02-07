@@ -1,21 +1,25 @@
-.button-container {
+.button {
+  flex-grow: 1;
   display: inline-block;
   text-align: center;
   font-size: 1.4vw;
-  overflow: hidden;
   display: flex;
   justify-content: center;
 }
 
-.button-container-leftslant {
+.button + .button {
+  margin-left: 0.5vw;
+}
+
+.button-leftslant {
   clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
 }
 
-.button-container-rightslant {
+.button-rightslant {
   clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
 }
 
-.button-container:hover {
+.button:hover {
   cursor: pointer;
 }
 
@@ -26,12 +30,14 @@
 
 .button-caption {
   padding: 0 5%;
+  display: flex;
+  align-items: center;
 }
 
-.button-container-leftslant .button-caption {
+.button-leftslant .button-caption {
   padding-left: 15%;
 }
 
-.button-container-rightslant .button-caption {
+.button-rightslant .button-caption {
   padding-right: 15%;
 }
