@@ -7,8 +7,12 @@ const socket_port = 8080;
 const socket = io.connect(`http://localhost:${socket_port}`);
 
 export default function Terminal(props) {
+    //initialises state object for terminal output
     const [terminalOutput, setTerminalOutput] = useState('');
+    const flags = props.flags;
+    const debug_level = props.debug_level;
     
+    //updates terminal output in the pre
     useEffect(() => {
         socket.on('console_output', data => {
             setTerminalOutput(terminalOutput + data);
@@ -18,18 +22,20 @@ export default function Terminal(props) {
         });
         scrollToBottom();
         return function cleanup() {
-            // TODO: we can cleanup the text here when the terminal is inactive or when too much is in the pre
+            // TODO: we can cleanup the terminal here when the terminal is inactive 
+            //  or when too much is in the pre
             if (props.isInactive) console.log("terminal off");
         };
-    });
+    }, [terminalOutput]); //useEffect only called when terminal output changes
 
-    const  scrollToBottom = () => {
+    const scrollToBottom = () => {
         animateScroll.scrollToBottom({
           containerId: 'terminal_pre',
           duration: 0
         });
     }
 
+    //TODO: implement so that react doesn't still render the terminal
     if (props.isInactive) {
         return(null);
     }
@@ -39,8 +45,8 @@ export default function Terminal(props) {
             <pre id='terminal_pre'>{terminalOutput}</pre>
             <button
                 onClick= {() => {socket.emit('bbb_start', {
-                    flags: [],
-                    debug_level: '0'
+                    flags,
+                    debug_level
                 })}}>
                 start bbb
             </button>
@@ -53,5 +59,7 @@ export default function Terminal(props) {
 }
 
 Terminal.defaultProps = {
-    content: 'The content prop of this component has not been set'
+    content: 'The content prop of this component has not been set',
+    flags: [],
+    debug_level: '0'
   };
