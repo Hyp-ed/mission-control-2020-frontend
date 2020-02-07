@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 import "./Terminal.css";
 import { animateScroll } from 'react-scroll';
 
-const socket_port = 3333;
-//const socket = io.connect(`http://192.168.6.2:${socket_port}`);
+const io = require('socket.io-client');
+const socket_port = 8080;
+const socket = io.connect(`http://localhost:${socket_port}`);
 
 export default function Terminal(props) {
     const [terminalOutput, setTerminalOutput] = useState('');
-
+    
     useEffect(() => {
+        socket.on('console_output', data => {
+            setTerminalOutput(terminalOutput + data);
+        });
+        socket.on('console_error', err => {
+            console.error(`CONSOLE_ERROR: ${err}`);
+        });
         scrollToBottom();
         return function cleanup() {
             // TODO: we can cleanup the text here when the terminal is inactive or when too much is in the pre
@@ -16,20 +23,31 @@ export default function Terminal(props) {
         };
     });
 
-    function scrollToBottom() {
+    const  scrollToBottom = () => {
         animateScroll.scrollToBottom({
           containerId: 'terminal_pre',
           duration: 0
         });
     }
-    
+
     if (props.isInactive) {
         return(null);
     }
 
     return(
         <div className="terminal-root">
-            <pre id='terminal_pre'>{props.content}</pre>  
+            <pre id='terminal_pre'>{terminalOutput}</pre>
+            <button
+                onClick= {() => {socket.emit('bbb_start', {
+                    flags: [],
+                    debug_level: '0'
+                })}}>
+                start bbb
+            </button>
+            <button
+                onClick= {() => {socket.emit('bbb_stop')}}>
+                stop bbb
+            </button>
         </div>
     );
 }

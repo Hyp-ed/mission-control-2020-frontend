@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Tabs.css";
 import Button from "./Button.js"
 import {faTerminal,
@@ -7,7 +7,7 @@ import {faTerminal,
 import Terminal from "./Terminal.js"
 
 export default function Tabs(props) {
-    const [activeTabs, setActiveTabs] = useState([false,false,true]);
+    const [activeTabs, setActiveTabs] = useState([true,false,false]);
 
     const handleTabClick = (tabIndex) => {
         var newTabArray = [false,false,false];
