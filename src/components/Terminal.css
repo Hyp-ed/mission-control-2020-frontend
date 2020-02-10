@@ -1,21 +1,27 @@
 .terminal-root {
-    background-color: #1E1E1E;
     color: white;
     border-top: 1%;
-    align-items: center;
-    height: 97%;
+    height: 98%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-end;
+}
+
+.bottom-buttons {
+    margin: 1%;
+    width: 35%;
+    height: 8%;
+    display: flex;
+    justify-content: space-between;
 }
 
 pre {
     background-color: black;
     color: rgb(0, 255, 0);
     display: block;
-    height: 99%;
+    height: 90%;
     border: 2px solid #1E1E1E;
     overflow: scroll;
     margin: 0;
-    width: 99%
+    width: 100%
   }

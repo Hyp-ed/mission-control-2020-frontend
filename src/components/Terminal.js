@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./Terminal.css";
 import { animateScroll } from 'react-scroll';
+import Button from "./Button.js"
+import { faSkull, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 const io = require('socket.io-client');
 const socket_port = 8080;
@@ -51,17 +53,29 @@ export default function Terminal(props) {
     return(
         <div className="terminal-root">
             <pre id='terminal_pre'>{terminalOutput}</pre>
-            <button
-                onClick= {() => {socket.emit('bbb_start', {
-                    flags,
-                    debug_level
-                })}}>
-                start bbb
-            </button>
-            <button
-                onClick= {() => {socket.emit('bbb_stop')}}>
-                stop bbb
-            </button>
+            <div className="bottom-buttons">
+                <Button
+                    caption="START BBB"
+                    backgroundColor="#FFFFFF"
+                    textColor="#000000"
+                    icon={faPlay}
+                    width="60%"
+                    onClick= {() => {socket.emit('bbb_start', {
+                        flags,
+                        debug_level
+                    })}}>
+                    start bbb
+                </Button>
+                <Button
+                    caption="KILL"
+                    backgroundColor="#FFFFFF"
+                    textColor="#000000"
+                    icon={faSkull}
+                    width="38%"
+                    onClick= {() => {socket.emit('bbb_stop')}}>
+                    stop bbb
+                </Button>
+            </div>
         </div>
     );
 }
