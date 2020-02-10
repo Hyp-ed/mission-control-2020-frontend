@@ -3,6 +3,8 @@ import "./Terminal.css";
 import { animateScroll } from 'react-scroll';
 import Button from "./Button.js"
 import { faSkull, faPlay } from '@fortawesome/free-solid-svg-icons';
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
 
 const io = require('socket.io-client');
 const socket_port = 8080;
@@ -52,7 +54,9 @@ export default function Terminal(props) {
 
     return(
         <div className="terminal-root">
-            <pre id='terminal_pre'>{terminalOutput}</pre>
+            <SimpleBar className="terminal-content" forceVisible="y" autoHide={false}>
+                <pre id='terminal_pre'>{terminalOutput}</pre>
+            </SimpleBar>
             <div className="bottom-buttons">
                 <Button
                     caption="START BBB"
