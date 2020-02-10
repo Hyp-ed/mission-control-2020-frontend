@@ -2,7 +2,7 @@
     display: flex;
     background-color: inherit;
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -16,12 +16,39 @@
     justify-content: space-around;
 }
 
+.imu-status {
+    background-color: #8F8F8F;
+    border: 2px solid black;
+    width: 20%;
+    height: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.imu-status:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.encoder-status {
+    background-color: #8F8F8F;
+    border: 2px solid black;
+    width: 20%;
+    height: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .title {
     font-size: 1.7em;
     color: white;
     transform: rotate(-90deg);
     margin-left: -5%;
     margin-right: -8%;
+    text-align: center;
 }
 
 .indicator-box {
@@ -31,4 +58,14 @@
     align-items: center;
     height: 85%;
     width: 65%;
+    margin-right: 5%;
+}
+
+.encoder-title {
+    font-size: 1.7em;
+    color: white;
+    transform: rotate(-90deg);
+    margin-left: -25%;
+    margin-right: -25%;
+    text-align: center;
 }
