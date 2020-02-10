@@ -8,23 +8,27 @@
 
 .module-status {
     background-color: #8F8F8F;
-    border: 1px solid black;
+    border: 2px solid black;
     width: 40%;
     height: 40%;
     display: flex;
     align-items: center;
+    justify-content: space-around;
 }
 
 .title {
     font-size: 1.7em;
     color: white;
     transform: rotate(-90deg);
+    margin-left: -5%;
+    margin-right: -8%;
 }
 
 .indicator-box {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    height: 80%;
+    align-items: center;
+    height: 85%;
     width: 65%;
 }

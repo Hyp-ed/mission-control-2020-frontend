@@ -14,7 +14,7 @@ export default function Status(props) {
                 <div className="title">MODULES</div>
                 <div className="indicator-box">
                     <Indicator caption="MOT" enabled={true}/>
-                    <Indicator caption="BAT" enabled={true}/>
+                    <Indicator caption="BAT" enabled={false}/>
                     <Indicator caption="SEN" enabled={true}/>
                     <Indicator caption="TEL" enabled={true}/>
                     <Indicator caption="NAV" enabled={true}/>
