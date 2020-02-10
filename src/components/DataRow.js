@@ -11,7 +11,7 @@ export default props => {
 
   return (
     <div className="data-row-container">
-      {(props.level > 0 ? <div className="data-row-line"></div> : "")}
+      {props.level > 0 ? <div className="data-row-line"></div> : ""}
       <div className={"data-row " + (props.level > 0 ? "next" : "")}>
         <Textfit
           mode="single"
