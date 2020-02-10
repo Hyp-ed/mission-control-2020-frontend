@@ -5,9 +5,10 @@ import {faTerminal,
         faChartBar,
         faProjectDiagram} from "@fortawesome/free-solid-svg-icons";
 import Terminal from "./Terminal.js"
+import Status from "./Status.js"
 
 export default function Tabs(props) {
-    const [activeTabs, setActiveTabs] = useState([true,false,false]);
+    const [activeTabs, setActiveTabs] = useState([false,false,true]);
 
     const handleTabClick = (tabIndex) => {
         var newTabArray = [false,false,false];
@@ -58,6 +59,8 @@ export default function Tabs(props) {
             <div className="window-container">
                 <Terminal
                     isInactive={!activeTabs[0]}/>
+                <Status
+                    isInactive={!activeTabs[2]}/>
             </div>
         </div>
     );    

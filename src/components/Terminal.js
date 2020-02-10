@@ -64,7 +64,6 @@ export default function Terminal(props) {
                         flags,
                         debug_level
                     })}}>
-                    start bbb
                 </Button>
                 <Button
                     caption="KILL"
@@ -73,7 +72,6 @@ export default function Terminal(props) {
                     icon={faSkull}
                     width="38%"
                     onClick= {() => {socket.emit('bbb_stop')}}>
-                    stop bbb
                 </Button>
             </div>
         </div>

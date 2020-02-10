@@ -1,0 +1,18 @@
+.indicator {
+    display: flex;
+    justify-content: center;
+}
+
+.indicator-enabled {
+    background-color: white;
+}
+
+.indicator-disabled {
+    background-color: red;
+}
+
+.caption {
+    font-size: 1.5em;
+    margin-left: 20%;
+    margin-right: 20%;
+}
