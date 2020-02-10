@@ -3,7 +3,7 @@ import "./App.css";
 import Stomp from "stompjs";
 import ButtonContainer from "./components/ButtonContainer";
 import Header from "./components/Header.js";
-import Data from "./components/Data.js";
+import DataContainer from "./components/DataContainer";
 import Tabs from "./components/Tabs.js";
 import Gauge from "./components/Gauge";
 
@@ -95,7 +95,7 @@ export default function App() {
         connectedToBackend={stompClient}
       />
       <ButtonContainer></ButtonContainer>
-      <Data></Data>
+      <DataContainer></DataContainer>
       <div className="gauge-container">
         <Gauge
           unit={"m/s"}

@@ -12,9 +12,12 @@
     "@types/stompjs": "^2.3.4",
     "eslint-plugin-react-hooks": "^2.3.0",
     "react": "^16.12.0",
+    "react-collapse": "^5.0.1",
     "react-dom": "^16.12.0",
     "react-liquid-gauge": "^1.2.4",
     "react-scripts": "3.3.0",
+    "react-textfit": "^1.1.0",
+    "simplebar-react": "^2.1.0",
     "stompjs": "^2.3.3"
   },
   "scripts": {
