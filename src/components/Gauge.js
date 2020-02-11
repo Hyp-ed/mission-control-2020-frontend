@@ -29,17 +29,26 @@ const gradientStops = [
 ];
 
 export default function Gauge(props) {
-  const maxValue = props.maxValue ? props.maxValue : 100;
-  const pctValue = (props.value / maxValue) * 100;
+  // Create a percentage function that maps values to percentages
+  // The value at which the fill is 0%
+  const zeroFillValue = props.zeroFillValue ? props.zeroFillValue : 0;
+  // Percentage to which maxValue is mapped
+  const maxValuePct = props.maxValuePct ? props.maxValuePct : 90;
+  // Calculate gradient
+  const deltaY = maxValuePct - 0;
+  const deltaX = props.maxValue - zeroFillValue;
+  const gradient = deltaY / deltaX;
+  // Calculate y-axis intercept based on known x-axis intercept (zeroFillValue)
+  const b = -gradient * zeroFillValue;
+  const pctValue = gradient * props.value + b;
 
   // Specifies a custom text renderer for rendering a percent value.
   const textRenderer = () => {
-    const value = Math.round(props.value);
     const fontSize = props.size / 4;
     return (
       <tspan>
         <tspan className="value" style={{ fontSize }}>
-          {value}
+          {Math.round(props.value)}
         </tspan>
         <tspan style={{ fontSize: fontSize * 0.6 }}>{props.unit}</tspan>
       </tspan>
@@ -60,7 +69,12 @@ export default function Gauge(props) {
       waveAmplitude={0} // remove wave
       gradient
       gradientStops={gradientStops}
-      circleStyle={{ fill: props.value > 80 ? red : gray }}
+      circleStyle={{
+        fill:
+          props.value < props.minValue || props.maxValue < props.value
+            ? red
+            : gray
+      }}
       textStyle={{
         fill: gray
       }}

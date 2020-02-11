@@ -72,10 +72,15 @@ export default function App() {
   // We use an object to force both gauges update at the same time
   // If acceleration and velocity were two separate hooks, changing the state of one of them would only force the corresponding gauge to re-render
   // This is actually the more efficient way to do it, but it made the animation behave weirdly
-  const [gaugeData, setGaugeData] = useState({ velocity: 0, acceleration: 0 });
+  const [gaugeData, setGaugeData] = useState({
+    velocity: 1,
+    acceleration: 1
+  });
   const refreshRate = 250;
-  const accMaxValue = 50;
+  const accMaxValue = 40;
+  const accMinValue = 10;
   const velMaxValue = 400;
+  const velMinValue = 50;
   useEffect(() => {
     let timer = setTimeout(() => {
       setGaugeData({
@@ -86,7 +91,7 @@ export default function App() {
     return () => {
       clearTimeout(timer);
     };
-  }, [gaugeData]);
+  });
 
   return (
     <div className="gui-wrapper">
@@ -101,15 +106,19 @@ export default function App() {
           unit={"m/s"}
           size={Math.min(window.innerHeight / 4, window.innerWidth / 7)}
           refreshRate={refreshRate}
-          value={gaugeData.velocity}
+          minValue={velMinValue}
           maxValue={velMaxValue}
+          zeroFillValue={0}
+          value={gaugeData.velocity}
         />
         <Gauge
           unit={"m/s²"}
           size={Math.min(window.innerHeight / 6, window.innerWidth / 11)}
           refreshRate={refreshRate}
-          value={gaugeData.acceleration}
+          minValue={accMinValue}
           maxValue={accMaxValue}
+          maxValuePct={70}
+          value={gaugeData.acceleration}
         />
       </div>
       <Tabs></Tabs>
