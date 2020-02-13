@@ -18,7 +18,7 @@
 
 .imu-status {
     background-color: #8F8F8F;
-    border: 2px solid black;
+    border: 1px solid black;
     width: 20%;
     height: 35%;
     display: flex;
@@ -34,7 +34,7 @@
 
 .encoder-status {
     background-color: #8F8F8F;
-    border: 2px solid black;
+    border: 1px solid black;
     width: 20%;
     height: 35%;
     display: flex;
@@ -43,7 +43,6 @@
 }
 
 .title {
-    font-size: 1.7em;
     color: white;
     transform: rotate(-90deg);
     margin-left: -5%;
@@ -62,7 +61,6 @@
 }
 
 .encoder-title {
-    font-size: 1.7em;
     color: white;
     transform: rotate(-90deg);
     margin-left: -25%;
@@ -120,4 +118,5 @@
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
+    font-size: 1em;
 }

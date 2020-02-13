@@ -25,14 +25,14 @@
 
 .caption {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1em;
     margin-left: 20%;
     margin-right: 20%;
 }
 
 .caption.brake {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 0.9em;
     margin-left: 0;
     margin-right: 0;
 }
