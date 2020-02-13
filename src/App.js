@@ -81,17 +81,31 @@ export default function App() {
   const refreshRate = 250;
   const accMaxValue = 50;
   const velMaxValue = 400;
+
+  const [IMUData, setIMUData] = useState([]);
+  const [speedData, setSpeedData] = useState([]);
+
   useEffect(() => {
-    let timer = setTimeout(() => {
+    // Each interval represents one set of data from the pod
+    const interval = setInterval(() => {
+      setIMUData(oldData => [
+        ...oldData,
+        { x: Date.now(), y: (Math.random() - 0.5) * 20 }
+      ]);
+      setSpeedData(oldData => [
+        ...oldData,
+        { x: Date.now(), y: Math.random() * 10 }
+      ]);
       setGaugeData({
         velocity: Math.random() * velMaxValue,
         acceleration: Math.random() * accMaxValue
       });
     }, refreshRate);
+
     return () => {
-      clearTimeout(timer);
+      clearInterval(interval);
     };
-  }, [gaugeData]);
+  }, []);
 
   return (
     <div className="gui-wrapper">
@@ -151,7 +165,18 @@ export default function App() {
           maxValue={accMaxValue}
         />
       </div>
-      <Tabs></Tabs>
+      <Tabs
+        graphs={[
+          {
+            datasets: [
+              { label: "IMU", data: IMUData, unit: "m/s²" },
+              { label: "Speed", data: speedData, unit: "m/s" }
+            ],
+            // datasets: [],
+            fontSize: 12
+          }
+        ]}
+      ></Tabs>
     </div>
   );
 }
