@@ -8,7 +8,7 @@
 
 .module-status {
     background-color: #8F8F8F;
-    border: 2px solid black;
+    border: 1px solid black;
     width: 40%;
     height: 40%;
     display: flex;
@@ -92,7 +92,7 @@
     justify-content: center;
     align-items: center;
     background-color: #8F8F8F;
-    border: 2px solid black;
+    border: 1px solid black;
     width: 30%;
     height: 20%;
     margin: 0;
