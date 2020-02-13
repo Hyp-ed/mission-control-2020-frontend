@@ -10,6 +10,22 @@ export default function Status(props) {
 
     return (
         <div className="status-root">
+            <div className="brake-status-container-wrapper">
+                <div className="brake-status-container">
+                    <div className="brake-status">
+                        <Indicator caption="EM BRAKE 1" enabled={true} brake/>
+                    </div>
+                    <div className="brake-status">
+                        <Indicator caption="FRICTION BRAKE 1" enabled={true} brake/>
+                    </div>
+                    <div className="brake-status">
+                        <Indicator caption="EM BRAKE 2" enabled={true} brake/>
+                    </div>
+                    <div className="brake-status">
+                        <Indicator caption="FRICTION BRAKE 2" enabled={true} brake/>
+                    </div>
+                </div>
+            </div>
             <div className="imu-status">
                 <div className="title">IMUS</div>
                 <div className="indicator-box">
