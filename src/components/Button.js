@@ -34,6 +34,5 @@ export default function Button(props) {
               <span>{props.caption}</span>
           </div>  
       </div>
-    </div>
   );
 }
