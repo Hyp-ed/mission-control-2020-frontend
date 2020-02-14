@@ -1,6 +1,7 @@
 import React from "react";
 import "./DataContainer.css";
 import DataRow from "./DataRow";
+import DataRowString from "./DataRowString";
 import DataList from "./DataList";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
@@ -20,7 +21,10 @@ export default props => {
             level={level}
           ></DataList>
         );
-      } else {
+      } else if (isNaN(list.value)) {
+        return <DataRowString data={list} level={level - 1}></DataRowString>
+      }
+      else {
         return <DataRow data={list} level={level - 1}></DataRow>
       }
     });

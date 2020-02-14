@@ -76,6 +76,12 @@
   margin-left: 10px;
 }
 
+.data-row > .data-row-value.data-row-value-string {
+  grid-column: 5 / 11;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
 .data-row-bar > .progress-bar {
   height: 100%;
   background-color: white;
