@@ -60,6 +60,13 @@
   height: 70%;
   background-color: #464646;
   border: 1px solid #000000;
+  display: grid;
+  grid-template: 1fr / 1fr;
+}
+
+.data-row-bar > * {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
 }
 
 .data-row > .data-row-value {
@@ -70,9 +77,9 @@
 }
 
 .data-row-bar > .progress-bar {
-  position: relative;
   height: 100%;
   background-color: white;
+  transition: width 500ms;
 }
 
 .data-row-bar.alert > .progress-bar {

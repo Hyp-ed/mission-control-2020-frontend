@@ -30,13 +30,12 @@ export default props => {
           <div
             className="progress-bar"
             style={{
-              width: percentage + "%",
-              marginRight: -percentage + "%"
+              width: percentage + "%"
             }}
           ></div>
           <div className="range">
-            <div className="range-border range-border-bottom"></div>
             <div className="range-border range-border-top"></div>
+            <div className="range-border range-border-bottom"></div>
             <div className="range-value range-min">{props.data.min}</div>
             <div className="range-value range-max">{props.data.max}</div>
           </div>
