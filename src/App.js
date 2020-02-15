@@ -26,6 +26,7 @@ export default function App() {
       .then(text => console.log("CONNECTED TO BACKEND"))
       .then(() => {
         const sc = Stomp.client("ws://localhost:8080/connecthere");
+        sc.debug = false;
         setStompClient(sc);
         sc.connect(
           {},
@@ -51,7 +52,6 @@ export default function App() {
     setConnectedToPod(
       receivedPodConnectionStatus === "CONNECTED" ? true : false
     );
-    console.log(receivedPodConnectionStatus);
   };
 
   const podDataHandler = message => {
@@ -94,8 +94,8 @@ export default function App() {
         connectedToPod={connectedToPod}
         connectedToBackend={stompClient}
       />
-      <ButtonContainer></ButtonContainer>
-      <DataContainer></DataContainer>
+      <ButtonContainer sendCommand={sendCommand} stompClient={stompClient} podData={podData}></ButtonContainer>
+      <DataContainer podData={podData}></DataContainer>
       <div className="gauge-container">
         <Gauge
           unit={"m/s"}

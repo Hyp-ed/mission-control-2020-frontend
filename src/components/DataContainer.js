@@ -9,8 +9,6 @@ import testData from './testData.json';
 
 export default props => {
 
-  const data = testData;
-
   const getLists = (lists, level) =>
     lists.map((list, i) => {
       if (Array.isArray(list.value)) {
@@ -29,9 +27,19 @@ export default props => {
       }
     });
 
-  return (
-    <SimpleBar className="data-container" forceVisible="y" autoHide={false}>
-      {getLists(data, 0)}
-    </SimpleBar>
-  );
+  if (props.podData !== null) {
+    // const data = testData;
+    const data = props.podData.additional_data;
+    return (
+      <SimpleBar className="data-container" forceVisible="y" autoHide={false}>
+        {getLists(data, 0)}
+      </SimpleBar>
+    );
+  }
+  else {
+    return (<SimpleBar className="data-container" forceVisible="y" autoHide={false}>
+    
+  </SimpleBar>)
+  }
+  
 };

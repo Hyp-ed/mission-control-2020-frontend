@@ -5,27 +5,28 @@
   font-size: 1.4vw;
   display: flex;
   justify-content: center;
+  cursor: default;
+  user-select: none;
 }
 
 .button + .button {
   margin-left: 0.5vw;
 }
 
-.button-leftslant {
+.button-slant-left {
   clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
 }
 
-.button-rightslant {
+.button-slant-right {
   clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
 }
 
-.button:hover {
+.button:hover:not(.disabled) {
   cursor: pointer;
 }
 
 .button-icon {
   height: 100%;
-  padding-right: 10px;
 }
 
 .button-caption {
@@ -34,10 +35,14 @@
   align-items: center;
 }
 
-.button-leftslant .button-caption {
-  padding-left: 15%;
+.button-caption > span {
+  margin-left: 10px;
 }
 
-.button-rightslant .button-caption {
-  padding-right: 15%;
+.button-slant-left .button-caption {
+  padding-left: 17%;
+}
+
+.button-slant-right .button-caption {
+  padding-right: 17%;
 }
