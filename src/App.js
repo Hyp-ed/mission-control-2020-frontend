@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Stomp from "stompjs";
-import {
-  faRuler,
-  faExclamationTriangle,
-  faStop
-} from "@fortawesome/free-solid-svg-icons";
-import Button from "./components/Button.js";
+import ButtonContainer from "./components/ButtonContainer";
 import Header from "./components/Header.js";
-import Scrollable from "./components/Scrollable.js";
+import DataContainer from "./components/DataContainer";
 import Tabs from "./components/Tabs.js";
 import Gauge from "./components/Gauge";
+import testData from './testData.json';
 
 export default function App() {
   const [connectedToPod, setConnectedToPod] = useState(false);
   const [stompClient, setStompClient] = useState(null);
-  const [podData, setPodData] = useState(null);
+  const [podData, setPodData] = useState(testData);
 
   useEffect(() => {
     // ask backend to start base-station server instance
@@ -31,6 +27,7 @@ export default function App() {
       .then(text => console.log("CONNECTED TO BACKEND"))
       .then(() => {
         const sc = Stomp.client("ws://localhost:8080/connecthere");
+        sc.debug = false;
         setStompClient(sc);
         sc.connect(
           {},
@@ -56,7 +53,6 @@ export default function App() {
     setConnectedToPod(
       receivedPodConnectionStatus === "CONNECTED" ? true : false
     );
-    console.log(receivedPodConnectionStatus);
   };
 
   const podDataHandler = message => {
@@ -99,42 +95,8 @@ export default function App() {
         connectedToPod={connectedToPod}
         connectedToBackend={stompClient}
       />
-      <div className="button-modular-container">
-        <div className="buttons">
-          <Button
-            caption="CALIBRATE"
-            icon={faRuler}
-            onClick={() => {
-              return;
-            }}
-            slantedLeft
-            textColor="#FFFFFF"
-            backgroundColor="#1098AD"
-          ></Button>
-          <Button
-            caption="RETRACT BRAKES"
-            icon={faStop}
-            onClick={() => {
-              return;
-            }}
-            textColor="#000000"
-            backgroundColor="#FFFFFF"
-            width="40%"
-          ></Button>
-          <Button
-            caption="ABORT"
-            icon={faExclamationTriangle}
-            onClick={() => {
-              return;
-            }}
-            width="25%"
-            // slantedRight
-            textColor="#000000"
-            backgroundColor="#FFFFFF"
-          ></Button>
-        </div>
-        <Scrollable></Scrollable>
-      </div>
+      <ButtonContainer stompClient={stompClient} podData={podData}></ButtonContainer>
+      <DataContainer podData={podData}></DataContainer>
       <div className="gauge-container">
         <Gauge
           unit={"m/s"}

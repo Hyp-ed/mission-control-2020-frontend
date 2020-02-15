@@ -3,41 +3,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Button.css";
 
 export default function Button(props) {
-  
-  function slantStyle() {
-      var style = ["button-container"];
-      if (props.slantedLeft) {
-        style.push("button-container-leftslant");
-      }
-      if (props.slantedRight) {
-        style.push("button-container-rightslant");
-      }
+  const getClassNames = backgroundColor => {
+    var classes = ["button"];
 
-      return style.join(" ");
-  }
+    if (props.slantedLeft && props.slantedRight) {
+      classes.push("button-slant-both");
+    } else if (props.slantedLeft) {
+      classes.push("button-slant-left");
+    } else if (props.slantedRight) {
+      classes.push("button-slant-right");
+    }
+
+    if (props.disabled) {
+      classes.push("disabled");
+    }
+
+    classes.push(backgroundColor);
+
+    return classes.join(" ");
+  };
 
   return (
     <div
-      className={slantStyle()}
-      onClick={props.onClick}
-      style={{ 
-        color: props.isInactive ? "#FFFFFF" : props.textColor,
-        backgroundColor: props.isInactive ? "inherit" : props.backgroundColor,
-        width: props.width, 
-        fontSize: props.fontSize}}>
-          <div 
-            className="button-caption"
-            style={{
-                    display: "flex",
-                    alignItems: "center",
-                    }}>
-              <FontAwesomeIcon className="button-icon" icon={props.icon} />
+      className={getClassNames(props.backgroundColor)}
+      onClick={props.handleClick}
+    >
+      <div className="button-caption">
+        <FontAwesomeIcon className="button-icon" icon={props.icon} spin={props.spin}/>
               <span>{props.caption}</span>
           </div>  
       </div>
   );
-}
-
-Button.defaultProps = {
-  width: "32%",
 }
