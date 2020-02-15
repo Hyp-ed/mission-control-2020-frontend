@@ -6,11 +6,12 @@ import Header from "./components/Header.js";
 import DataContainer from "./components/DataContainer";
 import Tabs from "./components/Tabs.js";
 import Gauge from "./components/Gauge";
+import testData from './testData.json';
 
 export default function App() {
   const [connectedToPod, setConnectedToPod] = useState(false);
   const [stompClient, setStompClient] = useState(null);
-  const [podData, setPodData] = useState(null);
+  const [podData, setPodData] = useState(testData);
 
   useEffect(() => {
     // ask backend to start base-station server instance
@@ -94,7 +95,7 @@ export default function App() {
         connectedToPod={connectedToPod}
         connectedToBackend={stompClient}
       />
-      <ButtonContainer sendCommand={sendCommand} stompClient={stompClient} podData={podData}></ButtonContainer>
+      <ButtonContainer stompClient={stompClient} podData={podData}></ButtonContainer>
       <DataContainer podData={podData}></DataContainer>
       <div className="gauge-container">
         <Gauge

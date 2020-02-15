@@ -5,9 +5,10 @@ import DataRowString from "./DataRowString";
 import DataList from "./DataList";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-import testData from './testData.json';
 
 export default props => {
+
+  console.log(props.podData);
 
   const getLists = (lists, level) =>
     lists.map((list, i) => {
@@ -28,7 +29,6 @@ export default props => {
     });
 
   if (props.podData !== null) {
-    // const data = testData;
     const data = props.podData.additional_data;
     return (
       <SimpleBar className="data-container" forceVisible="y" autoHide={false}>
