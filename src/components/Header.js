@@ -11,23 +11,39 @@ export default function Header(props) {
                                 ? "pod-connection connected"
                                 : "pod-connection disconnected";
 
+    const launchStarted = false; // props.launchStarted;
+
     const startTimer = () => {
-        console.log(Date.now)
-        setStartTime(Date.now);
+        setStartTime(Date.now());
         setTimerState(true);
         setTime(0);
     };
 
     const stopTimer = () => {
-        setTimerState(false)
+        setTimerState(false);
+        setTime(0);
     };
     
     useEffect(() => {
-        console.log(Date.now);
-        if (timerState) {
-            setTime(Date.now-startTime);
-        }
-    })
+        const interval = setInterval(() => {
+            if (timerState) {
+                setTime(Date.now()-startTime);
+            }
+        }, 1);
+        return () => clearInterval(interval);
+      },[]);
+
+    // useEffect() => {
+    //     if (timerState) {
+    //         setTime(Date.now()-startTime);
+    //     }
+    // })
+
+    const formatTime = () => {
+        var timeString = "";
+
+        return (timeString);
+    };
 
     return (
         <header className="header-root">
@@ -35,7 +51,7 @@ export default function Header(props) {
             <p>position here</p>
             <button onClick = {() => startTimer()}>start timer</button>
             <button onClick = {() => stopTimer()}>stop timer</button>
-            <div className="timer">{time.toLocaleTimeString}</div>
+            <p className="timer">{time}</p>
             <div className="pod-status">
                 <div className={podConnectionStyle}>
                     {props.connectedToPod
