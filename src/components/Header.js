@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import "./Header.css"
 import logo from "../hyped.png"
+import PositionBar from './PositionBar';
 
 export default function Header(props) {
     const [timerState, setTimerState] = useState(false);
@@ -56,7 +57,9 @@ export default function Header(props) {
     return (
         <header className="header-root">
             <img src={logo} className="hyped-logo" alt="logo" />
-            <p>position here</p>
+            <PositionBar
+                distance={props.distance}
+            />
             <p className="timer">{formatTime(time)}</p>
             <div className="pod-status">
                 <div className={podConnectionStyle}>
