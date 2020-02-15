@@ -94,6 +94,7 @@ export default function App() {
       <Header
         connectedToPod={connectedToPod}
         connectedToBackend={stompClient}
+        startTime={0}    //{podData.startTime} 
       />
       <ButtonContainer stompClient={stompClient} podData={podData}></ButtonContainer>
       <DataContainer podData={podData}></DataContainer>

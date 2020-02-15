@@ -4,19 +4,16 @@ import logo from "../hyped.png"
 
 export default function Header(props) {
     const [timerState, setTimerState] = useState(false);
-    const [time, setTime] = useState(null);
-    const [startTime, setStartTime] = useState(null);
+    const [time, setTime] = useState(0);
+    const [startTime, setStartTime] = useState(0);
     
     const podConnectionStyle = props.connectedToPod
                                 ? "pod-connection connected"
                                 : "pod-connection disconnected";
 
-    const launchStarted = false; // props.launchStarted;
-
     const startTimer = () => {
-        setStartTime(Date.now());
+        setStartTime(props.startTime);
         setTimerState(true);
-        setTime(0);
     };
 
     const stopTimer = () => {
@@ -24,34 +21,43 @@ export default function Header(props) {
         setTime(0);
     };
     
+    useEffect(() => { // once we get a start time from the pod, start the timer
+        if (props.startTime != 0) {
+            startTimer()
+        }
+    })
+
     useEffect(() => {
         const interval = setInterval(() => {
-            if (timerState) {
-                setTime(Date.now()-startTime);
-            }
+          console.log('This will run every second!');
+          if (timerState === true) setTime(Date.now()-startTime);
         }, 1);
         return () => clearInterval(interval);
-      },[]);
+    }, [timerState]); //sets interval once when timer state changes
 
-    // useEffect() => {
-    //     if (timerState) {
-    //         setTime(Date.now()-startTime);
-    //     }
-    // })
-
-    const formatTime = () => {
-        var timeString = "";
-
-        return (timeString);
-    };
+    const formatTime = (duration) => {
+        var milliseconds = parseInt(duration % 1000),
+          seconds = Math.floor((duration / 1000) % 60),
+          minutes = Math.floor((duration / (1000 * 60)) % 60);
+      
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+      
+        if (milliseconds < 10) {
+          milliseconds = "00" + milliseconds;
+        }
+        else if (milliseconds < 100) {
+          milliseconds = "0" + milliseconds;
+        }
+      
+        return "T+ " + minutes + ":" + seconds + "." + milliseconds;
+    }
 
     return (
         <header className="header-root">
             <img src={logo} className="hyped-logo" alt="logo" />
             <p>position here</p>
-            <button onClick = {() => startTimer()}>start timer</button>
-            <button onClick = {() => stopTimer()}>stop timer</button>
-            <p className="timer">{time}</p>
+            <p className="timer">{formatTime(time)}</p>
             <div className="pod-status">
                 <div className={podConnectionStyle}>
                     {props.connectedToPod
@@ -69,7 +75,4 @@ export default function Header(props) {
     );
 }
 
-Header.defaultProps = {
-    podState: "",
-}
 
