@@ -7,9 +7,6 @@ import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 
 export default props => {
-
-  console.log(props.podData);
-
   const getLists = (lists, level) =>
     lists.map((list, i) => {
       if (Array.isArray(list.value)) {

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Stomp from "stompjs";
-import ButtonContainer from "./components/ButtonContainer";
-import Header from "./components/Header.js";
-import DataContainer from "./components/DataContainer";
-import Tabs from "./components/Tabs.js";
-import Gauge from "./components/Gauge";
-import testData from './testData.json';
+import Home from "./routes/Home";
+import Main from "./routes/Main";
+import Disconnected from "./routes/Disconnected";
+import Loading from "./routes/Loading";
+import Setup from "./routes/Setup";
+import testData from "./testData.json";
 
 export default function App() {
   const [connectedToPod, setConnectedToPod] = useState(false);
@@ -69,53 +69,24 @@ export default function App() {
     }
   };
 
-  // TEMP: FAKE GAUGE DATA
-  // We use an object to force both gauges update at the same time
-  // If acceleration and velocity were two separate hooks, changing the state of one of them would only force the corresponding gauge to re-render
-  // This is actually the more efficient way to do it, but it made the animation behave weirdly
-  const [gaugeData, setGaugeData] = useState({ velocity: 0, acceleration: 0 });
-  const refreshRate = 250;
-  const accMaxValue = 50;
-  const velMaxValue = 400;
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      setGaugeData({
-        velocity: Math.random() * velMaxValue,
-        acceleration: Math.random() * accMaxValue
-      });
-    }, refreshRate);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [gaugeData]);
-
   return (
-    <div className="gui-wrapper">
-      <Header
-        connectedToPod={connectedToPod}
-        connectedToBackend={stompClient}
-      />
-      <ButtonContainer stompClient={stompClient} podData={podData}></ButtonContainer>
-      <DataContainer podData={podData}></DataContainer>
-      <div className="gauge-container">
-        <Gauge
-          unit={"m/s"}
-          size={Math.min(window.innerHeight / 4, window.innerWidth / 7)}
-          refreshRate={refreshRate}
-          value={gaugeData.velocity}
-          maxValue={velMaxValue}
-        />
-        <Gauge
-          unit={"m/s²"}
-          size={Math.min(window.innerHeight / 6, window.innerWidth / 11)}
-          refreshRate={refreshRate}
-          value={gaugeData.acceleration}
-          maxValue={accMaxValue}
-        />
-      </div>
-      <Tabs
-        activeTabs
-      />
-    </div>
+    <Router>
+      <Switch>
+        <Route
+          path="/main"
+          render={props => (
+            <Main
+              connectedToPod={connectedToPod}
+              stompClient={stompClient}
+              podData={podData}
+            />
+          )}
+        ></Route>
+        <Route path="/loading" render={props => <Loading />}></Route>
+        <Route path="/disconnected" render={props => <Disconnected />}></Route>
+        <Route path="/setup" render={props => <Setup />}></Route>
+        <Route path="/" render={props => <Home />}></Route>
+      </Switch>
+    </Router>
   );
 }
