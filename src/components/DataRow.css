@@ -1,7 +1,7 @@
 .data-row-container {
   display: flex;
   position: relative;
-  height: 30px;
+  height: 25px;
   border-left: 0.5px solid #707070;
 }
 
@@ -11,11 +11,12 @@
 
 .data-row {
   display: grid;
-  grid-auto-rows: 30px;
+  grid-auto-rows: 25px;
   grid-auto-columns: calc(100% / 10);
-  height: 30px;
+  height: 25px;
   width: 100%;
-  background-color: gray;
+  background: rgb(75,75,75);
+  background: linear-gradient(96deg, rgba(75,75,75,1) 10%, rgba(100,100,100,1) 100%);
   align-items: center;
   border-style: solid;
   border-color: black;
@@ -84,12 +85,7 @@
 
 .data-row-bar > .progress-bar {
   height: 100%;
-  background-color: white;
   transition: width 500ms;
-}
-
-.data-row-bar.alert > .progress-bar {
-  background-color: #AF111B;
 }
 
 .data-row-bar > .range {
@@ -124,7 +120,7 @@
   top: 20%;
   height: 60%;
   width: auto;
-  font-size: 10px;
+  font-size: 8px;
   z-index: 20;
 }
 

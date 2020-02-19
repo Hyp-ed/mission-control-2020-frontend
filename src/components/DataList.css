@@ -1,15 +1,17 @@
 .data-list-header {
   position: relative;
-  height: 35px;
+  height: 30px;
   color: white;
   display: flex;
   z-index: 2;
-  background-color: inherit;
+  background: rgb(27,27,27);
+  background: linear-gradient(96deg, rgba(27,27,27,1) 10%, rgba(52,52,52,1) 100%);
   padding-right: 20px;
 }
 
 .data-list-header:hover {
   cursor: pointer;
+  background: rgb(27,27,27);
 }
 
 .data-list.next {
