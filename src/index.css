@@ -5,7 +5,8 @@ body {
 }
 
 body,
-button {
+button,
+input {
   font-family: "Roboto Mono", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -2,15 +2,15 @@
   display: flex;
   justify-content: center;
   color: white;
-  font-size: min(2.5vw, 25px);
+  font-size: 1.25em;
   flex-wrap: wrap;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .setup-logo img {
   display: block;
-  width: 70%;
+  width: 100%;
   max-width: 300px;
 }
 
