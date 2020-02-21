@@ -13,6 +13,8 @@ export default function App() {
   const [stompClient, setStompClient] = useState(null);
   const [telemetryConnection, setTelemetryConnection] = useState(false);
   const [telemetryData, setTelemetryData] = useState(testData);
+  const [debugConnection, setDebugConnection] = useState(false);
+  const [terminalOutput, setTerminalOutput] = useState("");
 
   useEffect(() => {
     const sc = Stomp.client("ws://localhost:8080/connecthere");
@@ -27,6 +29,12 @@ export default function App() {
         sc.subscribe("/topic/telemetry/connection", message =>
           telemetryConnectionHandler(message)
         );
+        sc.subscribe("/topic/debug/output", message =>
+          terminalOutputHandler(message)
+        );
+        sc.subscribe("/topic/debug/connection", message =>
+          debugConnectionHandler(message)
+        );
         sc.subscribe("/topic/errors", message =>
           console.error(`ERROR FROM BACKEND: ${message}`)
         );
@@ -39,8 +47,16 @@ export default function App() {
     setTelemetryConnection(message.body === "CONNECTED" ? true : false);
   };
 
+  const debugConnectionHandler = message => {
+    setDebugConnection(message.body === "CONNECTED" ? true : false);
+  };
+
   const telemetryDataHandler = message => {
     setTelemetryData(JSON.parse(message.body));
+  };
+
+  const terminalOutputHandler = message => {
+    setTerminalOutput(message.body);
   };
 
   const disconnectHandler = error => {
@@ -61,9 +77,11 @@ export default function App() {
           path="/main"
           render={props => (
             <Main
-              telemetryConnection={telemetryConnection}
               stompClient={stompClient}
+              telemetryConnection={telemetryConnection}
               telemetryData={telemetryData}
+              debugConnection={debugConnection}
+              terminalOutput={terminalOutput}
             />
           )}
         ></Route>

@@ -10,7 +10,6 @@ export default function Header(props) {
       <p>time</p>
       <p>
         {props.telemetryConnection ? "connected" : "disconnected"}
-        {props.connectedToBackend ? "connected" : "disconnected"}
       </p>
     </header>
   );

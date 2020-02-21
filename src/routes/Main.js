@@ -7,23 +7,18 @@ import Tabs from "../components/Tabs";
 import GaugeContainer from "../components/GaugeContainer";
 
 export default function Main(props) {
-  const telemetryConnection = props.telemetryConnection;
-  const stompClient = props.stompClient;
-  const telemetryData = props.telemetryData;
-
   return (
     <div className="gui-wrapper">
       <Header
-        telemetryConnection={telemetryConnection}
-        connectedToBackend={stompClient}
+        telemetryConnection={props.telemetryConnection}
       />
       <ButtonContainer
-        stompClient={stompClient}
-        telemetryData={telemetryData}
+        stompClient={props.stompClient}
+        telemetryData={props.telemetryData}
       ></ButtonContainer>
-      <DataContainer telemetryData={telemetryData}></DataContainer>
+      <DataContainer telemetryData={props.telemetryData}></DataContainer>
       <GaugeContainer></GaugeContainer>
-      <Tabs activeTabs />
+      <Tabs terminalOutput={props.terminalOutput}/>
     </div>
   );
 }
