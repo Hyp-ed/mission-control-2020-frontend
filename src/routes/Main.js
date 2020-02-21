@@ -7,21 +7,21 @@ import Tabs from "../components/Tabs";
 import GaugeContainer from "../components/GaugeContainer";
 
 export default function Main(props) {
-  const connectedToPod = props.connectedToPod;
+  const telemetryConnection = props.telemetryConnection;
   const stompClient = props.stompClient;
-  const podData = props.podData;
+  const telemetryData = props.telemetryData;
 
   return (
     <div className="gui-wrapper">
       <Header
-        connectedToPod={connectedToPod}
+        telemetryConnection={telemetryConnection}
         connectedToBackend={stompClient}
       />
       <ButtonContainer
         stompClient={stompClient}
-        podData={podData}
+        telemetryData={telemetryData}
       ></ButtonContainer>
-      <DataContainer podData={podData}></DataContainer>
+      <DataContainer telemetryData={telemetryData}></DataContainer>
       <GaugeContainer></GaugeContainer>
       <Tabs activeTabs />
     </div>

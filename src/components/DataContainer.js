@@ -25,8 +25,8 @@ export default props => {
       }
     });
 
-  if (props.podData !== null) {
-    const data = props.podData.additional_data;
+  if (props.telemetryData !== null) {
+    const data = props.telemetryData.additional_data;
     return (
       <SimpleBar className="data-container" forceVisible="y" autoHide={false}>
         {getLists(data, 0)}

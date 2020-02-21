@@ -50,7 +50,7 @@ export default props => {
 
     setMainDisabled(true);
     if (props.stompClient) {
-      props.stompClient.send("/app/sendMessage", {}, command);
+      props.stompClient.send("/app/send/telemetry/command", {}, command);
       console.log("Sent command: " + command);
     }
   };
@@ -77,10 +77,10 @@ export default props => {
   };
 
   const getMainButton = () => {
-    if (props.podData === null) {
+    if (props.telemetryData === null) {
       return;
     }
-    const state = props.podData.crucial_data.find(o => o.name === 'status').value;
+    const state = props.telemetryData.crucial_data.find(o => o.name === 'status').value;
     switch (state) {
       case "IDLE":
         return getButton(buttons.calibrate, isMainDisabled);

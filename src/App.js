@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { MemoryRouter, Switch, Route, Link } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import Stomp from "stompjs";
 import Home from "./routes/Home";
 import Main from "./routes/Main";
@@ -9,76 +10,60 @@ import Setup from "./routes/Setup";
 import testData from "./testData.json";
 
 export default function App() {
-  const [connectedToPod, setConnectedToPod] = useState(false);
   const [stompClient, setStompClient] = useState(null);
-  const [podData, setPodData] = useState(testData);
+  const [telemetryConnection, setTelemetryConnection] = useState(false);
+  const [telemetryData, setTelemetryData] = useState(testData);
 
   useEffect(() => {
-    // ask backend to start base-station server instance
-    // afterwards establish websocket connection to backend
-    fetch("http://localhost:8080/server", { method: "POST" })
-      .then(
-        response => response.text(),
-        error =>
-          Promise.reject(
-            "Error: could not communicate with backend (fetch() returned error)"
-          )
-      )
-      .then(text => console.log("CONNECTED TO BACKEND"))
-      .then(() => {
-        const sc = Stomp.client("ws://localhost:8080/connecthere");
-        sc.debug = false;
-        setStompClient(sc);
-        sc.connect(
-          {},
-          frame => {
-            sc.subscribe("/topic/podData", message => podDataHandler(message));
-            sc.subscribe("/topic/isPodConnected", message =>
-              podConnectionStatusHandler(message)
-            );
-            sc.subscribe("/topic/errors", message =>
-              console.error(`ERROR FROM BACKEND: ${message}`)
-            );
-            sc.send("/app/pullData");
-          },
-          error => disconnectHandler(error)
+    const sc = Stomp.client("ws://localhost:8080/connecthere");
+    sc.debug = false;
+    setStompClient(sc);
+    sc.connect(
+      {},
+      frame => {
+        sc.subscribe("/topic/telemetry/data", message =>
+          telemetryDataHandler(message)
         );
-      })
-      .catch(error => console.error(error));
+        sc.subscribe("/topic/telemetry/connection", message =>
+          telemetryConnectionHandler(message)
+        );
+        sc.subscribe("/topic/errors", message =>
+          console.error(`ERROR FROM BACKEND: ${message}`)
+        );
+      },
+      error => disconnectHandler(error)
+    );
   }, []); // Only run once
 
-  const podConnectionStatusHandler = message => {
-    const receivedPodConnectionStatus = message.body;
-
-    setConnectedToPod(
-      receivedPodConnectionStatus === "CONNECTED" ? true : false
-    );
+  const telemetryConnectionHandler = message => {
+    setTelemetryConnection(message.body === "CONNECTED" ? true : false);
   };
 
-  const podDataHandler = message => {
-    const receivedPodData = JSON.parse(message.body);
-    setPodData(receivedPodData);
+  const telemetryDataHandler = message => {
+    setTelemetryData(JSON.parse(message.body));
   };
 
   const disconnectHandler = error => {
     if (error.startsWith("Whoops! Lost connection")) {
-      setConnectedToPod(false);
+      setTelemetryConnection(false);
       console.error("DISCONNECTED FROM BACKEND");
     } else {
       console.error(error);
     }
   };
 
+  const history = createMemoryHistory();
   return (
-    <Router>
+    <MemoryRouter history={history}>
+      <Link to="/main">as</Link>
       <Switch>
         <Route
           path="/main"
           render={props => (
             <Main
-              connectedToPod={connectedToPod}
+              telemetryConnection={telemetryConnection}
               stompClient={stompClient}
-              podData={podData}
+              telemetryData={telemetryData}
             />
           )}
         ></Route>
@@ -87,6 +72,6 @@ export default function App() {
         <Route path="/setup" render={props => <Setup />}></Route>
         <Route path="/" render={props => <Home />}></Route>
       </Switch>
-    </Router>
+    </MemoryRouter>
   );
 }
