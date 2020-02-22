@@ -7,6 +7,12 @@
   justify-content: center;
   cursor: default;
   user-select: none;
+  transition: flex-grow 1000ms linear;
+}
+
+.button.hidden {
+  flex-grow: 0.0001;
+  margin: 0 !important;
 }
 
 .button + .button {
@@ -14,11 +20,15 @@
 }
 
 .button-slant-left {
-  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  clip-path: polygon(30px 0, 100% 0, 100% 100%, 0% 100%);
 }
 
 .button-slant-right {
-  clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+  clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 100%, 0% 100%);
+}
+
+.button-slant-both {
+  clip-path: polygon(30px 0, calc(100% - 30px) 0, 100% 100%, 0% 100%);
 }
 
 .button:hover:not(.disabled) {
@@ -45,4 +55,8 @@
 
 .button-slant-right .button-caption {
   padding-right: 17%;
+}
+
+.button-slant-both .button-caption {
+  padding: 0 17%;
 }

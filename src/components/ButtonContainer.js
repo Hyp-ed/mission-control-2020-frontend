@@ -3,7 +3,9 @@ import {
   faExclamationTriangle,
   faLock,
   faLockOpen,
-  faSpinner
+  faSpinner,
+  faForward,
+  faRedo
 } from "@fortawesome/free-solid-svg-icons";
 import "./ButtonContainer.css";
 import React, { useState, useEffect } from "react";
@@ -11,6 +13,10 @@ import Button from "./Button";
 
 export default props => {
   const [isMainDisabled, setMainDisabled] = useState(false);
+  var state = "IDLE";
+  if (props.podData !== null) {
+    state = props.podData.crucial_data.find(o => o.name === "status").value;
+  }
   const buttons = {
     calibrate: {
       caption: "CALIBRATE",
@@ -26,20 +32,45 @@ export default props => {
       slantedLeft: true,
       backgroundColor: "bg-blue-gradient"
     },
+    launch: {
+      caption: "LAUNCH",
+      icon: faForward,
+      slantedLeft: true,
+      backgroundColor: "bg-green-gradient",
+      command: "LAUNCH"
+    },
+    abortRunning: {
+      caption: "ABORT",
+      icon: faExclamationTriangle,
+      slantedLeft: true,
+      slantedRight: true,
+      backgroundColor: "bg-red-gradient",
+      command: "STOP"
+    },
+    reset: {
+      caption: "RESET",
+      icon: faRedo,
+      slantedLeft: true,
+      backgroundColor: "bg-blue-gradient",
+      command: "RESET"
+    },
     extend: {
       caption: "EXTEND",
       icon: faLock,
-      backgroundColor: "bg-white-gradient"
+      backgroundColor: "bg-white-gradient",
+      command: "NOMINAL_BRAKING"
     },
     retract: {
       caption: "RETRACT",
       icon: faLockOpen,
-      backgroundColor: "bg-white-gradient"
+      backgroundColor: "bg-white-gradient",
+      command: "NOMINAL_RETRACT"
     },
     abort: {
       caption: "ABORT",
       icon: faExclamationTriangle,
-      backgroundColor: "bg-white-gradient"
+      backgroundColor: "bg-white-gradient",
+      command: "STOP"
     }
   };
 
@@ -56,10 +87,11 @@ export default props => {
   };
 
   useEffect(() => {
+    console.log(state);
     setMainDisabled(false);
-  }, [props.state]);
+  }, [state]);
 
-  const getButton = (button, disabled = false) => {
+  const getButton = (button, disabled = false, hidden = false) => {
     return (
       <Button
         caption={button.caption}
@@ -72,32 +104,63 @@ export default props => {
         slantedRight={button.slantedRight}
         backgroundColor={button.backgroundColor}
         disabled={disabled}
+        hidden={hidden}
       ></Button>
     );
   };
 
   const getMainButton = () => {
-    if (props.podData === null) {
-      return;
-    }
-    const state = props.podData.crucial_data.find(o => o.name === 'status').value;
     switch (state) {
       case "IDLE":
         return getButton(buttons.calibrate, isMainDisabled);
       case "CALIBRATING":
         return getButton(buttons.calibrating, true);
+      case "READY":
+        return getButton(buttons.launch, isMainDisabled);
+      case "ACCELERATING":
+        return getButton(buttons.abortRunning, isMainDisabled);
+      case "EMERGENCY_BRAKING":
+      case "NOMINAL_BRAKING":
+        return getButton(buttons.abortRunning, true);
+      case "RUN_COMPLETE":
+      case "FINISHED":
+      case "FAILURE_STOPPED":
+        return getButton(buttons.reset, isMainDisabled);
     }
   };
 
   const getBrakeButton = () => {
-    return getButton(props.isBrakeRetracted ? buttons.extend : buttons.retract);
+    var hidden = true;
+    switch (state) {
+      case "IDLE":
+      case "RUN_COMPLETE":
+      case "FINISHED":
+      case "FAILURE_STOPPED":
+        hidden = false;
+    }
+    return getButton(
+      props.isBrakeRetracted ? buttons.extend : buttons.retract,
+      false,
+      hidden
+    );
+  };
+
+  const getAbortButton = () => {
+    var hidden = true;
+    switch (state) {
+      case "IDLE":
+      case "CALIBRATING":
+      case "READY":
+        hidden = false;
+    }
+    return getButton(buttons.abort, false, hidden);
   };
 
   return (
     <div className="button-container">
       {getMainButton()}
       {getBrakeButton()}
-      {getButton(buttons.abort)}
+      {getAbortButton()}
     </div>
   );
 };
