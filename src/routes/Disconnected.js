@@ -7,6 +7,7 @@ import Button from "../components/Button";
 
 export default function Disconnected() {
   const handleClick = () => {
+    // TODO: reconnect
     console.log("reconnect");
   }
 

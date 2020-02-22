@@ -71,7 +71,6 @@ export default function App() {
   const history = createMemoryHistory();
   return (
     <MemoryRouter history={history}>
-      <Link to="/main">as</Link>
       <Switch>
         <Route
           path="/main"
