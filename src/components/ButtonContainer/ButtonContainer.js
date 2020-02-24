@@ -9,13 +9,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./ButtonContainer.css";
 import React, { useState, useEffect } from "react";
-import Button from "./Button";
+import Button from "../Button/Button";
 
 export default props => {
   const [isMainDisabled, setMainDisabled] = useState(false);
   var state = "IDLE";
-  if (props.podData !== null) {
-    state = props.podData.crucial_data.find(o => o.name === "status").value;
+  if (props.telemetryData !== null) {
+    state = props.telemetryData.crucial_data.find(o => o.name === "status").value;
   }
   const buttons = {
     calibrate: {
@@ -81,7 +81,7 @@ export default props => {
 
     setMainDisabled(true);
     if (props.stompClient) {
-      props.stompClient.send("/app/sendMessage", {}, command);
+      props.stompClient.send("/app/send/telemetry/command", {}, command);
       console.log("Sent command: " + command);
     }
   };

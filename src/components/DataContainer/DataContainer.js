@@ -1,8 +1,8 @@
 import React from "react";
 import "./DataContainer.css";
-import DataRow from "./DataRow";
-import DataRowString from "./DataRowString";
-import DataList from "./DataList";
+import DataRow from "../DataRow/DataRow";
+import DataRowString from "../DataRow/DataRowString";
+import DataList from "../DataList/DataList";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 
@@ -25,8 +25,8 @@ export default props => {
       }
     });
 
-  if (props.podData !== null) {
-    const data = props.podData.additional_data;
+  if (props.telemetryData !== null) {
+    const data = props.telemetryData.additional_data;
     return (
       <SimpleBar className="data-container" forceVisible="y" autoHide={false}>
         {getLists(data, 0)}

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./Tabs.css";
-import Button from "./Button.js";
+import Button from "../Button/Button";
 import {
   faTerminal,
   faChartBar,
   faProjectDiagram
 } from "@fortawesome/free-solid-svg-icons";
-import Terminal from "./Terminal.js";
-import Status from "./Status.js";
+import Terminal from "../Terminal/Terminal";
+import Status from "../Status/Status";
 
 export default function Tabs(props) {
   const [activeTabs, setActiveTabs] = useState([false, false, true]);
@@ -59,7 +59,7 @@ export default function Tabs(props) {
         />
       </div>
       <div className="window-container">
-        <Terminal isInactive={!activeTabs[0]} />
+        <Terminal isInactive={!activeTabs[0]} terminalOutput={props.terminalOutput}/>
         <Status isInactive={!activeTabs[2]} />
       </div>
     </div>

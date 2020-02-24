@@ -1,23 +1,9 @@
-body {
-  margin: 0;
-  background-color: black;
-}
-
 .gui-wrapper {
   display: grid;
   grid-auto-columns: calc(100%/12);
   grid-auto-rows: calc(100%/12);
   height: 94vh;
   padding: 1.5% 2%;
-}
-
-.gauge-container {
-  grid-row: 2/6;
-  grid-column: 10/13;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: flex-end;
-  margin-bottom: 10%;
 }
 
 /* Colors */

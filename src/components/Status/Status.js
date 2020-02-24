@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Status.css";
-import Indicator from './Indicator';
+import Indicator from '../Indicator/Indicator';
 
 export default function Status(props) {
     
