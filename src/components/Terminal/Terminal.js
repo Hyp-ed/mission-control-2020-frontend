@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./Terminal.css";
 import { animateScroll } from 'react-scroll';
-import Button from "./Button.js"
+import Button from "../Button/Button"
 import { faSkull, faPlay } from '@fortawesome/free-solid-svg-icons';
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";

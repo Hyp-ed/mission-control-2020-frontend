@@ -1,6 +1,6 @@
 import React from "react";
 import "./SetupLogo.css";
-import logo from "../hyped.png";
+import logo from "../../hyped.png";
 
 export default function SetupLogo() {
   return (

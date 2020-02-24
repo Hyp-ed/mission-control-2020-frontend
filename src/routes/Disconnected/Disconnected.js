@@ -1,9 +1,9 @@
 import React from "react";
 import "./Disconnected.css";
-import SetupLogo from "./SetupLogo";
+import SetupLogo from "../SetupLogo/SetupLogo";
 import { faExclamationTriangle, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../components/Button";
+import Button from "../../components/Button/Button";
 
 export default function Disconnected() {
   const handleClick = () => {

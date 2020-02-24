@@ -1,7 +1,7 @@
 import React from "react";
 import "./Home.css";
-import SetupLogo from "./SetupLogo";
-import Button from "../components/Button";
+import SetupLogo from "../SetupLogo/SetupLogo";
+import Button from "../../components/Button/Button";
 import { faCode, faRocket } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from 'react-router-dom';
 

@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./ButtonContainer.css";
 import React, { useState, useEffect } from "react";
-import Button from "./Button";
+import Button from "../Button/Button";
 
 export default props => {
   const [isMainDisabled, setMainDisabled] = useState(false);

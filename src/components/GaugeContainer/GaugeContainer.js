@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./GaugeContainer.css";
-import Gauge from "./Gauge";
+import Gauge from "../Gauge/Gauge";
 
 export default function GaugeContainer(props) {
   // TEMP: FAKE GAUGE DATA

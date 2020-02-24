@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { MemoryRouter, Switch, Route, Link } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import Stomp from "stompjs";
-import Home from "./routes/Home";
-import Main from "./routes/Main";
-import Disconnected from "./routes/Disconnected";
-import Loading from "./routes/Loading";
-import Setup from "./routes/Setup";
+import Home from "./routes/Home/Home";
+import Main from "./routes/Main/Main";
+import Disconnected from "./routes/Disconnected/Disconnected";
+import Loading from "./routes/Loading/Loading";
+import Setup from "./routes/Setup/Setup";
 import testData from "./testData.json";
 
 export default function App() {

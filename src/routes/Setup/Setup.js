@@ -1,7 +1,7 @@
 import React from "react";
 import "./Setup.css";
-import SetupLogo from "./SetupLogo";
-import Button from "../components/Button";
+import SetupLogo from "../SetupLogo/SetupLogo";
+import Button from "../../components/Button/Button";
 import { faPlay, faCogs } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Main.css";
-import ButtonContainer from "../components/ButtonContainer";
-import Header from "../components/Header";
-import DataContainer from "../components/DataContainer";
-import Tabs from "../components/Tabs";
-import GaugeContainer from "../components/GaugeContainer";
+import ButtonContainer from "../../components/ButtonContainer/ButtonContainer";
+import Header from "../../components/Header/Header";
+import DataContainer from "../../components/DataContainer/DataContainer";
+import Tabs from "../../components/Tabs/Tabs";
+import GaugeContainer from "../../components/GaugeContainer/GaugeContainer";
 
 export default function Main(props) {
   return (

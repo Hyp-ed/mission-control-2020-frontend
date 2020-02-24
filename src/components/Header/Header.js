@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import logo from "../hyped.png";
+import logo from "../../hyped.png";
 
 export default function Header(props) {
   return (
