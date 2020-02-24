@@ -6,6 +6,7 @@
   font-size: 1.4vw;
   cursor: default;
   user-select: none;
+  transition: flex-grow 1000ms linear;
 }
 
 .button.hidden {
