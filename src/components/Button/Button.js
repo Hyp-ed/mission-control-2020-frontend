@@ -18,10 +18,22 @@ export default function Button(props) {
       classes.push("disabled");
     }
 
+    if (props.hidden) {
+      classes.push("hidden");
+    }
+
     classes.push(backgroundColor);
 
     return classes.join(" ");
   };
+
+  if (props.hidden) {
+    return (
+      <div
+        className={getClassNames(props.backgroundColor)}
+      ></div>
+        );
+  }
 
   return (
     <button
