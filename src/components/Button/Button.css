@@ -6,8 +6,11 @@
   font-size: 1.4vw;
   cursor: default;
   user-select: none;
-  padding: 0 2%;
-  transition: flex-grow 1000ms linear;
+}
+
+.button.hidden {
+  flex-grow: 0.0001;
+  margin: 0 !important;
 }
 
 .button.hidden {
