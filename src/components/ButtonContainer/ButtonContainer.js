@@ -13,10 +13,8 @@ import Button from "../Button/Button";
 
 export default props => {
   const [isMainDisabled, setMainDisabled] = useState(false);
-  var state = "IDLE";
-  if (props.telemetryData !== null) {
-    state = props.telemetryData.crucial_data.find(o => o.name === "status").value;
-  }
+  const state = props.state;
+  
   const buttons = {
     calibrate: {
       caption: "CALIBRATE",

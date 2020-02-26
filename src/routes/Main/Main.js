@@ -11,14 +11,21 @@ export default function Main(props) {
     <div className="gui-wrapper">
       <Header
         telemetryConnection={props.telemetryConnection}
+        telemetryData={props.telemetryData}
+        debugConnection={props.debugConnection}
+        baseStationConnection={props.stompClient.connected}
+        startTime={props.startTime}
+        endTime={props.endTime}
+        state={props.state}
       />
       <ButtonContainer
         stompClient={props.stompClient}
         telemetryData={props.telemetryData}
+        state={props.state}
       ></ButtonContainer>
       <DataContainer telemetryData={props.telemetryData}></DataContainer>
       <GaugeContainer></GaugeContainer>
-      <Tabs terminalOutput={props.terminalOutput}/>
+      <Tabs terminalOutput={props.terminalOutput} />
     </div>
   );
 }

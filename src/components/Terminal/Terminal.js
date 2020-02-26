@@ -27,7 +27,6 @@ export default function Terminal(props) {
         });
     }
 
-    //TODO: implement so that react doesn't still render the terminal
     if (props.isInactive) {
         return(null);
     }
