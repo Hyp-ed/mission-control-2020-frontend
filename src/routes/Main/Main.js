@@ -13,7 +13,8 @@ export default function Main(props) {
         telemetryConnection={props.telemetryConnection}
         debugConnection={props.debugConnection}
         baseStationConnection={props.stompClient.connected}
-        startTime={0}
+        startTime={props.startTime}
+        endTime={props.endTime}
         state={props.state}
       />
       <ButtonContainer
@@ -23,7 +24,7 @@ export default function Main(props) {
       ></ButtonContainer>
       <DataContainer telemetryData={props.telemetryData}></DataContainer>
       <GaugeContainer></GaugeContainer>
-      <Tabs terminalOutput={props.terminalOutput}/>
+      <Tabs terminalOutput={props.terminalOutput} />
     </div>
   );
 }

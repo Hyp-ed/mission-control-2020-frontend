@@ -4,37 +4,24 @@ import logo from "../../hyped.png";
 import PositionBar from "../PositionBar/PositionBar";
 
 export default function Header(props) {
-  const [timerState, setTimerState] = useState(false);
   const [time, setTime] = useState(0);
-  const [startTime, setStartTime] = useState(0);
 
   const telemetryConnectionStyle = props.telemetryConnection
     ? "pod-connection connected"
     : "pod-connection disconnected";
 
-  const startTimer = () => {
-    setStartTime(props.startTime);
-    setTimerState(true);
-  };
-
-  const stopTimer = () => {
-    setTimerState(false);
-    setTime(0);
-  };
-
   useEffect(() => {
-    // once we get a start time from the pod, start the timer
-    if (props.startTime != 0) {
-      startTimer();
+    if (props.endTime != 0) {
+      return;
     }
-  });
-
-  useEffect(() => {
+    if (props.startTime == 0) {
+      return;
+    }
     const interval = setInterval(() => {
-      if (timerState === true) setTime(Date.now() - startTime);
+      setTime(Date.now() - props.startTime);
     }, 1); // runs every milisecond
     return () => clearInterval(interval);
-  }, [timerState]); //sets interval once when timer state changes
+  }, [props.startTime, props.endTime]); //sets interval once when timer state changes
 
   const formatTime = duration => {
     var milliseconds = parseInt(duration % 1000),

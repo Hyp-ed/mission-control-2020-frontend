@@ -73,6 +73,25 @@ export default function App() {
     state = telemetryData.crucial_data.find(o => o.name === "status").value;
   }
 
+  // temporary solution to the timer, it should actually come from the pod side
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
+  useEffect(() => {
+    if (state == "CALIBRATING") {
+      setStartTime(0);
+      setEndTime(0);
+    }
+    else if (state == "ACCELERATING" && startTime == 0) {
+      setStartTime(Date.now());
+    }
+    else if (
+      (state == "RUN_COMPLETE" || state == "FAILURE_STOPPED") &&
+      endTime == 0
+    ) {
+      setEndTime(Date.now());
+    }
+  }, [state]);
+
   const history = createMemoryHistory();
   return (
     <MemoryRouter history={history}>
@@ -87,6 +106,8 @@ export default function App() {
               debugConnection={debugConnection}
               terminalOutput={terminalOutput}
               state={state}
+              startTime={startTime}
+              endTime={endTime}
             />
           )}
         ></Route>
