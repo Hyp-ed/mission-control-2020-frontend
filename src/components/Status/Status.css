@@ -42,7 +42,7 @@
     justify-content: space-around;
 }
 
-.title {
+.status-root .title {
     color: white;
     transform: rotate(-90deg);
     margin-left: -5%;

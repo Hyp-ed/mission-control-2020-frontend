@@ -1,23 +1,9 @@
-body {
-  margin: 0;
-  background-color: black;
-}
-
 .gui-wrapper {
   display: grid;
   grid-auto-columns: calc(100%/12);
   grid-auto-rows: calc(100%/12);
   height: 94vh;
   padding: 1.5% 2%;
-}
-
-.gauge-container {
-  grid-row: 2/6;
-  grid-column: 10/13;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: flex-end;
-  margin-bottom: 10%;
 }
 
 /* Colors */
@@ -45,7 +31,7 @@ body {
   color: black;
 }
 
-.bg-white-gradient.button:hover {
+.bg-white-gradient.button:hover, .bg-white-gradient.button.disabled {
   background: rgb(200,200,200);
 }
 
@@ -55,10 +41,27 @@ body {
   color: white;
 }
 
-.bg-blue-gradient.button:hover {
+.bg-blue-gradient.button:hover, .bg-blue-gradient.button.disabled {
   background: rgb(0,112,133);
 }
 
-.bg-blue-gradient.button.disabled {
-  background: rgb(0,112,133);
+.bg-red-gradient {
+  background: rgb(175,17,27);
+  background: radial-gradient(circle, rgba(175,17,27,1) 55%, rgba(148,0,0,1) 100%);
+  color: white;
 }
+
+.bg-red-gradient.button:hover, .bg-red-gradient.button.disabled {
+  background: rgb(148,0,0);
+}
+
+.bg-green-gradient {
+  background: rgb(55,180,77);
+  background: radial-gradient(circle, rgba(55,180,77,1) 55%, rgba(30,155,52,1) 100%);
+  color: white;
+}
+
+.bg-green-gradient.button:hover, .bg-green-gradient.button.disabled {
+  background: rgb(30,155,52);
+}
+

@@ -16,7 +16,7 @@ export default props => {
         <Textfit
           mode="single"
           forceSingleModeWidth={false}
-          max={16}
+          max={14}
           className="data-row-name"
         >
           {props.data.name}
@@ -28,7 +28,7 @@ export default props => {
           }
         >
           <div
-            className="progress-bar"
+            className={"progress-bar " + (percentage > 90 || percentage < 10 ? " bg-red-gradient" : "bg-white-gradient")}
             style={{
               width: percentage + "%"
             }}
@@ -43,7 +43,7 @@ export default props => {
         <Textfit
           mode="single"
           forceSingleModeWidth={false}
-          max={16}
+          max={14}
           className="data-row-value"
         >
           {props.data.value + " " + props.data.unit}

@@ -10,15 +10,19 @@ The mission-control is made up of a Java backend and a React App (Javascript) fr
 
 ### Installing dependencies
 
-This section requires ```brew``` installed on your computer. (If you don't have `brew` set up, click [here](https://brew.sh/) for more info) In order for the React App to run we need to install some dependent libraries. In the directory containing the frontend repo, run:
-
+This section requires ```brew``` installed on your computer. (If you don't have `brew` set up, click [here](https://brew.sh/) for more info) In order for the React App to run we need to install some dependent libraries. Use the following to check if node and npm are installed on your computer:
 ```
-$ brew install node
-$ brew install npm
+$ node -v
+$ npm -v
+```
+If not, in the directory containing the frontend repo, run:
+```
+$ sudo brew install node
+$ sudo brew install npm
 ```
 or on linux:
 ```
-$ sudo apt-get install node
+$ sudo apt-get install nodejs
 $ sudo apt-get install npm
 ```
 After installing node and npm:
@@ -27,7 +31,7 @@ $ sudo npm install yarn -g
 ```
 After installing yarn:
 ```
-$ yarn install
+$ sudo yarn install
 ```
 
 Note: do not use `sudo apt-get install yarn`. This will install a different package with the same name.

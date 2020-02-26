@@ -18,20 +18,34 @@ export default function Button(props) {
       classes.push("disabled");
     }
 
+    if (props.hidden) {
+      classes.push("hidden");
+    }
+
     classes.push(backgroundColor);
 
     return classes.join(" ");
   };
 
+  if (props.hidden) {
+    return (
+      <div
+        className={getClassNames(props.backgroundColor)}
+      ></div>
+        );
+  }
+
   return (
-    <div
+    <button
       className={getClassNames(props.backgroundColor)}
       onClick={props.handleClick}
     >
-      <div className="button-caption">
-        <FontAwesomeIcon className="button-icon" icon={props.icon} spin={props.spin}/>
-              <span>{props.caption}</span>
-          </div>  
-      </div>
+      <FontAwesomeIcon
+        className="button-icon"
+        icon={props.icon}
+        spin={props.spin}
+      />
+      {props.caption}
+    </button>
   );
 }
