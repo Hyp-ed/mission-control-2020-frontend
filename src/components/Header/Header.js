@@ -40,10 +40,16 @@ export default function Header(props) {
     return "T+ " + minutes + ":" + seconds + "." + milliseconds;
   };
 
+  var distance = 0;
+  if (props.telemetryData !== null) {
+    distance = props.telemetryData.crucial_data.find(o => o.name === "distance").value;
+    distance = Math.round((distance + Number.EPSILON) * 100) / 100
+  }
+
   return (
     <header className="header-root">
       <img src={logo} className="hyped-logo" alt="logo" />
-      <PositionBar distance={props.distance} />
+      <PositionBar distance={distance} />
       <p className="timer">{formatTime(time)}</p>
       <div className="pod-status">
         <div className={telemetryConnectionStyle}>

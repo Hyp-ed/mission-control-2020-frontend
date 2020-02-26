@@ -11,6 +11,7 @@ export default function Main(props) {
     <div className="gui-wrapper">
       <Header
         telemetryConnection={props.telemetryConnection}
+        telemetryData={props.telemetryData}
         debugConnection={props.debugConnection}
         baseStationConnection={props.stompClient.connected}
         startTime={props.startTime}
