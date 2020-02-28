@@ -10,7 +10,7 @@ import Terminal from "../Terminal/Terminal";
 import Status from "../Status/Status";
 
 export default function Tabs(props) {
-  const [activeTabs, setActiveTabs] = useState([false, false, true]);
+  const [activeTabs, setActiveTabs] = useState([true, false, false]);
 
   const handleTabClick = tabIndex => {
     var newTabArray = [false, false, false];

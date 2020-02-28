@@ -32,7 +32,7 @@
 }
 
 .bg-white-gradient.button:hover, .bg-white-gradient.button.disabled {
-  background: rgb(200,200,200);
+  background: rgb(190,190,190);
 }
 
 .bg-blue-gradient {
