@@ -1,17 +1,64 @@
 .tabs-root {
-    grid-column: 6/13;
-    grid-row: 5/13;
-    display: grid;
+  grid-column: 6/13;
+  grid-row: 5/13;
+  display: grid;
 }
 
 .tabs-container {
-    grid-row: 1/1;
-    grid-column: 1/2;
-    background-color: rgb(63, 63, 63);
+  grid-row: 1/1;
+  grid-column: 1/2;
+  background-color: rgb(63, 63, 63);
+}
+
+.datapoint-container {
+  grid-column: 1/3;
+  grid-row: 2/11;
+  z-index: 2;
 }
 
 .window-container {
-    grid-column: 1/3;
-    grid-row: 2/11;
-    background-color: #343434;
+  grid-column: 1/3;
+  grid-row: 2/11;
+  background-color: #343434;
+  display: flex;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.graph-container {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: scroll;
+}
+
+.graph-container:nth-child(2) {
+  break-after: always;
+  flex-basis: 100%;
+}
+
+.plus {
+  width: 5%;
+  width: 3vw;
+  height: 3vw;
+  justify-self: center;
+  align-self: center;
+  background: linear-gradient(#8f8f8f, #8f8f8f),
+    linear-gradient(#8f8f8f, #8f8f8f);
+  background-position: center;
+
+  background-size: 75% 2px, 2px 75%; /*thickness = 2px, length = 75%*/
+  background-repeat: no-repeat;
+  margin-right: 10px;
+}
+
+.plus:hover {
+  cursor: pointer;
+  background: linear-gradient(#343434, #343434),
+    linear-gradient(#343434, #343434), #8f8f8f;
+  background-position: center;
+  background-size: 75% 2px, 2px 75%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
 }
