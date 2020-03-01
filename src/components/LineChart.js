@@ -1,6 +1,9 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-plugin-streaming";
+import "./LineChart.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const colors = [
   "#BF000B", // dark red
@@ -12,6 +15,7 @@ const colors = [
 const accentColor = "#8F8F8F";
 const options = fontSize => {
   return {
+    responsive: true,
     maintainAspectRatio: true,
     // onResize: (_, size) => {},
     animation: {
@@ -46,6 +50,7 @@ const options = fontSize => {
           ticks: { display: false },
           gridLines: { display: false },
           type: "time",
+          distribution: "linear",
           time: { parser: "DD/MM/YYYY" }
         }
       ],
@@ -90,16 +95,35 @@ export default function lineChart(props) {
 
   // Won't work if datasets array is empty
   var data = { datasets: [] };
-  for (var i = 0; i < props.datasets.length; i++) {
+  for (var i = 0; i < props.datapoints.length; i++) {
     data.datasets.push({
-      label: props.datasets[i].label,
+      label: props.datapoints[i].label,
       fill: false,
-      borderColor: colors[i % props.datasets.length], // cycle colours
+      borderColor: colors[i % props.datapoints.length], // cycle colours
       borderWidth: 1.5,
       lineTension: 0,
-      data: props.datasets[i].data
+      data: props.datapoints[i].data
     });
   }
 
-  return <Line data={data} options={options(props.fontSize)} />;
+  return (
+    <div className="chart-wrapper">
+      <div className="chart-buttons">
+        <FontAwesomeIcon
+          className="close-button"
+          onClick={() => props.removeChart(props.id)}
+          icon={faTimes}
+        />
+        <span
+          className="datapoint-button"
+          onClick={() => props.selectDatapoints(props.id)}
+        >
+          Add datapoint
+        </span>
+      </div>
+      <div>
+        <Line data={data} options={options(props.fontSize)} />
+      </div>
+    </div>
+  );
 }

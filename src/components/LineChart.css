@@ -1,0 +1,35 @@
+.chart-wrapper {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.close-button {
+  border-radius: 50%;
+}
+
+.datapoint-button {
+  transform: rotate(-180deg);
+  writing-mode: vertical-rl;
+  font-size: small;
+  outline-style: solid;
+  outline-color: #8f8f8f;
+}
+
+.datapoint-button:hover {
+  background-color: #8f8f8f;
+  color: #343434;
+}
+
+.chart-buttons > * {
+  display: flex;
+  outline-width: 1px;
+  color: #8f8f8f;
+  padding: 5px 0 5px 1px;
+  /* margin: 5px 0 5px 1px; */
+}
+
+.chart-buttons > *:hover {
+  cursor: pointer;
+}
