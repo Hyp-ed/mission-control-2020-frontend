@@ -59,7 +59,11 @@ export default function Tabs(props) {
         />
       </div>
       <div className="window-container">
-        <Terminal isInactive={!activeTabs[0]} terminalOutput={props.terminalOutput}/>
+        <Terminal
+          isInactive={!activeTabs[0]}
+          terminalOutput={props.terminalOutput}
+          stompClient={props.stompClient}
+        />
         <Status isInactive={!activeTabs[2]} />
       </div>
     </div>

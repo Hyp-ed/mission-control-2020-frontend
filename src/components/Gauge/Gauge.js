@@ -59,7 +59,7 @@ export default function Gauge(props) {
       waveAmplitude={0} // remove wave
       gradient
       gradientStops={gradientStops}
-      circleStyle={{ fill: props.value.value > 80 ? red : gray }}
+      circleStyle={{ fill: pctValue > 80 ? red : gray }}
       textStyle={{
         fill: gray
       }}

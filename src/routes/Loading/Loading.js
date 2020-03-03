@@ -10,10 +10,13 @@ import { useHistory } from "react-router-dom";
 import SetupLogo from "../SetupLogo/SetupLogo";
 import Button from "../../components/Button/Button";
 import "./Loading.css";
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
 
 export default function Loading(props) {
   const history = useHistory();
   const handleGoBackClick = () => {
+    props.stompClient.send("/app/send/debug/reset", {}, {});
     history.push("/setup");
   };
 
@@ -42,7 +45,22 @@ export default function Loading(props) {
             className="icon alert"
             icon={faExclamationTriangle}
           ></FontAwesomeIcon>,
-          "Compiling failed"
+          "Compiling failed",
+          <div className="terminal-root">
+            <SimpleBar
+              className="terminal-content"
+              forceVisible="y"
+              autoHide={false}
+            >
+              <pre id="terminal_pre">{props.debugError}</pre>
+            </SimpleBar>
+          </div>,
+          <Button
+          caption="GO BACK"
+          handleClick={handleGoBackClick}
+          backgroundColor="bg-white-gradient"
+          icon={faArrowAltCircleLeft}
+        ></Button>
         ];
       default:
         return;
@@ -51,25 +69,14 @@ export default function Loading(props) {
 
   useEffect(() => {
     if (props.debugStatus == "RUNNING") {
-      history.push("/main")
+      history.push("/main");
     }
-  }, [props.debugStatus])
+  }, [props.debugStatus]);
 
   return (
     <div className="loading-wrapper centered">
       <SetupLogo></SetupLogo>
       <div className="loading-wrapper-content">{getMessage()}</div>
-      {() => {
-        if (props.debugStatus == "COMPILING_FAILED") {
-          return (<Button
-            caption="GO BACK"
-            handleClick={handleGoBackClick}
-            backgroundColor="bg-white-gradient"
-            icon={faArrowAltCircleLeft}
-          ></Button>);
-        }
-      }}
-      
     </div>
   );
 }

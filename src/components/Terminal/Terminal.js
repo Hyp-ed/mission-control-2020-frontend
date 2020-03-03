@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Terminal.css";
 import { animateScroll } from "react-scroll";
 import Button from "../Button/Button";
@@ -9,10 +9,22 @@ import "simplebar/dist/simplebar.min.css";
 export default function Terminal(props) {
   const flags = props.flags;
   const debug_level = props.debug_level;
+  const scrollableNodeRef = React.createRef();
+  const previousOutput = usePrevious(props.terminalOutput);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
   //updates terminal output in the pre
   useEffect(() => {
-    scrollToBottom();
+    if (JSON.stringify(previousOutput) != JSON.stringify(props.terminalOutput)) {
+      scrollableNodeRef.current.scrollTo(0, scrollableNodeRef.current.scrollHeight);
+    }
     return function cleanup() {
       // TODO: we can cleanup the terminal here when the terminal is inactive
       //  or when too much is in the pre
@@ -20,12 +32,6 @@ export default function Terminal(props) {
     };
   }, [props.terminalOutput]); //useEffect only called when terminal output changes
 
-  const scrollToBottom = () => {
-    animateScroll.scrollToBottom({
-      containerId: "terminal_pre",
-      duration: 0
-    });
-  };
 
   if (props.isInactive) {
     return null;
@@ -38,9 +44,13 @@ export default function Terminal(props) {
     return props.terminalOutput.map(log => (log.line + "\n"));
   };
 
+  const handleKillClick = () => {
+    props.stompClient.send("/app/send/debug/kill", {}, {});
+  }
+
   return (
     <div className="terminal-root">
-      <SimpleBar className="terminal-content" forceVisible="y" autoHide={false}>
+      <SimpleBar className="terminal-content" forceVisible="y" autoHide={false} scrollableNodeProps={{ ref: scrollableNodeRef }}>
         <pre id="terminal_pre">{getTerminalOutput()}</pre>
       </SimpleBar>
       <div className="bottom-buttons">
@@ -50,7 +60,7 @@ export default function Terminal(props) {
           textColor="#000000"
           icon={faSkull}
           width="38%"
-          onClick={() => {}}
+          handleClick={handleKillClick}
         ></Button>
       </div>
     </div>

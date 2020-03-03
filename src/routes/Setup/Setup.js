@@ -76,20 +76,23 @@ export default function Setup(props) {
 
   const getConnectButton = () => {
     var button;
-    switch (props.debugStatus) {
-      case "DISCONNECTED":
-        button = connectButtons.connect;
-        break;
-      case "CONNECTING":
-        button = connectButtons.connecting;
-        break;
-      case "CONNECTED":
-        button = connectButtons.connected;
-        break;
-      case "CONNECTING_FAILED":
-        button = connectButtons.failed;
-        break;
+    if (props.debugConnection) {
+      button = connectButtons.connected;
     }
+    else {
+      switch (props.debugStatus) {
+        case "DISCONNECTED":
+          button = connectButtons.connect;
+          break;
+        case "CONNECTING":
+          button = connectButtons.connecting;
+          break;
+        case "CONNECTING_FAILED":
+          button = connectButtons.failed;
+          break;
+      }
+    }
+
     return (
       <Button
         caption={button.caption}
@@ -115,7 +118,7 @@ export default function Setup(props) {
   };
 
   const handleRunClick = () => {
-    if (props.debugStatus != "CONNECTED") {
+    if (!props.debugConnection) {
       return;
     }
     props.stompClient.send("/app/send/debug/run", {}, JSON.stringify(flags));
@@ -123,7 +126,7 @@ export default function Setup(props) {
   };
 
   const handleCompileClick = () => {
-    if (props.debugStatus != "CONNECTED") {
+    if (!props.debugConnection) {
       return;
     }
     props.stompClient.send("/app/send/debug/compileRun", {}, JSON.stringify(flags));
@@ -170,14 +173,14 @@ export default function Setup(props) {
           handleClick={handleRunClick}
           backgroundColor="bg-white-gradient"
           icon={faPlay}
-          disabled={props.debugStatus != "CONNECTED"}
+          disabled={!props.debugConnection}
         ></Button>
         <Button
           caption="COMPILE & RUN"
           handleClick={handleCompileClick}
           backgroundColor="bg-white-gradient"
           icon={faCogs}
-          disabled={props.debugStatus != "CONNECTED"}
+          disabled={!props.debugConnection}
         ></Button>
       </div>
     </div>

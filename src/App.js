@@ -125,7 +125,17 @@ export default function App() {
             />
           )}
         ></Route>
-        <Route path="/loading" render={props => <Loading debugStatus={debugStatus} debugError={debugError}/>}></Route>
+        <Route
+          path="/loading"
+          render={props => (
+            <Loading
+              stompClient={stompClient}
+              debugStatus={debugStatus}
+              debugError={debugError}
+              debugConnection={debugConnection}
+            />
+          )}
+        ></Route>
         <Route path="/disconnected" render={props => <Disconnected />}></Route>
         <Route
           path="/setup"

@@ -25,3 +25,8 @@
 .loading-wrapper-content .icon.success {
   color: rgb(30,155,52);
 }
+
+.loading-wrapper-content .terminal-root {
+  margin: 20px 0;
+  font-size: 0.6em;
+}
