@@ -64,7 +64,7 @@ export default function Tabs(props) {
           terminalOutput={props.terminalOutput}
           stompClient={props.stompClient}
         />
-        <Status isInactive={!activeTabs[2]} />
+        {/* <Status isInactive={!activeTabs[2]} /> */}
       </div>
     </div>
   );

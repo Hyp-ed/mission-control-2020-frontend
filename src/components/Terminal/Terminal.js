@@ -22,7 +22,7 @@ export default function Terminal(props) {
 
   //updates terminal output in the pre
   useEffect(() => {
-    if (JSON.stringify(previousOutput) != JSON.stringify(props.terminalOutput)) {
+    if (JSON.stringify(previousOutput) != JSON.stringify(props.terminalOutput) && scrollableNodeRef.current !== null) {
       scrollableNodeRef.current.scrollTo(0, scrollableNodeRef.current.scrollHeight);
     }
     return function cleanup() {
