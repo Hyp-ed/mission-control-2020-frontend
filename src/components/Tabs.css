@@ -10,18 +10,11 @@
   background-color: rgb(63, 63, 63);
 }
 
-.datapoint-container {
-  grid-column: 1/3;
-  grid-row: 2/11;
-  z-index: 2;
-}
-
 .window-container {
   grid-column: 1/3;
   grid-row: 2/11;
   background-color: #343434;
   display: flex;
-  overflow: hidden;
   z-index: 1;
 }
 
