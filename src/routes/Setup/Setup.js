@@ -29,7 +29,7 @@ export default function Setup(props) {
     { name: "Embrakes", value: "--fake_embrakes" },
     { name: "Motors", value: "--fake_motors" },
     { name: "Battery test", value: "--battery_test" },
-    { name: "High power", value: "--fake_highpower" },
+    { name: "High power", value: "--fake_highpower" }
   ];
 
   const additional = [];
@@ -78,8 +78,7 @@ export default function Setup(props) {
     var button;
     if (props.debugConnection) {
       button = connectButtons.connected;
-    }
-    else {
+    } else {
       switch (props.debugStatus) {
         case "DISCONNECTED":
           button = connectButtons.connect;
@@ -88,6 +87,9 @@ export default function Setup(props) {
           button = connectButtons.connecting;
           break;
         case "CONNECTING_FAILED":
+          button = connectButtons.failed;
+          break;
+        default:
           button = connectButtons.failed;
           break;
       }
@@ -122,14 +124,18 @@ export default function Setup(props) {
       return;
     }
     props.stompClient.send("/app/send/debug/run", {}, JSON.stringify(flags));
-    history.push("/main")
+    history.push("/main");
   };
 
   const handleCompileClick = () => {
     if (!props.debugConnection) {
       return;
     }
-    props.stompClient.send("/app/send/debug/compileRun", {}, JSON.stringify(flags));
+    props.stompClient.send(
+      "/app/send/debug/compileRun",
+      {},
+      JSON.stringify(flags)
+    );
     history.push("/loading");
   };
 
@@ -141,8 +147,7 @@ export default function Setup(props) {
     var newFlags = flags;
     if (e.target.checked) {
       newFlags.push(e.target.value);
-    }
-    else {
+    } else {
       newFlags.splice(newFlags.indexOf(e.target.value), 1);
     }
     setFlags(newFlags);
@@ -155,7 +160,10 @@ export default function Setup(props) {
       <div className="input-group">
         <label>IP address</label>
         <div className="input-group-button">
-          <input onChange={handleIpAddressChange} defaultValue={"localhost"}></input>
+          <input
+            onChange={handleIpAddressChange}
+            defaultValue={"localhost"}
+          ></input>
           {getConnectButton()}
         </div>
       </div>
