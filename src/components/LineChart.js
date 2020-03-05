@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-plugin-streaming";
 import "./LineChart.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import _ from "lodash";
 
 const colors = [
   "#BF000B", // dark red
@@ -76,35 +77,95 @@ const options = fontSize => {
   };
 };
 
-export default function lineChart(props) {
-  /* EXPECTED DATA FORMAT:
-    data: {
-      datasets:[
-        {
-          // index of values used for positioning on x-axis
-          data: [val1, val2, ...] 
-        },
-        {
-          // each value's position is uniquely determined
-          data: [{x: _, y: _}]
-        }
-        ...
-      ]
-    }
-  */
-
-  // Won't work if datasets array is empty
-  var data = { datasets: [] };
-  for (var i = 0; i < props.datapoints.length; i++) {
-    data.datasets.push({
-      label: props.datapoints[i].label,
-      fill: false,
-      borderColor: colors[i % props.datapoints.length], // cycle colours
-      borderWidth: 1.5,
-      lineTension: 0,
-      data: props.datapoints[i].data
-    });
+const getDataset = (object, keys) => {
+  if (Array.isArray(object)) {
+    let key = keys[0];
+    keys = keys.slice(1);
+    return getDataset(
+      object.find(o => o.name === key),
+      keys
+    );
+  } else if (object.hasOwnProperty("value") && Array.isArray(object.value)) {
+    let key = keys[0];
+    keys = keys.slice(1);
+    return getDataset(
+      object.value.find(o => o.name === key),
+      keys
+    );
+  } else if (keys.length > 0) {
+    let key = keys[0];
+    keys = keys.slice(1);
+    return getDataset(object[key], keys);
+  } else {
+    return object.value;
   }
+};
+
+const useDeepEffect = (fn, deps) => {
+  const isFirst = useRef(true);
+  const prevDeps = useRef(deps);
+
+  useEffect(() => {
+    const isSame = prevDeps.current.every((obj, index) =>
+      _.isEqual(obj, deps[index])
+    );
+
+    if (isFirst.current || !isSame) {
+      fn();
+    }
+
+    isFirst.current = false;
+    prevDeps.current = deps;
+  }, deps);
+};
+
+export default function LineChart(props) {
+  const [datasets, setDatasets] = useState(new WeakMap());
+
+  // objects used as dependencies => carry out deep comparison
+  useDeepEffect(() => {
+    // console.log(getData());
+    setDatasets(old => {
+      props.keyArrays.forEach(keyArray => {
+        let datapoint = {
+          x: props.data.time,
+          y: getDataset(props.data.telemetryData, keyArray)
+        };
+        if (old.has(keyArray)) {
+          old.set(keyArray, [...old.get(keyArray), datapoint]);
+        } else {
+          old.set(keyArray, [datapoint]);
+        }
+      });
+      return old;
+    });
+  }, [props.data, props.keyArrays]);
+
+  const getData = () => {
+    return {
+      datasets: Array.from(props.keyArrays, (keyArray, i) => {
+        if (!datasets.has(keyArray)) console.log("yo");
+        return {
+          label: `TestVal ${i}`,
+          data: datasets.has(keyArray) ? datasets.get(keyArray) : [],
+          // unit: "test",
+          fill: false,
+          borderColor: colors[i % colors.length], // cycle colours
+          borderWidth: 1.5,
+          lineTension: 0
+        };
+      })
+    };
+  };
+
+  /* FORMAT of *data* prop:
+    datasets: [
+      {
+        data: [{x: _, y: _}]
+      }, 
+      {...}
+    ]
+  */
 
   return (
     <div className="chart-wrapper">
@@ -122,7 +183,7 @@ export default function lineChart(props) {
         </span>
       </div>
       <div>
-        <Line data={data} options={options(props.fontSize)} />
+        <Line data={getData()} options={options(props.fontSize)} />
       </div>
     </div>
   );

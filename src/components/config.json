@@ -2,11 +2,17 @@
   "charts": [
     {
       "id": 0,
-      "datapoints": []
+      "datapoints": [
+        ["crucial_data", "velocity"],
+        ["crucial_data", "acceleration"]
+      ]
     },
     {
       "id": 1,
-      "datapoints": []
+      "datapoints": [
+        ["crucial_data", "velocity"],
+        ["crucial_data", "acceleration"]
+      ]
     }
   ]
 }

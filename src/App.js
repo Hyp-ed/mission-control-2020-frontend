@@ -82,23 +82,27 @@ export default function App() {
   const accMaxValue = 50;
   const velMaxValue = 400;
 
-  const [IMUData, setIMUData] = useState([]);
-  const [speedData, setSpeedData] = useState([]);
+  const [telemetryData, setTelemetryData] = useState(
+    require("./testData.json")
+  );
 
   useEffect(() => {
     // Each interval represents one set of data from the pod
     const interval = setInterval(() => {
-      setIMUData(oldData => [
-        ...oldData,
-        { x: Date.now(), y: (Math.random() - 0.5) * 20 }
-      ]);
-      setSpeedData(oldData => [
-        ...oldData,
-        { x: Date.now(), y: Math.random() * 10 }
-      ]);
       setGaugeData({
         velocity: Math.random() * velMaxValue,
         acceleration: Math.random() * accMaxValue
+      });
+      setTelemetryData(oldData => {
+        const accIdx = oldData.crucial_data.findIndex(
+          e => e.name === "acceleration"
+        );
+        const velIdx = oldData.crucial_data.findIndex(
+          e => e.name === "velocity"
+        );
+        oldData.crucial_data[accIdx].value = (Math.random() - 0.5) * 20;
+        oldData.crucial_data[velIdx].value = Math.random() * 10;
+        return oldData;
       });
     }, refreshRate);
 
@@ -166,16 +170,10 @@ export default function App() {
         />
       </div>
       <Tabs
-        graphs={[
-          {
-            datasets: [
-              { label: "IMU", data: IMUData, unit: "m/s²" },
-              { label: "Speed", data: speedData, unit: "m/s" }
-            ],
-            // datasets: [],
-            fontSize: 12
-          }
-        ]}
+        data={{
+          time: Date.now(),
+          telemetryData: telemetryData
+        }}
       ></Tabs>
     </div>
   );
