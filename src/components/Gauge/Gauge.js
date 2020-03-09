@@ -29,19 +29,19 @@ const gradientStops = [
 ];
 
 export default function Gauge(props) {
-  const maxValue = props.maxValue ? props.maxValue : 100;
-  const pctValue = (props.value / maxValue) * 100;
+  const maxValue = props.value.max;
+  const pctValue = (props.value.value / maxValue) * 100;
 
   // Specifies a custom text renderer for rendering a percent value.
   const textRenderer = () => {
-    const value = Math.round(props.value);
+    const value = Math.round(props.value.value);
     const fontSize = props.size / 4;
     return (
       <tspan>
         <tspan className="value" style={{ fontSize }}>
           {value}
         </tspan>
-        <tspan style={{ fontSize: fontSize * 0.6 }}>{props.unit}</tspan>
+        <tspan style={{ fontSize: fontSize * 0.6 }}>{props.value.unit}</tspan>
       </tspan>
     );
   };
@@ -54,13 +54,12 @@ export default function Gauge(props) {
       value={pctValue} // value must be in percent as per documentation
       textRenderer={textRenderer}
       riseAnimation
-      riseAnimationTime={props.refreshRate}
       waveAnimation={false}
       waveFrequency={2}
       waveAmplitude={0} // remove wave
       gradient
       gradientStops={gradientStops}
-      circleStyle={{ fill: props.value > 80 ? red : gray }}
+      circleStyle={{ fill: pctValue > 80 ? red : gray }}
       textStyle={{
         fill: gray
       }}

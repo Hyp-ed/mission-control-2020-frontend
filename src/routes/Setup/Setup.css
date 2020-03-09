@@ -37,6 +37,19 @@
   flex-wrap: wrap;
 }
 
+.input-group-button {
+  display: inline-flex;
+  width: 100%;
+}
+
+.input-group-button > input {
+  flex-grow: 2;
+}
+
+.input-group-button > button {
+  flex-grow: 1;
+}
+
 .input-group-switch {
   display: flex;
   box-sizing: border-box;

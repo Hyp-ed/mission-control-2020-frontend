@@ -10,7 +10,7 @@ import Terminal from "../Terminal/Terminal";
 import Status from "../Status/Status";
 
 export default function Tabs(props) {
-  const [activeTabs, setActiveTabs] = useState([false, false, true]);
+  const [activeTabs, setActiveTabs] = useState([true, false, false]);
 
   const handleTabClick = tabIndex => {
     var newTabArray = [false, false, false];
@@ -59,8 +59,12 @@ export default function Tabs(props) {
         />
       </div>
       <div className="window-container">
-        <Terminal isInactive={!activeTabs[0]} terminalOutput={props.terminalOutput}/>
-        <Status isInactive={!activeTabs[2]} />
+        <Terminal
+          isInactive={!activeTabs[0]}
+          terminalOutput={props.terminalOutput}
+          stompClient={props.stompClient}
+        />
+        {/* <Status isInactive={!activeTabs[2]} /> */}
       </div>
     </div>
   );

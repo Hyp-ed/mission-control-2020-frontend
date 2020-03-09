@@ -30,7 +30,7 @@ button {
   -moz-appearance: none;
 }
 
-button:active {
+button:active:not(.disabled) {
   transform: scale(0.99);
 }
 

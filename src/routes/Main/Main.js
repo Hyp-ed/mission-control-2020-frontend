@@ -24,8 +24,11 @@ export default function Main(props) {
         state={props.state}
       ></ButtonContainer>
       <DataContainer telemetryData={props.telemetryData}></DataContainer>
-      <GaugeContainer></GaugeContainer>
-      <Tabs terminalOutput={props.terminalOutput} />
+      <GaugeContainer telemetryData={props.telemetryData}></GaugeContainer>
+      <Tabs
+        terminalOutput={props.terminalOutput}
+        stompClient={props.stompClient}
+      />
     </div>
   );
 }
