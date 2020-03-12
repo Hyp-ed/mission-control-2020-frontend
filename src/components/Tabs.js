@@ -6,11 +6,11 @@ import { isEqual } from "lodash";
 import AddGraphButton from "./AddGraphButton";
 
 const MAX_GRAPHS = 4;
+const NO_GRAPH = -1;
 
 export default function Tabs(props) {
   var config = require("./config.json");
-  const [currentGraph, setCurrentGraph] = useState(null);
-  const [graphDatapoints, setGraphDatapoints] = useState({});
+  const [currentGraph, setCurrentGraph] = useState(-1);
 
   /**
    * Recursively walks the data object using a list of keys and returns the datapoint object under the given path
@@ -54,29 +54,12 @@ export default function Tabs(props) {
     return id;
   };
 
-  const parseConfig = () => {
-    let datapoints = {};
-    config.graphs.forEach(graph => {
-      datapoints[graph.id] = graph.paths.map(path => {
-        let datapoint = getDatapoint(props.data.telemetryData, path);
-        return {
-          name: datapoint.name,
-          unit: datapoint.unit,
-          min: datapoint.min,
-          max: datapoint.max,
-          path: path
-        };
-      });
-    });
-    setGraphDatapoints(datapoints);
-  };
-
   /**
-   * Memoize config, parsing happens only if config changes.
+   * Memoize config, call fn iff config changes.
    */
-  useMemo(() => {
-    parseConfig(config);
-  }, [config]);
+  // useMemo(() => {
+  //   fn(config);
+  // }, [config]);
 
   const addGraph = () => {
     if (config.graphs.length >= MAX_GRAPHS) {
@@ -90,9 +73,8 @@ export default function Tabs(props) {
   };
 
   const removeGraph = id => {
-    console.log("removing " + id);
+    console.log(`Removing graph ${id}`);
     config.graphs = config.graphs.filter(graph => graph.id !== id);
-    console.log(config);
   };
 
   const getGraphs = () => {
@@ -100,7 +82,7 @@ export default function Tabs(props) {
       <LineGraph
         key={graph.id}
         id={graph.id}
-        datapoints={graphDatapoints[graph.id] ? graphDatapoints[graph.id] : []}
+        paths={graph.paths ? graph.paths : []}
         fontSize={10}
         removeGraph={removeGraph}
         data={props.data}
@@ -110,49 +92,36 @@ export default function Tabs(props) {
     ));
   };
 
-  const addDatapoint = datapoint => {
-    const datapoints = graphDatapoints.hasOwnProperty(currentGraph)
-      ? [...graphDatapoints[currentGraph], datapoint]
-      : [datapoint];
-    setGraphDatapoints({
-      ...graphDatapoints,
-      [currentGraph]: datapoints
-    });
+  const addPath = path => {
+    config.graphs.find(graph => graph.id === currentGraph).paths.push(path);
   };
 
-  const getDatapointIndex = (list, datapoint) => {
-    if (!list || !datapoint) {
-      return -1;
-    }
-    return list.findIndex(d => {
-      // Perform deep comparison
-      return isEqual(d, datapoint);
-    });
-  };
-
-  const handleDatapoint = datapoint => {
-    if (
-      graphDatapoints.hasOwnProperty(currentGraph) &&
-      getDatapointIndex(graphDatapoints[currentGraph], datapoint) > -1
-    ) {
-      removeDatapoint(datapoint);
+  const handlePath = path => {
+    if (isPathSelected(path)) {
+      removePath(path);
     } else {
-      addDatapoint(datapoint);
+      addPath(path);
     }
   };
 
-  const removeDatapoint = datapoint => {
-    const index = getDatapointIndex(graphDatapoints[currentGraph], datapoint);
-    if (index > -1) {
-      setGraphDatapoints(previous => {
-        previous[currentGraph].splice(index, 1);
-        return previous;
-      });
-    }
+  const removePath = path => {
+    config.graphs.find(
+      graph => graph.id === currentGraph
+    ).paths = config.graphs
+      .find(graph => graph.id === currentGraph)
+      .paths.filter(p => !isEqual(p, path));
   };
 
-  const isDatapointSelected = datapoint => {
-    return getDatapointIndex(graphDatapoints[currentGraph], datapoint) > -1;
+  const isPathSelected = path => {
+    try {
+      return (
+        config.graphs
+          .find(graph => graph.id === currentGraph)
+          .paths.filter(p => isEqual(p, path)).length > 0
+      );
+    } catch (e) {
+      return false;
+    }
   };
 
   return (
@@ -162,17 +131,15 @@ export default function Tabs(props) {
         <div className="graph-container">{getGraphs()}</div>
         <AddGraphButton
           enabled={config.graphs.length < MAX_GRAPHS}
-          onClick={() => addGraph()}
+          onClick={addGraph}
         />
       </div>
       <DatapointContainer
-        visible={currentGraph !== null}
+        visible={currentGraph !== NO_GRAPH}
         data={props.data.telemetryData}
-        onCloseClicked={() => setCurrentGraph(null)}
-        getDatapointIndex={getDatapointIndex}
-        graphDatapoints={graphDatapoints[currentGraph]}
-        handleDatapoint={handleDatapoint}
-        isSelected={isDatapointSelected}
+        onCloseClicked={() => setCurrentGraph(NO_GRAPH)}
+        handlePath={handlePath}
+        isSelected={isPathSelected}
       />
     </div>
   );

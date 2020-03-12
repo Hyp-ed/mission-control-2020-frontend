@@ -108,23 +108,20 @@ export default function LineGraph(props) {
 
   useDeepEffect(() => {
     setDatasets(old_dataset => {
-      props.datapoints.forEach(datapoint => {
-        let graph_datapoint = {
+      props.paths.forEach(path => {
+        let datapoint = {
           x: props.data.time,
-          y: props.getValue(props.data.telemetryData, datapoint.path)
+          y: props.getValue(props.data.telemetryData, path)
         };
-        if (old_dataset.hasOwnProperty(datapoint.path)) {
-          old_dataset[datapoint.path] = [
-            ...old_dataset[datapoint.path],
-            graph_datapoint
-          ];
+        if (old_dataset.hasOwnProperty(path)) {
+          old_dataset[path] = [...old_dataset[path], datapoint];
         } else {
-          old_dataset[datapoint.path] = [graph_datapoint];
+          old_dataset[path] = [datapoint];
         }
       });
       return old_dataset;
     });
-  }, [props.data, props.datapoints]);
+  }, [props.data, props.paths]);
 
   /**
    * Generates an unambiguous label for a datapoint
@@ -137,19 +134,19 @@ export default function LineGraph(props) {
    * @param {object} datapoint
    * @returns a unique label for a datapoint
    */
-  const getDatapointLabel = datapoint => {
+  const getDatapointLabel = path => {
     let numOccurrences = 0;
-    props.datapoints.forEach(d => {
-      if (d.name === datapoint.name) {
+    props.paths.forEach(p => {
+      if (isEqual(p, path)) {
         numOccurrences++;
       }
     });
-    if (numOccurrences > 1 && datapoint.path.length > 1) {
-      return [datapoint.path[datapoint.path.length - 2], datapoint.name]
+    if (numOccurrences > 1 && path.length > 1) {
+      return [path[path.length - 2], path[path.length - 1]]
         .join(" ")
         .toUpperCase();
     }
-    return datapoint.name.toUpperCase();
+    return path[path.length - 1].toUpperCase();
   };
 
   /**
@@ -166,13 +163,10 @@ export default function LineGraph(props) {
    */
   const getData = () => {
     return {
-      datasets: Array.from(props.datapoints, (datapoint, i) => {
+      datasets: Array.from(props.paths, (path, i) => {
         return {
-          label: getDatapointLabel(datapoint),
-          data: datasets.hasOwnProperty(datapoint.path)
-            ? datasets[datapoint.path]
-            : [],
-          unit: datapoint.unit,
+          label: getDatapointLabel(path),
+          data: datasets.hasOwnProperty(path) ? datasets[path] : [],
           borderColor: graph_colors[i % graph_colors.length], // cycle colors
           fill: false,
           borderWidth: 1.5,
@@ -199,7 +193,7 @@ export default function LineGraph(props) {
       </div>
       <div>
         <Line
-          data={getData}
+          data={() => getData()}
           options={options(props.fontSize)}
           // height={window.innerHeight / 4}
           // width={window.innerWidth / 4.3}

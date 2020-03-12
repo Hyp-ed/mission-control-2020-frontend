@@ -3,26 +3,26 @@ import "./DatapointContainer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const getDatapointList = (data, path = []) => {
+const DELIMITER = " > ";
+
+const getPathObjects = (data, path = []) => {
   if (
     data.hasOwnProperty("crucial_data") &&
     data.hasOwnProperty("additional_data")
   ) {
-    return getDatapointList(data.crucial_data, ["crucial_data"]).concat(
-      getDatapointList(data.additional_data, ["additional_data"])
+    return getPathObjects(data.crucial_data, ["crucial_data"]).concat(
+      getPathObjects(data.additional_data, ["additional_data"])
     );
   }
   return data
     .map(nested_data => {
       if (Array.isArray(nested_data.value)) {
-        return getDatapointList(nested_data.value, [...path, nested_data.name]);
+        return getPathObjects(nested_data.value, [...path, nested_data.name]);
       } else if (!isNaN(nested_data.value)) {
+        let p = [...path, nested_data.name];
         return {
-          name: nested_data.name,
-          unit: nested_data.unit,
-          path: [...path, nested_data.name],
-          min: nested_data.min,
-          max: nested_data.max
+          caption: p.join(DELIMITER),
+          path: p
         };
       }
     })
@@ -32,20 +32,22 @@ const getDatapointList = (data, path = []) => {
 export default function DatapointContainer(props) {
   const getDatapointTabs = () => {
     var datapoints = [];
-    getDatapointList(props.data).forEach((datapoint, i) => {
-      if (!datapoint) {
+
+    getPathObjects(props.data).forEach((path_obj, i) => {
+      if (!path_obj) {
         return;
       }
+
       datapoints.push(
         <div
           className={[
-            props.isSelected(datapoint) ? "selected" : "",
+            props.isSelected(path_obj.path) ? "selected" : "",
             props.visible ? "datapoint" : "invisible"
           ].join(" ")}
-          onClick={() => props.handleDatapoint(datapoint)}
+          onClick={() => props.handlePath(path_obj.path)}
           key={i}
         >
-          {datapoint.path.join(" > ")}
+          {path_obj.caption}
         </div>
       );
     });
@@ -59,7 +61,7 @@ export default function DatapointContainer(props) {
     >
       <FontAwesomeIcon
         className="close-button"
-        onClick={() => props.onCloseClicked()}
+        onClick={props.onCloseClicked}
         icon={faTimes}
       />
       <div className="datapoints">{getDatapointTabs()}</div>
