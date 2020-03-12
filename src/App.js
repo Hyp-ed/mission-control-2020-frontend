@@ -78,7 +78,7 @@ export default function App() {
   // If acceleration and velocity were two separate hooks, changing the state of one of them would only force the corresponding gauge to re-render
   // This is actually the more efficient way to do it, but it made the animation behave weirdly
   const [gaugeData, setGaugeData] = useState({ velocity: 0, acceleration: 0 });
-  const refreshRate = 250;
+  const refreshRate = 200;
   const accMaxValue = 50;
   const velMaxValue = 400;
 
@@ -171,6 +171,7 @@ export default function App() {
       </div>
       <Tabs
         data={{
+          // TODO: get a timestamp from the pod side?
           time: Date.now(),
           telemetryData: telemetryData
         }}

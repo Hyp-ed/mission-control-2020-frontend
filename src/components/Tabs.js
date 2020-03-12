@@ -1,75 +1,139 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./Tabs.css";
-import LineChart from "./LineChart";
+import LineGraph from "./LineGraph";
 import DatapointContainer from "./DatapointContainer";
+import { isEqual } from "lodash";
+import AddGraphButton from "./AddGraphButton";
 
-const MAX_CHARTS = 4;
+const MAX_GRAPHS = 4;
 
 export default function Tabs(props) {
   var config = require("./config.json");
-  const [currentlySelecting, setCurrentlySelecting] = useState(null);
-  const [chartDatapoints, setChartDatapoints] = useState({});
+  const [currentGraph, setCurrentGraph] = useState(null);
+  const [graphDatapoints, setGraphDatapoints] = useState({});
 
-  // TEMP
-  const telemetryData = require("../testData.json");
-
-  const removeChart = id => {
-    config.charts = config.charts.filter(chart => chart.id !== id);
+  /**
+   * Recursively walks the data object using a list of keys and returns the datapoint object under the given path
+   *
+   * @param {object} data – object to be walked
+   * @param {array} path – contains object keys
+   * @returns
+   */
+  const getDatapoint = (data, path) => {
+    if (!data || !path) {
+      return undefined;
+    }
+    if (Array.isArray(data)) {
+      let key = path[0];
+      path = path.slice(1);
+      data = data.find(o => o.name === key);
+    } else if (data.hasOwnProperty("value") && Array.isArray(data.value)) {
+      let key = path[0];
+      path = path.slice(1);
+      data = data.value.find(o => o.name === key);
+    } else if (typeof data === "object" && data !== null) {
+      if (path.length === 0) {
+        return data;
+      }
+      let key = path[0];
+      data = data[key];
+      path = path.slice(1);
+    } else {
+      return undefined;
+    }
+    return getDatapoint(data, path);
   };
 
-  const getCharts = () => {
-    return Array.from(config.charts, chart => (
-      <LineChart
-        key={chart.id}
-        id={chart.id}
-        keyArrays={chart.datapoints}
-        fontSize={12}
-        removeChart={removeChart}
-        selectDatapoints={selectDatapoints}
+  /**
+   * Simple incremental unique id generator for graphs
+   */
+  const [graphId, setGraphId] = useState(config.graphs.length);
+  const getGraphId = () => {
+    let id = graphId;
+    setGraphId(id + 1);
+    return id;
+  };
+
+  const parseConfig = () => {
+    let datapoints = {};
+    config.graphs.forEach(graph => {
+      datapoints[graph.id] = graph.paths.map(path => {
+        let datapoint = getDatapoint(props.data.telemetryData, path);
+        return {
+          name: datapoint.name,
+          unit: datapoint.unit,
+          min: datapoint.min,
+          max: datapoint.max,
+          path: path
+        };
+      });
+    });
+    setGraphDatapoints(datapoints);
+  };
+
+  /**
+   * Memoize config, parsing happens only if config changes.
+   */
+  useMemo(() => {
+    parseConfig(config);
+  }, [config]);
+
+  const addGraph = () => {
+    if (config.graphs.length >= MAX_GRAPHS) {
+      console.error(`Maximum number of graphs (${MAX_GRAPHS}) reached!`);
+      return;
+    }
+    config.graphs.push({
+      id: getGraphId(),
+      paths: []
+    });
+  };
+
+  const removeGraph = id => {
+    console.log("removing " + id);
+    config.graphs = config.graphs.filter(graph => graph.id !== id);
+    console.log(config);
+  };
+
+  const getGraphs = () => {
+    return Array.from(config.graphs, graph => (
+      <LineGraph
+        key={graph.id}
+        id={graph.id}
+        datapoints={graphDatapoints[graph.id] ? graphDatapoints[graph.id] : []}
+        fontSize={10}
+        removeGraph={removeGraph}
         data={props.data}
+        onSelectDatapointsClicked={id => setCurrentGraph(id)}
+        getValue={(data, path) => getDatapoint(data, path).value}
       />
     ));
   };
 
-  const addChart = () => {
-    if (config.charts.length >= MAX_CHARTS) {
-      console.error(`Maximum number of charts (${MAX_CHARTS}) reached!`);
-      return;
-    }
-    config.charts.push({ id: config.charts.length, datapoints: [] });
-  };
-
-  const selectDatapoints = chartId => {
-    setCurrentlySelecting(chartId);
-  };
-
   const addDatapoint = datapoint => {
-    const datapoints = chartDatapoints.hasOwnProperty(currentlySelecting)
-      ? [...chartDatapoints[currentlySelecting], datapoint]
+    const datapoints = graphDatapoints.hasOwnProperty(currentGraph)
+      ? [...graphDatapoints[currentGraph], datapoint]
       : [datapoint];
-    setChartDatapoints({
-      ...chartDatapoints,
-      [currentlySelecting]: datapoints
+    setGraphDatapoints({
+      ...graphDatapoints,
+      [currentGraph]: datapoints
     });
   };
 
   const getDatapointIndex = (list, datapoint) => {
+    if (!list || !datapoint) {
+      return -1;
+    }
     return list.findIndex(d => {
-      const treesEqual =
-        d.tree && datapoint.tree
-          ? d.tree.length === datapoint.tree.length &&
-            d.tree.every((d, i) => d === datapoint.tree[i])
-          : true;
-      const namesEqual = d.name === datapoint.name;
-      return namesEqual && treesEqual;
+      // Perform deep comparison
+      return isEqual(d, datapoint);
     });
   };
 
   const handleDatapoint = datapoint => {
     if (
-      // TODO refactor: contains datapoint
-      chartDatapoints.hasOwnProperty(currentlySelecting) &&
-      getDatapointIndex(chartDatapoints[currentlySelecting], datapoint) > -1
+      graphDatapoints.hasOwnProperty(currentGraph) &&
+      getDatapointIndex(graphDatapoints[currentGraph], datapoint) > -1
     ) {
       removeDatapoint(datapoint);
     } else {
@@ -78,35 +142,37 @@ export default function Tabs(props) {
   };
 
   const removeDatapoint = datapoint => {
-    const index = getDatapointIndex(
-      chartDatapoints[currentlySelecting],
-      datapoint
-    );
+    const index = getDatapointIndex(graphDatapoints[currentGraph], datapoint);
     if (index > -1) {
-      setChartDatapoints(previous => {
-        previous[currentlySelecting].splice(index, 1);
+      setGraphDatapoints(previous => {
+        previous[currentGraph].splice(index, 1);
         return previous;
       });
     }
   };
 
+  const isDatapointSelected = datapoint => {
+    return getDatapointIndex(graphDatapoints[currentGraph], datapoint) > -1;
+  };
+
   return (
     <div className="tabs-root">
       <div className="tabs-container"></div>
-
       <div className="window-container">
-        <div className="graph-container">{getCharts()}</div>
-        <div className="plus" onClick={() => addChart()}></div>
+        <div className="graph-container">{getGraphs()}</div>
+        <AddGraphButton
+          enabled={config.graphs.length < MAX_GRAPHS}
+          onClick={() => addGraph()}
+        />
       </div>
       <DatapointContainer
-        visible={currentlySelecting !== null}
-        data={telemetryData}
-        onCloseClicked={() => {
-          setCurrentlySelecting(null);
-        }}
+        visible={currentGraph !== null}
+        data={props.data.telemetryData}
+        onCloseClicked={() => setCurrentGraph(null)}
         getDatapointIndex={getDatapointIndex}
-        selectedDatapoints={chartDatapoints[currentlySelecting]}
+        graphDatapoints={graphDatapoints[currentGraph]}
         handleDatapoint={handleDatapoint}
+        isSelected={isDatapointSelected}
       />
     </div>
   );

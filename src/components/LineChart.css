@@ -1,4 +1,4 @@
-.chart-wrapper {
+.graph-wrapper {
   margin: 10px;
   display: flex;
   align-items: center;
@@ -22,14 +22,20 @@
   color: #343434;
 }
 
-.chart-buttons > * {
+.graph-buttons > * {
   display: flex;
   outline-width: 1px;
   color: #8f8f8f;
   padding: 5px 0 5px 1px;
-  /* margin: 5px 0 5px 1px; */
+  margin: 5px 0 5px 1px;
 }
 
-.chart-buttons > *:hover {
+.graph-buttons > *:hover {
   cursor: pointer;
 }
+
+/* .graph-wrapper:only-child {
+  background-color: aqua;
+  width: 100%;
+  height: auto !important;
+} */

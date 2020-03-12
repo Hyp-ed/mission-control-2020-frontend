@@ -1,18 +1,23 @@
 {
-  "charts": [
+  "graphs": [
     {
       "id": 0,
-      "datapoints": [
+      "paths": [
         ["crucial_data", "velocity"],
         ["crucial_data", "acceleration"]
       ]
     },
     {
       "id": 1,
-      "datapoints": [
-        ["crucial_data", "velocity"],
-        ["crucial_data", "acceleration"]
-      ]
+      "paths": [["crucial_data", "velocity"]]
+    },
+    {
+      "id": 2,
+      "paths": [["crucial_data", "velocity"]]
+    },
+    {
+      "id": 3,
+      "paths": [["crucial_data", "velocity"]]
     }
   ]
 }

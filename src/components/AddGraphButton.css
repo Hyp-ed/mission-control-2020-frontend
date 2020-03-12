@@ -1,0 +1,24 @@
+.plus {
+  width: 5%;
+  width: 3vw;
+  height: 3vw;
+  justify-self: center;
+  align-self: center;
+  background: linear-gradient(#8f8f8f, #8f8f8f),
+    linear-gradient(#8f8f8f, #8f8f8f);
+  background-position: center;
+
+  background-size: 75% 2px, 2px 75%; /*thickness = 2px, length = 75%*/
+  background-repeat: no-repeat;
+  margin-right: 10px;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  background: linear-gradient(#343434, #343434),
+    linear-gradient(#343434, #343434), #8f8f8f;
+  background-position: center;
+  background-size: 75% 2px, 2px 75%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+}
