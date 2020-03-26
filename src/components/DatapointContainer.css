@@ -33,6 +33,7 @@
   color: #343434;
 }
 
-.selected {
+.selected,
+.selected:hover {
   color: green;
 }
