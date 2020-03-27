@@ -12,7 +12,7 @@
 .datapoint-button {
   transform: rotate(-180deg);
   writing-mode: vertical-rl;
-  font-size: small;
+  font-size: 0.8vw;
   outline-style: solid;
   outline-color: #8f8f8f;
 }

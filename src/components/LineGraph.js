@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-plugin-streaming";
-import "./LineChart.css";
+import "./LineGraph.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { isEqual } from "lodash";
@@ -135,9 +135,10 @@ export default function LineGraph(props) {
    * @returns a unique label for a datapoint
    */
   const getDatapointLabel = path => {
+    console.log(path);
     let numOccurrences = 0;
     props.paths.forEach(p => {
-      if (isEqual(p, path)) {
+      if (isEqual(p[p.length - 1], path[path.length - 1])) {
         numOccurrences++;
       }
     });
