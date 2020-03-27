@@ -38,6 +38,32 @@
   flex-basis: 100%;
 }
 
-.graph-container:only-child {
-  background-color: aqua;
+.graph-sidebar {
+  align-self: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-sidebar > * {
+  width: 3vw;
+  height: 3vw;
+  margin-right: 1vw;
+  margin-top: 2vh;
+}
+
+.graph-sidebar__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  color: #8f8f8f;
+  font-size: 1.5vw;
+}
+
+.graph-sidebar__icon:hover {
+  cursor: pointer;
+  background-color: #8f8f8f;
+  color: #343434;
 }

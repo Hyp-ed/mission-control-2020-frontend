@@ -3,24 +3,38 @@ import "./Tabs.css";
 import LineGraph from "./LineGraph";
 import DatapointContainer from "./DatapointContainer";
 import { isEqual } from "lodash";
-import AddGraphButton from "./AddGraphButton";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUpload,
+  faDownload,
+  faPlus
+} from "@fortawesome/free-solid-svg-icons";
+
+/** The maximum number of graphs that can be displayed. */
 const MAX_GRAPHS = 4;
+/** TODO: */
 const NO_GRAPH = -1;
 
 export default function Tabs(props) {
   var config = require("./config.json");
-  const [currentGraph, setCurrentGraph] = useState(-1);
+  const [currentGraph, setCurrentGraph] = useState(NO_GRAPH);
 
+  // TODO: separate file?
   /**
-   * Recursively walks the data object using a list of keys and returns the datapoint object under the given path
+   * Recursively walk the data object using a list of keys.
    *
    * @param {object} data – object to be walked
    * @param {array} path – contains object keys
-   * @returns
+   * @returns data point object
    */
-  const getDatapoint = (data, path) => {
-    if (!data || !path) {
+  const getDataPoint = (data, path) => {
+    if (!data) {
+      console.err("Data not initialized.");
+      return undefined;
+    }
+    if (!path) {
+      console.err("Path not initialized.");
       return undefined;
     }
     if (Array.isArray(data)) {
@@ -41,19 +55,20 @@ export default function Tabs(props) {
     } else {
       return undefined;
     }
-    return getDatapoint(data, path);
+    return getDataPoint(data, path);
   };
 
   /**
-   * Simple incremental unique id generator for graphs
+   * Unique ID generator for graphs
    */
-  const [graphId, setGraphId] = useState(config.graphs.length);
-  const getGraphId = () => {
-    let id = graphId;
-    setGraphId(id + 1);
-    return id;
+  const [graphID, setGraphID] = useState(config.graphs.length);
+  const getGraphID = () => {
+    let ID = graphID;
+    setGraphID(ID + 1);
+    return ID;
   };
 
+  // TODO: ?
   /**
    * Memoize config, call fn iff config changes.
    */
@@ -67,33 +82,33 @@ export default function Tabs(props) {
       return;
     }
     config.graphs.push({
-      id: getGraphId(),
+      ID: getGraphID(),
       paths: []
     });
   };
 
-  const removeGraph = id => {
-    console.log(`Removing graph ${id}`);
-    config.graphs = config.graphs.filter(graph => graph.id !== id);
+  const removeGraph = ID => {
+    console.log(`Removing graph ${ID}`);
+    config.graphs = config.graphs.filter(graph => graph.ID !== ID);
   };
 
   const getGraphs = () => {
     return Array.from(config.graphs, graph => (
       <LineGraph
-        key={graph.id}
-        id={graph.id}
+        key={graph.ID}
+        ID={graph.ID}
         paths={graph.paths ? graph.paths : []}
         fontSize={10}
         removeGraph={removeGraph}
         data={props.data}
-        onSelectDatapointsClicked={id => setCurrentGraph(id)}
-        getValue={(data, path) => getDatapoint(data, path).value}
+        onSelectDatapointsClicked={ID => setCurrentGraph(ID)}
+        getValue={(data, path) => getDataPoint(data, path).value}
       />
     ));
   };
 
   const addPath = path => {
-    config.graphs.find(graph => graph.id === currentGraph).paths.push(path);
+    config.graphs.find(graph => graph.ID === currentGraph).paths.push(path);
   };
 
   const handlePath = path => {
@@ -106,9 +121,9 @@ export default function Tabs(props) {
 
   const removePath = path => {
     config.graphs.find(
-      graph => graph.id === currentGraph
+      graph => graph.ID === currentGraph
     ).paths = config.graphs
-      .find(graph => graph.id === currentGraph)
+      .find(graph => graph.ID === currentGraph)
       .paths.filter(p => !isEqual(p, path));
   };
 
@@ -116,7 +131,7 @@ export default function Tabs(props) {
     try {
       return (
         config.graphs
-          .find(graph => graph.id === currentGraph)
+          .find(graph => graph.ID === currentGraph)
           .paths.filter(p => isEqual(p, path)).length > 0
       );
     } catch (e) {
@@ -124,23 +139,47 @@ export default function Tabs(props) {
     }
   };
 
+  const handleImportClick = () => {
+    console.log("import config");
+  };
+
+  const handleExportClick = () => {
+    console.log("export config");
+  };
+
+  // TODO: make graph container alone?
   return (
     <div className="tabs-root">
       <div className="tabs-container"></div>
       <div className="window-container">
         <div className="graph-container">{getGraphs()}</div>
-        <AddGraphButton
-          enabled={config.graphs.length < MAX_GRAPHS}
-          onClick={addGraph}
-        />
+        <div className="graph-sidebar">
+          <div
+            className="graph-sidebar__icon"
+            onClick={addGraph}
+            enabled={config.graphs.length < MAX_GRAPHS}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
+          <div onClick={handleImportClick} className="graph-sidebar__icon">
+            <FontAwesomeIcon icon={faDownload} />
+          </div>
+          <div onClick={handleExportClick} className="graph-sidebar__icon">
+            <FontAwesomeIcon icon={faUpload} />
+          </div>
+        </div>
       </div>
       <DatapointContainer
         visible={currentGraph !== NO_GRAPH}
         data={props.data.telemetryData}
         onCloseClicked={() => setCurrentGraph(NO_GRAPH)}
-        handlePath={handlePath}
+        onDataPointClicked={handlePath}
         isSelected={isPathSelected}
-      />
+      ></DatapointContainer>
+      <div className="bottom-buttons"></div>
     </div>
   );
 }
+
+// TODO: introduce ConfigManager  to wrap all functionality?
+// TODO: GLOBAL - remove unused imports
