@@ -181,22 +181,22 @@ export default function LineGraph(props) {
       <div className="graph-buttons">
         <FontAwesomeIcon
           className="close-button"
-          onClick={() => props.removeGraph(props.id)}
+          onClick={() => props.removeGraph(props.ID)}
           icon={faTimes}
         />
         <span
           className="datapoint-button"
-          onClick={() => props.onSelectDatapointsClicked(props.id)}
+          onClick={() => props.onSelectDatapointsClicked(props.ID)}
         >
           Add datapoint
         </span>
       </div>
       <div>
         <Line
-          data={() => getData()}
+          data={getData}
           options={options(props.fontSize)}
-          // height={window.innerHeight / 4}
-          // width={window.innerWidth / 4.3}
+          height={window.innerHeight / 4}
+          width={window.innerWidth / 4.3}
         />
       </div>
     </div>

@@ -33,9 +33,3 @@
 .graph-buttons > *:hover {
   cursor: pointer;
 }
-
-/* .graph-wrapper:only-child {
-  background-color: aqua;
-  width: 100%;
-  height: auto !important;
-} */

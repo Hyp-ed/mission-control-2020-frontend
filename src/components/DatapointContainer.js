@@ -5,66 +5,79 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const DELIMITER = " > ";
 
-const getPathObjects = (data, path = []) => {
-  if (
-    data.hasOwnProperty("crucial_data") &&
-    data.hasOwnProperty("additional_data")
-  ) {
-    return getPathObjects(data.crucial_data, ["crucial_data"]).concat(
-      getPathObjects(data.additional_data, ["additional_data"])
-    );
-  }
-  return data
-    .map(nested_data => {
-      if (Array.isArray(nested_data.value)) {
-        return getPathObjects(nested_data.value, [...path, nested_data.name]);
-      } else if (!isNaN(nested_data.value)) {
-        let p = [...path, nested_data.name];
-        return {
-          caption: p.join(DELIMITER),
-          path: p
-        };
-      }
-    })
-    .flat();
-};
-
 export default function DatapointContainer(props) {
-  const getDatapointTabs = () => {
-    var datapoints = [];
+  // TODO: GLOBAL make everything Camel case
 
-    getPathObjects(props.data).forEach((path_obj, i) => {
-      if (!path_obj) {
-        return;
-      }
-
-      datapoints.push(
-        <div
-          className={[
-            props.isSelected(path_obj.path) ? "selected" : "",
-            props.visible ? "datapoint" : "invisible"
-          ].join(" ")}
-          onClick={() => props.handlePath(path_obj.path)}
-          key={i}
-        >
-          {path_obj.caption}
-        </div>
+  // TODO: can merge with getDataPoint???
+  /**
+   * Recursively walk the data object using a list of keys.
+   *
+   * @param {object} data – object to be walked
+   * @param {array} path – contains object keys
+   * @returns array of data point objects containing path and caption
+   */
+  const getDataPoints = (data, path = []) => {
+    if (
+      data.hasOwnProperty("crucial_data") &&
+      data.hasOwnProperty("additional_data")
+    ) {
+      return getDataPoints(data.crucial_data, ["crucial_data"]).concat(
+        getDataPoints(data.additional_data, ["additional_data"])
       );
-    });
-    return datapoints;
+    }
+    return data
+      .map(nestedData => {
+        if (Array.isArray(nestedData.value)) {
+          return getDataPoints(nestedData.value, [...path, nestedData.name]);
+        }
+        if (!isNaN(nestedData.value)) {
+          let p = [...path, nestedData.name];
+          return {
+            caption: p.join(DELIMITER),
+            path: p
+          };
+        }
+        return undefined;
+      })
+      .flat();
   };
 
+  /**
+   * Create an array of data point divs
+   *
+   * @returns an array of data point divs
+   */
+  const getDataPointList = () => {
+    const dataPoints = getDataPoints(props.data);
+    return dataPoints
+      .filter(dataPoint => dataPoint !== undefined)
+      .map((dataPoint, i) => {
+        return (
+          <div
+            className={[
+              props.visible ? "" : "invisible",
+              props.isSelected(dataPoint.path) ? "selected" : "",
+              "datapoint"
+            ].join(" ")}
+            onClick={() => props.onDataPointClicked(dataPoint.path)}
+            key={i}
+          >
+            {dataPoint.caption}
+          </div>
+        );
+      });
+  };
+
+  // TODO: get rid of inline styles
+
   return (
-    <div
-      style={{ overflow: "scroll" }}
-      className={props.visible ? "datapoint-container" : "invisible"}
-    >
+    <div className={props.visible ? "datapoint-container" : "invisible"}>
       <FontAwesomeIcon
         className="close-button"
         onClick={props.onCloseClicked}
         icon={faTimes}
       />
-      <div className="datapoints">{getDatapointTabs()}</div>
+      <div className="datapoints">{getDataPointList()}</div>
     </div>
   );
 }
