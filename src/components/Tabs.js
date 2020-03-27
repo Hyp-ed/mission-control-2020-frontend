@@ -3,13 +3,13 @@ import "./Tabs.css";
 import LineGraph from "./LineGraph";
 import DatapointContainer from "./DatapointContainer";
 import { isEqual } from "lodash";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUpload,
   faDownload,
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
+import ReactTooltip from "react-tooltip";
 
 /** The maximum number of graphs that can be displayed. */
 const MAX_GRAPHS = 4;
@@ -98,7 +98,7 @@ export default function Tabs(props) {
         key={graph.ID}
         ID={graph.ID}
         paths={graph.paths ? graph.paths : []}
-        fontSize={10}
+        fontSize={15}
         removeGraph={removeGraph}
         data={props.data}
         onSelectDatapointsClicked={ID => setCurrentGraph(ID)}
@@ -158,13 +158,40 @@ export default function Tabs(props) {
             className="graph-sidebar__icon"
             onClick={addGraph}
             enabled={config.graphs.length < MAX_GRAPHS}
+            data-tip="Add graph" // tooltip caption
           >
+            <ReactTooltip
+              effect="solid"
+              delayShow={300}
+              textColor="#8f8f8f"
+              multiline={false}
+            />
             <FontAwesomeIcon icon={faPlus} />
           </div>
-          <div onClick={handleImportClick} className="graph-sidebar__icon">
+          <div
+            onClick={handleImportClick}
+            className="graph-sidebar__icon"
+            data-tip="Import config"
+          >
+            <ReactTooltip
+              effect="solid"
+              delayShow={300}
+              textColor="#8f8f8f"
+              multiline={false}
+            />
             <FontAwesomeIcon icon={faDownload} />
           </div>
-          <div onClick={handleExportClick} className="graph-sidebar__icon">
+          <div
+            onClick={handleExportClick}
+            className="graph-sidebar__icon"
+            data-tip="Export config"
+          >
+            <ReactTooltip
+              effect="solid"
+              delayShow={300}
+              textColor="#8f8f8f"
+              multiline={false}
+            />
             <FontAwesomeIcon icon={faUpload} />
           </div>
         </div>
