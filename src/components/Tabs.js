@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState } from "react";
 import "./Tabs.css";
 import LineGraph from "./LineGraph";
 import DatapointContainer from "./DatapointContainer";
-import { isEqual } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUpload,
@@ -10,17 +9,14 @@ import {
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import ReactTooltip from "react-tooltip";
+import ConfigManager from "../ConfigManager";
 
-/** The maximum number of graphs that can be displayed. */
-const MAX_GRAPHS = 4;
-/** TODO: */
 const NO_GRAPH = -1;
 
 export default function Tabs(props) {
-  const [config, setConfig] = useState(require("./config.json"));
+  // const [config, setConfig] = useState(require("../config.json"));
   const [currentGraph, setCurrentGraph] = useState(NO_GRAPH);
 
-  // TODO: separate file?
   /**
    * Recursively walk the data object using a list of keys.
    *
@@ -58,85 +54,23 @@ export default function Tabs(props) {
     return getDataPoint(data, path);
   };
 
-  /**
-   * Unique ID generator for graphs
-   */
-  const [graphID, setGraphID] = useState(config.graphs.length);
-  const getGraphID = () => {
-    let ID = graphID;
-    setGraphID(ID + 1);
-    return ID;
-  };
-
-  // TODO: ?
-  /**
-   * Memoize config, call fn iff config changes.
-   */
-  // useMemo(() => {
-  //   fn(config);
-  // }, [config]);
-
-  const addGraph = () => {
-    if (config.graphs.length >= MAX_GRAPHS) {
-      console.error(`Maximum number of graphs (${MAX_GRAPHS}) reached!`);
-      return;
-    }
-    config.graphs.push({
-      ID: getGraphID(),
-      paths: []
-    });
-  };
-
-  const removeGraph = ID => {
-    console.log(`Removing graph ${ID}`);
-    config.graphs = config.graphs.filter(graph => graph.ID !== ID);
+  const getDataPointValue = (data, path) => {
+    return getDataPoint(data, path).value;
   };
 
   const getGraphs = () => {
-    return Array.from(config.graphs, graph => (
+    return Array.from(ConfigManager.getConfig().graphs, graph => (
       <LineGraph
         key={graph.ID}
         ID={graph.ID}
         paths={graph.paths ? graph.paths : []}
         fontSize={15}
-        removeGraph={removeGraph}
+        removeGraph={path => ConfigManager.removeGraph(path, currentGraph)}
         data={props.data}
-        onSelectDatapointsClicked={ID => setCurrentGraph(ID)}
-        getValue={(data, path) => getDataPoint(data, path).value}
+        onSelectDatapointsClicked={setCurrentGraph}
+        getValue={getDataPointValue}
       />
     ));
-  };
-
-  const addPath = path => {
-    config.graphs.find(graph => graph.ID === currentGraph).paths.push(path);
-  };
-
-  const handlePath = path => {
-    if (isPathSelected(path)) {
-      removePath(path);
-    } else {
-      addPath(path);
-    }
-  };
-
-  const removePath = path => {
-    config.graphs.find(
-      graph => graph.ID === currentGraph
-    ).paths = config.graphs
-      .find(graph => graph.ID === currentGraph)
-      .paths.filter(p => !isEqual(p, path));
-  };
-
-  const isPathSelected = path => {
-    try {
-      return (
-        config.graphs
-          .find(graph => graph.ID === currentGraph)
-          .paths.filter(p => isEqual(p, path)).length > 0
-      );
-    } catch (e) {
-      return false;
-    }
   };
 
   /**
@@ -150,7 +84,7 @@ export default function Tabs(props) {
         const reader = new FileReader();
         reader.readAsBinaryString(file);
         reader.onloadend = () => {
-          setConfig(JSON.parse(reader.result));
+          ConfigManager.setConfig(reader.result);
         };
         event.target.value = null; // clear the input
       };
@@ -164,6 +98,7 @@ export default function Tabs(props) {
    */
   const handleDownloadClick = () => {
     try {
+      const config = ConfigManager.getConfig();
       const str = JSON.stringify(config);
       const url = window.URL.createObjectURL(new Blob([str]));
       const link = document.createElement("a");
@@ -176,6 +111,18 @@ export default function Tabs(props) {
     }
   };
 
+  const resetCurrentGraph = () => {
+    setCurrentGraph(NO_GRAPH);
+  };
+
+  const handleDataPointClicked = path => {
+    ConfigManager.handlePath(path, currentGraph);
+  };
+
+  const isSelected = path => {
+    return ConfigManager.isPathSelected(path, currentGraph);
+  };
+
   // TODO: make graph container alone?
   return (
     <div className="tabs-root">
@@ -185,9 +132,9 @@ export default function Tabs(props) {
         <div className="graph-sidebar">
           <div
             className="graph-sidebar__icon"
-            onClick={addGraph}
+            onClick={ConfigManager.addGraph}
             data-tip="Add graph" // tooltip caption
-            enabled={config.graphs.length < MAX_GRAPHS}
+            enabled={ConfigManager.shouldEnableAdd}
           >
             <ReactTooltip
               effect="solid"
@@ -210,7 +157,6 @@ export default function Tabs(props) {
             />
             <FontAwesomeIcon icon={faDownload} />
           </div>
-
           <div
             onClick={handleUploadClick}
             className="graph-sidebar__icon"
@@ -230,14 +176,11 @@ export default function Tabs(props) {
       <DatapointContainer
         visible={currentGraph !== NO_GRAPH}
         data={props.data.telemetryData}
-        onCloseClicked={() => setCurrentGraph(NO_GRAPH)}
-        onDataPointClicked={handlePath}
-        isSelected={isPathSelected}
+        onCloseClicked={resetCurrentGraph}
+        onDataPointClicked={handleDataPointClicked}
+        isSelected={isSelected}
       ></DatapointContainer>
       <div className="bottom-buttons"></div>
     </div>
   );
 }
-
-// TODO: introduce ConfigManager  to wrap all functionality?
-// TODO: GLOBAL - remove unused imports
