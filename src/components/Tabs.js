@@ -17,7 +17,7 @@ const MAX_GRAPHS = 4;
 const NO_GRAPH = -1;
 
 export default function Tabs(props) {
-  var config = require("./config.json");
+  const [config, setConfig] = useState(require("./config.json"));
   const [currentGraph, setCurrentGraph] = useState(NO_GRAPH);
 
   // TODO: separate file?
@@ -139,12 +139,21 @@ export default function Tabs(props) {
     }
   };
 
-  const handleImportClick = () => {
-    console.log("import config");
+  const handleUploadClick = () => {
+    document.getElementById("fileButton").click();
+    document.getElementById("fileButton").onchange = function(event) {
+      const file = event.target.files[0];
+      let reader = new FileReader();
+      reader.readAsBinaryString(file);
+      reader.onloadend = () => {
+        setConfig(JSON.parse(reader.result));
+      };
+      event.target.value = null; // clear the input
+    };
   };
 
-  const handleExportClick = () => {
-    console.log("export config");
+  const handleDownloadClick = () => {
+    console.log("Download config");
   };
 
   // TODO: make graph container alone?
@@ -157,8 +166,8 @@ export default function Tabs(props) {
           <div
             className="graph-sidebar__icon"
             onClick={addGraph}
-            enabled={config.graphs.length < MAX_GRAPHS}
             data-tip="Add graph" // tooltip caption
+            enabled={config.graphs.length < MAX_GRAPHS}
           >
             <ReactTooltip
               effect="solid"
@@ -169,9 +178,9 @@ export default function Tabs(props) {
             <FontAwesomeIcon icon={faPlus} />
           </div>
           <div
-            onClick={handleImportClick}
             className="graph-sidebar__icon"
-            data-tip="Import config"
+            onClick={handleDownloadClick}
+            data-tip="Save config"
           >
             <ReactTooltip
               effect="solid"
@@ -181,11 +190,13 @@ export default function Tabs(props) {
             />
             <FontAwesomeIcon icon={faDownload} />
           </div>
+
           <div
-            onClick={handleExportClick}
+            onClick={handleUploadClick}
             className="graph-sidebar__icon"
-            data-tip="Export config"
+            data-tip="Upload config"
           >
+            <input id="fileButton" type="file" hidden></input>
             <ReactTooltip
               effect="solid"
               delayShow={300}
