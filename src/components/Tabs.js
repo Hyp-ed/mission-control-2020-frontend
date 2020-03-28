@@ -139,21 +139,41 @@ export default function Tabs(props) {
     }
   };
 
+  /**
+   * Allow the user to upload a config file
+   */
   const handleUploadClick = () => {
-    document.getElementById("fileButton").click();
-    document.getElementById("fileButton").onchange = function(event) {
-      const file = event.target.files[0];
-      let reader = new FileReader();
-      reader.readAsBinaryString(file);
-      reader.onloadend = () => {
-        setConfig(JSON.parse(reader.result));
+    try {
+      document.getElementById("fileButton").click();
+      document.getElementById("fileButton").onchange = function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onloadend = () => {
+          setConfig(JSON.parse(reader.result));
+        };
+        event.target.value = null; // clear the input
       };
-      event.target.value = null; // clear the input
-    };
+    } catch (err) {
+      console.error(err);
+    }
   };
 
+  /**
+   * Allow the user to download a config file
+   */
   const handleDownloadClick = () => {
-    console.log("Download config");
+    try {
+      const str = JSON.stringify(config);
+      const url = window.URL.createObjectURL(new Blob([str]));
+      const link = document.createElement("a");
+      link.download = "myGraphConfig.json";
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // TODO: make graph container alone?
