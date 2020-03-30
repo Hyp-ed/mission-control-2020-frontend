@@ -1,17 +1,18 @@
 import { isEqual } from "lodash";
 /** The maximum number of graphs that can be displayed. */
 const MAX_GRAPHS = 4;
+const DEFAULT_ID = 0;
 class ConfigManager {
-  config = require("./config.json");
-  graphID = this.config.graphs.length;
+  constructor() {
+    this.graphID = DEFAULT_ID;
+    this.setConfig(require("./config.json"));
+  }
 
   /**
    * Unique ID generator for graphs
    */
   getGraphID = () => {
-    const ID = this.graphID;
-    this.graphID = ID + 1;
-    return ID;
+    return this.graphID++;
   };
 
   /**
@@ -35,36 +36,34 @@ class ConfigManager {
   /**
    * PATH HANDLERS
    */
-  handlePath = (path, currentGraph) => {
-    if (this.isPathSelected(path, currentGraph)) {
-      this.removePath(path, currentGraph);
+  handlePath = (path, graphID) => {
+    if (this.isPathSelected(path, graphID)) {
+      this.removePath(path, graphID);
     } else {
-      this.addPath(path, currentGraph);
+      this.addPath(path, graphID);
     }
   };
 
-  addPath = (path, currentGraph) => {
-    this.config.graphs
-      .find(graph => graph.ID === currentGraph)
-      .paths.push(path);
+  addPath = (path, graphID) => {
+    this.config.graphs.find(graph => graph.ID === graphID).paths.push(path);
   };
 
-  removePath = (path, currentGraph) => {
+  removePath = (path, graphID) => {
     this.config.graphs.find(
-      graph => graph.ID === currentGraph
+      graph => graph.ID === graphID
     ).paths = this.config.graphs
-      .find(graph => graph.ID === currentGraph)
+      .find(graph => graph.ID === graphID)
       .paths.filter(p => !isEqual(p, path));
   };
 
-  isPathSelected = (path, currentGraph) => {
+  isPathSelected = (path, graphID) => {
     try {
       return (
         this.config.graphs
-          .find(graph => graph.ID === currentGraph)
+          .find(graph => graph.ID === graphID)
           .paths.filter(p => isEqual(p, path)).length > 0
       );
-    } catch (err) {
+    } catch (e) {
       return false;
     }
   };
@@ -96,13 +95,6 @@ class ConfigManager {
     const problems = [];
     json.graphs.forEach((graph, i) => {
       const graphNum = i + 1;
-      if (!graph.hasOwnProperty("ID")) {
-        problems.push(`Missing field in graph ${graphNum}: "ID"`);
-      } else if (typeof graph.ID !== "number") {
-        problems.push(
-          `Invalid field in graph ${graphNum}: "ID" should be a number but got ${typeof graph.ID}`
-        );
-      }
       if (!graph.hasOwnProperty("paths")) {
         problems.push(`Missing field in graph ${graphNum}: "paths"`);
       } else if (!Array.isArray(graph.paths)) {
@@ -130,16 +122,13 @@ class ConfigManager {
     return true;
 
     // WITHOUT ERROR MESSAGES:
-    // return json.graphs.every(graph => {
-    //   const hasValidID =
-    //     graph.hasOwnProperty("ID") && typeof graph.ID === "number";
-    //   const hasValidPaths =
+    // return json.graphs.every(
+    //   graph =>
     //     graph.hasOwnProperty("paths") &&
     //     Array.isArray(graph.paths) &&
     //     graph.paths.every(path => Array.isArray(path)) &&
-    //     graph.paths.every(path => path.every(key => typeof key === "string"));
-    //   return hasValidID && hasValidPaths;
-    // });
+    //     graph.paths.every(path => path.every(key => typeof key === "string"))
+    // );
   };
 
   /**
@@ -148,7 +137,7 @@ class ConfigManager {
    * @param {Blob} file
    * @returns
    */
-  setConfig = file => {
+  parseConfig = file => {
     if (!file) {
       console.error("Config file must not be undefined.");
       return;
@@ -165,9 +154,16 @@ class ConfigManager {
         alert("JSON improperly formatted");
         return;
       }
+      this.setConfig(json);
       console.log("Successfully set new config file.");
-      this.config = json;
     };
+  };
+
+  setConfig = json => {
+    json.graphs.forEach(graph => {
+      graph.ID = this.getGraphID();
+    });
+    this.config = json;
   };
 
   shouldEnableAdd = () => {

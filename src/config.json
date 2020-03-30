@@ -1,23 +1,13 @@
 {
   "graphs": [
     {
-      "ID": 0,
       "paths": [
         ["crucial_data", "velocity"],
         ["crucial_data", "acceleration"]
       ]
     },
     {
-      "ID": 1,
-      "paths": [["crucial_data", "velocity"]]
-    },
-    {
-      "ID": 2,
-      "paths": [["crucial_data", "velocity"]]
-    },
-    {
-      "ID": 3,
-      "paths": [["crucial_data", "velocity"]]
+      "paths": []
     }
   ]
 }
