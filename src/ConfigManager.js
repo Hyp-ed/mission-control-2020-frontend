@@ -1,4 +1,4 @@
-import { isEqual } from "lodash";
+import { isEqual, omit } from "lodash";
 /** The maximum number of graphs that can be displayed. */
 const MAX_GRAPHS = 4;
 const DEFAULT_ID = 0;
@@ -168,6 +168,12 @@ class ConfigManager {
 
   shouldEnableAdd = () => {
     return this.state.graphs.length < MAX_GRAPHS;
+  };
+
+  downloadableString = () => {
+    const copy = {};
+    copy.graphs = this.config.graphs.map(graph => omit(graph, "ID"));
+    return JSON.stringify(copy);
   };
 }
 

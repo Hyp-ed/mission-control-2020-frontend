@@ -4,8 +4,8 @@ import LineGraph from "./LineGraph";
 import DatapointContainer from "./DatapointContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUpload,
-  faDownload,
+  faFileImport,
+  faSave,
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import ReactTooltip from "react-tooltip";
@@ -26,11 +26,11 @@ export default function Tabs(props) {
    */
   const getDataPoint = (data, path) => {
     if (!data) {
-      console.err("Data not initialized.");
+      console.error("Data not initialized.");
       return undefined;
     }
     if (!path) {
-      console.err("Path not initialized.");
+      console.error("Path not initialized.");
       return undefined;
     }
     if (Array.isArray(data)) {
@@ -77,20 +77,12 @@ export default function Tabs(props) {
    * Allow the user to upload a config file
    */
   const handleUploadClick = () => {
-    try {
-      document.getElementById("fileButton").click();
-      document.getElementById("fileButton").onchange = function(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.readAsBinaryString(file);
-        reader.onloadend = () => {
-          ConfigManager.setConfig(reader.result);
-        };
-        event.target.value = null; // clear the input
-      };
-    } catch (err) {
-      console.error(err);
-    }
+    document.getElementById("fileButton").click();
+    document.getElementById("fileButton").onchange = event => {
+      const file = event.target.files[0];
+      ConfigManager.parseConfig(file);
+      event.target.value = null; // clear the input
+    };
   };
 
   /**
@@ -98,8 +90,7 @@ export default function Tabs(props) {
    */
   const handleDownloadClick = () => {
     try {
-      const config = ConfigManager.getConfig();
-      const str = JSON.stringify(config);
+      const str = ConfigManager.downloadableString();
       const url = window.URL.createObjectURL(new Blob([str]));
       const link = document.createElement("a");
       link.download = "myGraphConfig.json";
@@ -111,6 +102,7 @@ export default function Tabs(props) {
     }
   };
 
+  // TODO: move current graph id to config manager?
   const resetCurrentGraph = () => {
     setCurrentGraph(NO_GRAPH);
   };
@@ -145,19 +137,6 @@ export default function Tabs(props) {
             <FontAwesomeIcon icon={faPlus} />
           </div>
           <div
-            className="graph-sidebar__icon"
-            onClick={handleDownloadClick}
-            data-tip="Save config"
-          >
-            <ReactTooltip
-              effect="solid"
-              delayShow={300}
-              textColor="#8f8f8f"
-              multiline={false}
-            />
-            <FontAwesomeIcon icon={faDownload} />
-          </div>
-          <div
             onClick={handleUploadClick}
             className="graph-sidebar__icon"
             data-tip="Upload config"
@@ -169,7 +148,20 @@ export default function Tabs(props) {
               textColor="#8f8f8f"
               multiline={false}
             />
-            <FontAwesomeIcon icon={faUpload} />
+            <FontAwesomeIcon icon={faFileImport} />
+          </div>
+          <div
+            className="graph-sidebar__icon"
+            onClick={handleDownloadClick}
+            data-tip="Save config"
+          >
+            <ReactTooltip
+              effect="solid"
+              delayShow={300}
+              textColor="#8f8f8f"
+              multiline={false}
+            />
+            <FontAwesomeIcon icon={faSave} />
           </div>
         </div>
       </div>
@@ -180,7 +172,6 @@ export default function Tabs(props) {
         onDataPointClicked={handleDataPointClicked}
         isSelected={isSelected}
       ></DatapointContainer>
-      <div className="bottom-buttons"></div>
     </div>
   );
 }
