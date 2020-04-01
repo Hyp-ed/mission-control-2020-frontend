@@ -5,6 +5,7 @@ import "./LineGraph.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { isEqual } from "lodash";
+import { getDataPointValue } from "../DataTools";
 
 const graph_colors = [
   "#BF000B", // dark red
@@ -111,7 +112,7 @@ export default function LineGraph(props) {
       props.paths.forEach(path => {
         let datapoint = {
           x: props.data.time,
-          y: props.getValue(props.data.telemetryData, path)
+          y: getDataPointValue(props.data.telemetryData, path)
         };
         if (old_dataset.hasOwnProperty(path)) {
           old_dataset[path] = [...old_dataset[path], datapoint];
@@ -134,8 +135,7 @@ export default function LineGraph(props) {
    * @param {object} datapoint
    * @returns a unique label for a datapoint
    */
-  const getDatapointLabel = path => {
-    console.log(path);
+  const uniqueLabel = path => {
     let numOccurrences = 0;
     props.paths.forEach(p => {
       if (isEqual(p[p.length - 1], path[path.length - 1])) {
@@ -166,7 +166,7 @@ export default function LineGraph(props) {
     return {
       datasets: Array.from(props.paths, (path, i) => {
         return {
-          label: getDatapointLabel(path),
+          label: uniqueLabel(path),
           data: datasets.hasOwnProperty(path) ? datasets[path] : [],
           borderColor: graph_colors[i % graph_colors.length], // cycle colors
           fill: false,
