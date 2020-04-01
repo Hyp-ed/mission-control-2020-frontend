@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import "./Tabs.css";
 import LineGraph from "./LineGraph";
 import DatapointContainer from "./DatapointContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFileImport,
-  faSave,
-  faPlus
-} from "@fortawesome/free-solid-svg-icons";
-import ReactTooltip from "react-tooltip";
 import ConfigManager from "../ConfigManager";
+import Sidebar from "./Sidebar";
 
 const NO_GRAPH = -1;
+const GraphContainer = props => {
+  return <div className="graph-container">{props.graphs}</div>;
+};
 
 export default function Tabs(props) {
   // const [config, setConfig] = useState(require("../config.json"));
@@ -88,7 +85,7 @@ export default function Tabs(props) {
   /**
    * Allow the user to download a config file
    */
-  const handleDownloadClick = () => {
+  const handleSaveClick = () => {
     try {
       const str = ConfigManager.downloadableString();
       const url = window.URL.createObjectURL(new Blob([str]));
@@ -115,55 +112,16 @@ export default function Tabs(props) {
     return ConfigManager.isPathSelected(path, currentGraph);
   };
 
-  // TODO: make graph container alone?
   return (
     <div className="tabs-root">
       <div className="tabs-container"></div>
       <div className="window-container">
-        <div className="graph-container">{getGraphs()}</div>
-        <div className="graph-sidebar">
-          <div
-            className="graph-sidebar__icon"
-            onClick={ConfigManager.addGraph}
-            data-tip="Add graph" // tooltip caption
-            enabled={ConfigManager.shouldEnableAdd}
-          >
-            <ReactTooltip
-              effect="solid"
-              delayShow={300}
-              textColor="#8f8f8f"
-              multiline={false}
-            />
-            <FontAwesomeIcon icon={faPlus} />
-          </div>
-          <div
-            onClick={handleUploadClick}
-            className="graph-sidebar__icon"
-            data-tip="Upload config"
-          >
-            <input id="fileButton" type="file" hidden></input>
-            <ReactTooltip
-              effect="solid"
-              delayShow={300}
-              textColor="#8f8f8f"
-              multiline={false}
-            />
-            <FontAwesomeIcon icon={faFileImport} />
-          </div>
-          <div
-            className="graph-sidebar__icon"
-            onClick={handleDownloadClick}
-            data-tip="Save config"
-          >
-            <ReactTooltip
-              effect="solid"
-              delayShow={300}
-              textColor="#8f8f8f"
-              multiline={false}
-            />
-            <FontAwesomeIcon icon={faSave} />
-          </div>
-        </div>
+        <GraphContainer graphs={getGraphs()}></GraphContainer>
+        <Sidebar
+          handleAddGraphClick={ConfigManager.addGraph}
+          handleSaveClick={handleSaveClick}
+          handleUploadClick={handleUploadClick}
+        ></Sidebar>
       </div>
       <DatapointContainer
         visible={currentGraph !== NO_GRAPH}

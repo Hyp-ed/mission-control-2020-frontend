@@ -1,0 +1,29 @@
+#sidebar {
+  align-self: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar > * {
+  width: 2.5vw;
+  height: 2.5vw;
+  margin-right: 0.5vw;
+  margin-top: 2vh;
+}
+
+.sidebar__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  color: #8f8f8f;
+  font-size: 1.2vw;
+}
+
+.sidebar__icon:hover {
+  cursor: pointer;
+  background-color: #8f8f8f;
+  color: #343434;
+}
