@@ -1,5 +1,4 @@
 .datapoint-container {
-  overflow: scroll;
   margin-top: 0.2em;
   grid-column: 1/8;
   grid-row: 2/11;
@@ -7,24 +6,35 @@
   background-color: #343434;
   color: #8f8f8f;
   opacity: 90%;
+  height: 100%;
 }
 
 .datapoint-container > * {
-  margin: 10px;
+  margin: 0.5em;
 }
 
 .invisible {
   opacity: 0%;
 }
 
+.close-button {
+  overflow: hidden;
+}
+
 .close-button:hover {
   cursor: pointer;
 }
 
+.content {
+  height: 90%;
+  overflow: auto;
+}
+
 .datapoint {
   text-transform: capitalize;
-  padding: 5px;
-  font-size: 0.8vw;
+  padding: 0.5em;
+  font-size: 0.9em;
+  width: 95%;
 }
 
 .datapoint:hover {
@@ -33,7 +43,7 @@
   color: #343434;
 }
 
-.selected,
-.selected:hover {
+.datapoint--selected,
+.datapoint--selected:hover {
   color: green;
 }

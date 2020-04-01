@@ -55,8 +55,7 @@ export default function DatapointContainer(props) {
         return (
           <div
             className={[
-              props.visible ? "" : "invisible",
-              props.isSelected(dataPoint.path) ? "selected" : "",
+              props.isSelected(dataPoint.path) ? "datapoint--selected" : "",
               "datapoint"
             ].join(" ")}
             onClick={() => props.onDataPointClicked(dataPoint.path)}
@@ -77,7 +76,7 @@ export default function DatapointContainer(props) {
         onClick={props.onCloseClicked}
         icon={faTimes}
       />
-      <div className="datapoints">{getDataPointList()}</div>
+      <div className="content">{getDataPointList()}</div>
     </div>
   );
 }
