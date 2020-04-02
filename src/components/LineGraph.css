@@ -13,6 +13,12 @@
   width: 100%;
 }
 
+#container:nth-child(1):nth-last-child(2),
+#container:nth-child(2):last-child {
+  height: 90%;
+  width: 45%;
+}
+
 #buttons > * {
   display: flex;
   outline-width: 1px;
