@@ -16,10 +16,9 @@ export default function Tabs(props) {
         key={graph.ID}
         ID={graph.ID}
         paths={graph.paths ? graph.paths : []}
-        fontSize={15}
         removeGraph={path => ConfigManager.removeGraph(path, currentGraph)}
         data={props.data}
-        onSelectDatapointsClicked={setCurrentGraph}
+        onSelectClicked={setCurrentGraph}
       />
     ));
   };

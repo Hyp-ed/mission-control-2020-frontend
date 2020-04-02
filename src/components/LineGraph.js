@@ -111,10 +111,10 @@ export default function LineGraph(props) {
           icon={faTimes}
         />
         <span
-          id="add-button"
-          onClick={() => props.onSelectDatapointsClicked(props.ID)}
+          id="select-button"
+          onClick={() => props.onSelectClicked(props.ID)}
         >
-          Add datapoint
+          Select data points
         </span>
       </div>
       <div id="wrapper">

@@ -29,7 +29,7 @@
   border-radius: 50%;
 }
 
-#add-button {
+#select-button {
   transform: rotate(-180deg);
   writing-mode: vertical-rl;
   font-size: 0.8vw;
@@ -37,7 +37,7 @@
   outline-color: #8f8f8f;
 }
 
-#add-button:hover {
+#select-button:hover {
   background-color: #8f8f8f;
   color: #343434;
 }
