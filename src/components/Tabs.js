@@ -3,13 +3,10 @@ import "./Tabs.css";
 import LineGraph from "./LineGraph";
 import DatapointContainer from "./DatapointContainer";
 import ConfigManager from "../ConfigManager";
+import GraphContainer from "./GraphContainer";
 import Sidebar from "./Sidebar";
 
 const NO_GRAPH = -1;
-const GraphContainer = props => {
-  return <div className="graph-container">{props.graphs}</div>;
-};
-
 export default function Tabs(props) {
   const [currentGraph, setCurrentGraph] = useState(NO_GRAPH);
 
@@ -56,7 +53,6 @@ export default function Tabs(props) {
     }
   };
 
-  // TODO: move current graph id to config manager?
   const resetCurrentGraph = () => {
     setCurrentGraph(NO_GRAPH);
   };
@@ -73,7 +69,7 @@ export default function Tabs(props) {
     <div className="tabs-root">
       <div className="tabs-container"></div>
       <div className="window-container">
-        <GraphContainer graphs={getGraphs()}></GraphContainer>
+        <GraphContainer graphs={getGraphs()} />
         <Sidebar
           handleAddGraphClick={ConfigManager.addGraph}
           handleSaveClick={handleSaveClick}

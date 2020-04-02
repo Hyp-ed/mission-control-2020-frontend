@@ -24,16 +24,3 @@
   display: flex;
   z-index: 1;
 }
-
-.graph-container {
-  width: 95%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  overflow: scroll;
-}
-
-.graph-container:nth-child(2n) {
-  break-after: always;
-  flex-basis: 100%;
-}
