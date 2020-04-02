@@ -1,28 +1,19 @@
-.graph-wrapper {
-  margin: 10px;
+#container {
+  margin: 0.5em;
+  height: 45%;
+  width: 45%;
   display: flex;
+  align-self: center;
+  justify-self: center;
   align-items: center;
-  justify-items: center;
 }
 
-.close-button {
-  border-radius: 50%;
+#container:only-child {
+  height: 90%;
+  width: 100%;
 }
 
-.datapoint-button {
-  transform: rotate(-180deg);
-  writing-mode: vertical-rl;
-  font-size: 0.8vw;
-  outline-style: solid;
-  outline-color: #8f8f8f;
-}
-
-.datapoint-button:hover {
-  background-color: #8f8f8f;
-  color: #343434;
-}
-
-.graph-buttons > * {
+#buttons > * {
   display: flex;
   outline-width: 1px;
   color: #8f8f8f;
@@ -30,6 +21,30 @@
   margin: 5px 0 5px 1px;
 }
 
-.graph-buttons > *:hover {
+#buttons > *:hover {
   cursor: pointer;
+}
+
+#close-button {
+  border-radius: 50%;
+}
+
+#add-button {
+  transform: rotate(-180deg);
+  writing-mode: vertical-rl;
+  font-size: 0.8vw;
+  outline-style: solid;
+  outline-color: #8f8f8f;
+}
+
+#add-button:hover {
+  background-color: #8f8f8f;
+  color: #343434;
+}
+
+#wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  /* style={{ position: "relative", width: "50%", height: "50%" }}  */
 }
