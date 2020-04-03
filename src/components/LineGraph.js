@@ -25,7 +25,7 @@ const COLORS = [
 ];
 
 /**
- * React effect hook that deep compares objects in dependency array
+ * Effect hook that deep compares objects in the dependency array
  */
 const useDeepEffect = (fn, deps) => {
   const isFirst = useRef(true);
@@ -52,23 +52,26 @@ export default function LineGraph(props) {
   const [pathData, setPathData] = useState({});
 
   useDeepEffect(() => {
-    setPathData(oldData => {
+    setPathData(oldPathData => {
       props.paths.forEach(path => {
-        let dataPoint = {
+        const dataPoint = {
           x: props.data.time,
           y: getDataPointValue(props.data.telemetryData, path)
         };
-        if (oldData.hasOwnProperty(path)) {
-          oldData[path] = [...oldData[path], dataPoint];
+        if (oldPathData.hasOwnProperty(path)) {
+          oldPathData[path] = [...oldPathData[path], dataPoint];
         } else {
-          oldData[path] = [dataPoint];
+          oldPathData[path] = [dataPoint];
         }
       });
-      return oldData;
+      return oldPathData;
     });
   }, [props.data]);
 
   const getLabel = path => {
+    if (path.length === 1) {
+      return path[0];
+    }
     const parentKey = path[path.length - 2];
     const key = path[path.length - 1];
     if (parentKey === IGNORE_KEY) {
@@ -78,47 +81,40 @@ export default function LineGraph(props) {
     }
   };
 
-  /**
-   * Create an object containing all data
-   * Format:
-   *  { datasets: [
-   *      {
-   *        data: [{x: _, y: _}]
-   *      },
-   *      {...}
-   *    ]
-   *  }
-   * @returns a data object readable by ChartJS
-   */
-  const getData = () => {
+  const getFormattedData = () => {
     return {
       datasets: Array.from(props.paths, (path, i) => {
         return {
           label: getLabel(path),
-          data: pathData.hasOwnProperty(path) ? pathData[path] : [],
+          data: pathData[path],
           borderColor: COLORS[i % COLORS.length] // cycle colors
         };
       })
     };
   };
 
+  const onCloseClicked = () => {
+    props.removeGraph(props.ID);
+  };
+
+  const onSelectClicked = () => {
+    props.onSelectClicked(props.ID);
+  };
+
   return (
     <div id="graph-container">
       <div id="button-container">
         <FontAwesomeIcon
-          id="close-button"
-          onClick={() => props.removeGraph(props.ID)}
+          id="graph-close-button"
+          onClick={onCloseClicked}
           icon={faTimes}
         />
-        <span
-          id="select-button"
-          onClick={() => props.onSelectClicked(props.ID)}
-        >
+        <span id="select-button" onClick={onSelectClicked}>
           Select data points
         </span>
       </div>
       <div id="graph-wrapper">
-        <Line data={getData} />
+        <Line data={getFormattedData} />
       </div>
     </div>
   );
