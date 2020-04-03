@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Tabs.css";
 import LineGraph from "./LineGraph";
-import DatapointContainer from "./DatapointContainer";
+import DataPointSelector from "./DataPointSelector";
 import ConfigManager from "../ConfigManager";
-import GraphContainer from "./GraphContainer";
+import Graphs from "./Graphs";
 import Sidebar from "./Sidebar";
 
 const NO_GRAPH = -1;
@@ -62,20 +62,20 @@ export default function Tabs(props) {
     <div className="tabs-root">
       <div className="tabs-container"></div>
       <div className="window-container">
-        <GraphContainer graphs={getGraphs()} />
+        <Graphs graphs={getGraphs()} />
         <Sidebar
           handleAddGraphClick={ConfigManager.addGraph}
           handleSaveClick={handleSaveClick}
           handleUploadClick={handleUploadClick}
         ></Sidebar>
       </div>
-      <DatapointContainer
+      <DataPointSelector
         visible={currentGraph !== NO_GRAPH}
         data={props.data.telemetryData}
         onCloseClicked={resetCurrentGraph}
         onDataPointClicked={handleDataPointClicked}
         isSelected={isSelected}
-      ></DatapointContainer>
+      ></DataPointSelector>
     </div>
   );
 }
