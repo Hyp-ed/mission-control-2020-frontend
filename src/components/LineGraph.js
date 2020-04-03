@@ -15,12 +15,10 @@ const COLORS = [
   "#FFFFFF", // white
   "#A7CEE3", // aqua
   "#1F79B4", // pink
-  "#FDBF70", // peach
-  "#FF7F02", // orange
   "#CAB3D7", // violet
+  "#FF7F02", // orange
   "#6B3D9A", // purple
   "#B15928", // brown
-  "#FEFF99", // lemon
   "#4BBEBE" // green
 ];
 
@@ -87,7 +85,7 @@ export default function LineGraph(props) {
         return {
           label: getLabel(path),
           data: pathData[path],
-          borderColor: COLORS[i % COLORS.length] // cycle colors
+          borderColor: COLORS[(5 * props.ID + i) % COLORS.length] // shift and cycle colors
         };
       })
     };
