@@ -13,22 +13,27 @@ const TOOLTIP_TEXT_COLOR = "#8f8f8f";
 
 const Input = () => <input id="fileButton" type="file" hidden />;
 
-const Button = props => (
-  <div
-    className="sidebar-icon"
-    onClick={props.onClick}
-    data-tip={props.tooltip}
-  >
-    {props.input ? <Input></Input> : <div />}
-    <ReactTooltip
-      effect="solid"
-      delayShow={TOOLTIP_DELAY}
-      textColor={TOOLTIP_TEXT_COLOR}
-      place="left"
-    />
-    <FontAwesomeIcon icon={props.icon} />
-  </div>
-);
+const Button = props =>
+  props.enabled ? (
+    <div
+      className="sidebar-icon"
+      onClick={props.onClick}
+      data-tip={props.tooltip}
+    >
+      {props.input ? <Input></Input> : <div />}
+      <ReactTooltip
+        effect="solid"
+        delayShow={TOOLTIP_DELAY}
+        textColor={TOOLTIP_TEXT_COLOR}
+        place="left"
+      />
+      <FontAwesomeIcon icon={props.icon} />
+    </div>
+  ) : (
+    <div />
+  );
+
+Button.defaultProps = { input: false, enabled: true };
 
 export default function Sidebar(props) {
   return (
@@ -36,7 +41,7 @@ export default function Sidebar(props) {
       <Button
         onClick={props.handleAddGraphClick}
         tooltip="Add graph"
-        input={false}
+        enabled={props.isAddEnabled}
         icon={faPlus}
       ></Button>
       <Button
@@ -48,7 +53,6 @@ export default function Sidebar(props) {
       <Button
         onClick={props.handleSaveClick}
         tooltip="Save config"
-        input={false}
         icon={faSave}
       ></Button>
     </div>

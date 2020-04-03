@@ -158,8 +158,9 @@ class ConfigManager {
     return JSON.stringify(configNoIDs);
   };
 
-  hasMaxGraphs = () => {
-    return this.state.graphs.length >= MAX_GRAPHS;
+  shouldEnableAdd = () => {
+    console.log(this.config.graphs.length);
+    return this.config.graphs.length < MAX_GRAPHS;
   };
 }
 

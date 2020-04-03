@@ -65,6 +65,7 @@ export default function Tabs(props) {
         <Graphs graphs={getGraphs()} />
         <Sidebar
           handleAddGraphClick={ConfigManager.addGraph}
+          isAddEnabled={ConfigManager.shouldEnableAdd()}
           handleSaveClick={handleSaveClick}
           handleUploadClick={handleUploadClick}
         ></Sidebar>
