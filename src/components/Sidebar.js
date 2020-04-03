@@ -30,7 +30,7 @@ const Button = props => (
   </div>
 );
 
-const Sidebar = props => {
+export default function Sidebar(props) {
   return (
     <div id="sidebar-container">
       <Button
@@ -53,6 +53,4 @@ const Sidebar = props => {
       ></Button>
     </div>
   );
-};
-
-export default Sidebar;
+}
