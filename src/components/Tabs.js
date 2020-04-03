@@ -40,7 +40,7 @@ export default function Tabs(props) {
    */
   const handleSaveClick = () => {
     try {
-      const str = ConfigManager.downloadableString();
+      const str = ConfigManager.getConfigString();
       const url = window.URL.createObjectURL(new Blob([str]));
       const link = document.createElement("a");
       link.download = "myGraphConfig.json";

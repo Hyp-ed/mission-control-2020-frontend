@@ -1,16 +1,14 @@
 import { isEqual, omit } from "lodash";
-/** The maximum number of graphs that can be displayed. */
+
 const MAX_GRAPHS = 4;
 const DEFAULT_ID = 0;
+
 class ConfigManager {
   constructor() {
     this.graphID = DEFAULT_ID;
     this.setConfig(require("./config.json"));
   }
 
-  /**
-   * Unique ID generator for graphs
-   */
   getGraphID = () => {
     return this.graphID++;
   };
@@ -58,12 +56,9 @@ class ConfigManager {
 
   isPathSelected = (path, graphID) => {
     try {
-      return (
-        this.config.graphs
-          .find(graph => graph.ID === graphID)
-          .paths.filter(p => isEqual(p, path)).length > 0
-      );
-    } catch (e) {
+      const graph = this.config.graphs.find(graph => graph.ID === graphID);
+      return graph.paths.some(p => isEqual(p, path));
+    } catch {
       return false;
     }
   };
@@ -91,7 +86,6 @@ class ConfigManager {
       return false;
     }
 
-    // TODO: handle identical ID values
     const problems = [];
     json.graphs.forEach((graph, i) => {
       const graphNum = i + 1;
@@ -120,28 +114,12 @@ class ConfigManager {
       return false;
     }
     return true;
-
-    // WITHOUT ERROR MESSAGES:
-    // return json.graphs.every(
-    //   graph =>
-    //     graph.hasOwnProperty("paths") &&
-    //     Array.isArray(graph.paths) &&
-    //     graph.paths.every(path => Array.isArray(path)) &&
-    //     graph.paths.every(path => path.every(key => typeof key === "string"))
-    // );
   };
 
   /**
-   *
-   *
-   * @param {Blob} file
-   * @returns
+   * @param {Blob} - file retrieved using HTML input tag
    */
   parseConfig = file => {
-    if (!file) {
-      console.error("Config file must not be undefined.");
-      return;
-    }
     if (!file.name.endsWith(".json")) {
       alert("Config must be a JSON file!");
       return;
@@ -149,13 +127,20 @@ class ConfigManager {
     const reader = new FileReader();
     reader.readAsBinaryString(file);
     reader.onloadend = () => {
-      const json = JSON.parse(reader.result);
-      if (!this.isProperlyFormatted(json)) {
-        alert("JSON improperly formatted");
+      try {
+        const json = JSON.parse(reader.result);
+        if (!this.isProperlyFormatted(json)) {
+          alert(
+            "Config not properly formatted!\nSee the console for a full log"
+          );
+          return;
+        }
+        this.setConfig(json);
+        console.log("Successfully set new config file.");
+      } catch (err) {
+        console.error(err);
         return;
       }
-      this.setConfig(json);
-      console.log("Successfully set new config file.");
     };
   };
 
@@ -166,16 +151,18 @@ class ConfigManager {
     this.config = json;
   };
 
-  shouldEnableAdd = () => {
-    return this.state.graphs.length < MAX_GRAPHS;
+  getConfigString = () => {
+    const configNoIDs = {
+      graphs: this.config.graphs.map(graph => omit(graph, "ID"))
+    };
+    return JSON.stringify(configNoIDs);
   };
 
-  downloadableString = () => {
-    const copy = {};
-    copy.graphs = this.config.graphs.map(graph => omit(graph, "ID"));
-    return JSON.stringify(copy);
+  hasMaxGraphs = () => {
+    return this.state.graphs.length >= MAX_GRAPHS;
   };
 }
 
+// Export a single instance
 const configManager = new ConfigManager();
 export default configManager;
