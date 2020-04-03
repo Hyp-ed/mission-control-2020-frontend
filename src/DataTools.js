@@ -1,21 +1,14 @@
+import { isObjectLike } from "lodash";
 const DELIMITER = " > ";
 
 /**
- * Recursively walk the data object using a list of keys.
+ * Recursively walk the data object using a list of keys
  *
  * @param {object} data – object to be walked
- * @param {array} path – contains object keys
- * @returns data point object
+ * @param {[string]} path – array of keys
+ * @returns {object} - data point
  */
 const getDataPoint = (data, path) => {
-  if (!data) {
-    console.error("Data not initialized.");
-    return undefined;
-  }
-  if (!path) {
-    console.error("Path not initialized.");
-    return undefined;
-  }
   if (Array.isArray(data)) {
     const key = path[0];
     path = path.slice(1);
@@ -24,8 +17,9 @@ const getDataPoint = (data, path) => {
     const key = path[0];
     path = path.slice(1);
     data = data.value.find(o => o.name === key);
-  } else if (typeof data === "object" && data !== null) {
-    if (path.length === 0) {
+  } else if (isObjectLike(data)) {
+    const isEnd = path.length === 0;
+    if (isEnd) {
       return data;
     }
     const key = path[0];
@@ -42,10 +36,10 @@ export const getDataPointValue = (data, path) => {
 };
 
 /**
- * Recursively walk the data object using a list of keys.
+ * Recursively walk the data object to obtain a list of all data points' paths
  *
  * @param {object} data – object to be walked
- * @param {array} path – contains object keys
+ * @param {array} path – array of keys
  * @returns array of data point objects containing path and caption
  */
 export const getAllPaths = (data, path = []) => {
