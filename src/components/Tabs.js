@@ -23,9 +23,6 @@ export default function Tabs(props) {
     ));
   };
 
-  /**
-   * Allow the user to upload a config file
-   */
   const handleUploadClick = () => {
     document.getElementById("fileButton").click();
     document.getElementById("fileButton").onchange = event => {
@@ -35,9 +32,6 @@ export default function Tabs(props) {
     };
   };
 
-  /**
-   * Allow the user to download a config file
-   */
   const handleSaveClick = () => {
     try {
       const str = ConfigManager.getConfigString();
