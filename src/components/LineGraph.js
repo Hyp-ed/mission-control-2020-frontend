@@ -45,7 +45,7 @@ const useDeepEffect = (fn, deps) => {
   }, deps);
 };
 
-const IGNORE_KEY = "crucial_data";
+const IGNORE_KEYS = ["additional_data", "crucial_data"];
 const DELIMITER = " > ";
 
 export default function LineGraph(props) {
@@ -74,7 +74,7 @@ export default function LineGraph(props) {
     }
     const parentKey = path[path.length - 2];
     const key = path[path.length - 1];
-    if (parentKey === IGNORE_KEY) {
+    if (IGNORE_KEYS.includes(parentKey)) {
       return capitalize(key);
     } else {
       return [parentKey, key].join(DELIMITER);
