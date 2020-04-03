@@ -159,7 +159,6 @@ class ConfigManager {
   };
 
   shouldEnableAdd = () => {
-    console.log(this.config.graphs.length);
     return this.config.graphs.length < MAX_GRAPHS;
   };
 }
