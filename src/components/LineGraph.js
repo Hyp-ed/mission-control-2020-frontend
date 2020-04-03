@@ -103,8 +103,8 @@ export default function LineGraph(props) {
   };
 
   return (
-    <div id="container">
-      <div id="buttons">
+    <div id="graph-container">
+      <div id="button-container">
         <FontAwesomeIcon
           id="close-button"
           onClick={() => props.removeGraph(props.ID)}
@@ -117,7 +117,7 @@ export default function LineGraph(props) {
           Select data points
         </span>
       </div>
-      <div id="wrapper">
+      <div id="graph-wrapper">
         <Line data={getData} />
       </div>
     </div>
