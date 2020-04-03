@@ -8,14 +8,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ReactTooltip from "react-tooltip";
 
-const TOOLTIP_DELAY = 300;
+const TOOLTIP_DELAY = 250;
 const TOOLTIP_TEXT_COLOR = "#8f8f8f";
 
 const Input = () => <input id="fileButton" type="file" hidden />;
 
 const Button = props => (
   <div
-    className="sidebar__icon"
+    className="sidebar-icon"
     onClick={props.onClick}
     data-tip={props.tooltip}
   >
@@ -32,7 +32,7 @@ const Button = props => (
 
 const Sidebar = props => {
   return (
-    <div id="sidebar">
+    <div id="sidebar-container">
       <Button
         onClick={props.handleAddGraphClick}
         tooltip="Add graph"
