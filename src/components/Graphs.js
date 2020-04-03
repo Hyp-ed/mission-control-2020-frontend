@@ -15,6 +15,7 @@ const setGraphDefaults = () => {
   defaults.global.elements.line.tension = 0;
   defaults.global.elements.line.borderWidth = 1.5;
   defaults.global.elements.line.fill = false;
+  defaults.global.plugins.streaming.frameRate = 60;
   defaults.line.scales.xAxes[0] = {
     realtime: {
       ttl: undefined // automatically delete data after it disappears off the graph
