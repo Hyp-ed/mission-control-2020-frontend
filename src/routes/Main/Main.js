@@ -26,6 +26,7 @@ export default function Main(props) {
       <DataContainer telemetryData={props.telemetryData}></DataContainer>
       <GaugeContainer telemetryData={props.telemetryData}></GaugeContainer>
       <Tabs
+        telemetryData={props.telemetryData}
         terminalOutput={props.terminalOutput}
         stompClient={props.stompClient}
       />
